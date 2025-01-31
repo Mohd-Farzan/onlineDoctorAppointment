@@ -1,45 +1,33 @@
+import React, { useState } from 'react'
+// import logo from '../../../public/images/logo.jpeg'
 import { Sidebar, SidebarContent, SidebarGroup, SidebarGroupContent, SidebarGroupLabel, SidebarMenu, SidebarMenuButton, SidebarMenuItem } from '@/components/ui/sidebar';
-import { navbarItems } from '@/config';
-import { Calendar, Home, Inbox, Search, Settings } from 'lucide-react';
-import React from 'react'
-import { Link } from 'react-router-dom';
-
-function NavbarItems() {
-    return (
-      <nav className="flex lg:mb-0 gap-6 lg:flex-row">
-        {navbarItems.map(navItem => (
-          <Link className='text-sm font-bold' key={navItem.id} to={navItem.path}>
-            {navItem.lable}
-          </Link>
-        ))}
-      </nav>
-    );
-  }
-function Header(){
+import { Calendar, Home, Inbox, PanelsTopLeft, Search, Settings } from 'lucide-react';
+// import { LogOut } from 'lucide-react';
+function Sidebars() {
   const items = [
     {
       title: "Home",
-      url: "#",
+      url: "/welcome",
       icon: Home,
     },
     {
-      title: "Inbox",
-      url: "#",
+      title: "Doctor",
+      url: "/doctor",
       icon: Inbox,
     },
     {
-      title: "Calendar",
-      url: "#",
+      title: "Appointment",
+      url: "/appointment",
       icon: Calendar,
     },
     {
-      title: "Search",
-      url: "#",
-      icon: Search,
+      title: "Profile",
+      url: "/profile",
+      icon: PanelsTopLeft,
     },
     {
       title: "Settings",
-      url: "#",
+      url: "/settings",
       icon: Settings,
     },
   ]
@@ -65,14 +53,8 @@ function Header(){
         </SidebarGroup>
       </SidebarContent>
     </Sidebar>
-    // <header className="sticky top-0 z-40 w-full border-b bg-gray-500">
-    //   <div className="flex h-16 items-center justify-center px-4 md:px-6">
-    //     <div className="hidden lg:block">
-    //         <NavbarItems/>
-    //     </div>
-    //   </div>
-    //   </header>
+   
     );
 }
 
-export default Header
+export default Sidebars

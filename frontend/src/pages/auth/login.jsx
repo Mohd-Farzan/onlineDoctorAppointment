@@ -2,7 +2,7 @@ import CommonForm from '@/Component/Common/form'
 import { loginFormControls} from '@/config'
 import { loginUser } from '@/store/auth-slice'
 import React, { useState } from 'react'
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { Link,useNavigate } from 'react-router-dom';
 
 const initialState = {
@@ -10,6 +10,7 @@ const initialState = {
     password: '',
   };
 function AuthLogin() {
+    const user=useSelector((state)=>state.auth)
     const[formData,setFormData]=useState(initialState);
     const dispatch = useDispatch();
     const navigate = useNavigate();
@@ -22,10 +23,15 @@ function AuthLogin() {
             if (data?.payload?.success) {
              
               alert("successfully logged in")
-              setTimeout(() => navigate('../../home/welcome'), 1000);
+              if(user.role==='user'){
+                setTimeout(() => navigate('../../home/welcome'), 1000);
+              }
+              else{
+                setTimeout(()=>navigate('../../admin/dashboard'),1000);
+              }
             } else {
               alert("failed to login")
-              setTimeout(()=>navigate('/auth/signup'),800)
+              setTimeout(()=>navigate('/signup'),800)
             }
           });
     }
@@ -46,7 +52,7 @@ function AuthLogin() {
     </span>
     <p>
       Don't have an Account?
-      <Link className="font-medium text-primary hover:underline" to="/auth/signup">
+      <Link className="font-medium text-primary hover:underline" to="/signup">
         Signup
       </Link>
     </p>

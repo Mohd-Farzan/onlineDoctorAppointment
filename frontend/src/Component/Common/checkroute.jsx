@@ -1,5 +1,5 @@
 import React from 'react';
-import { Navigate, replace, useLocation, useNavigate } from 'react-router-dom';
+import { Navigate, useLocation, useNavigate } from 'react-router-dom';
 
 function CheckRoute({ isAuthenticated, user, children }) {
   const location = useLocation();
@@ -7,11 +7,11 @@ function CheckRoute({ isAuthenticated, user, children }) {
 
   if (!isAuthenticated) {
     // Allow unauthenticated users to access login or signup pages
-    if (location.pathname === '/auth/login' || location.pathname === '/auth/signup' || location.pathname==='/auth/forgotPassword') {
+    if (location.pathname === '/login' || location.pathname === '/signup' || location.pathname==='/forgotPassword') {
       return <>{children}</>;
     }
     // Redirect all other unauthenticated users to the login page
-    return <Navigate to='/auth/login' replace />;
+    return <Navigate to='/login' replace />;
   }
 
   // If user is authenticated
@@ -19,7 +19,7 @@ function CheckRoute({ isAuthenticated, user, children }) {
     // Admin-specific route handling
     if (user?.role === 'admin') {
       // Redirect admins from home or auth pages to admin dashboard
-      if (location.pathname.includes('/home') || location.pathname === '/auth/login' || location.pathname === '/auth/signup') {
+      if (location.pathname.includes('/home') || location.pathname === '/login' || location.pathname === '/signup') {
         return <Navigate to='/admin/dashboard' replace />;
       }
     }
@@ -27,7 +27,7 @@ function CheckRoute({ isAuthenticated, user, children }) {
     // User-specific route handling
     if (user?.role === 'user') {
       // Redirect users from admin routes or auth pages to home
-      if (location.pathname.includes('/admin') || location.pathname === '/auth/login' || location.pathname === '/auth/signup') {
+      if (location.pathname.includes('/admin') || location.pathname === '/login' || location.pathname === '/signup') {
         return <Navigate to='/home/welcome' replace />;
         
       }

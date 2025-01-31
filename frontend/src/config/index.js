@@ -53,10 +53,20 @@ export const navbarItems=[
         path:'/home/doctorlist'
     },
     {
-        id:'medicines',
-        lable:'Buy Medicines',
+        id:'appointment',
+        lable:'Appointment',
         path:'/home/medicines'
     },
+    {
+        id:'chat',
+        lable:'Chat',
+        path:'/home/chat'
+    },
+    {
+        id:'profile',
+        lable:'Profile',
+        path:'/home/profile'
+    }
     
 ]
 export const forgotpswrd=[

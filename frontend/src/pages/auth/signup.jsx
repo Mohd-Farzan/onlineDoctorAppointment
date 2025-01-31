@@ -24,10 +24,10 @@ function AuthSignup() {
       if (data?.payload?.success) {
        
         alert("successfully signup")
-        setTimeout(() => navigate('/auth/login'), 1000);
+        setTimeout(() => navigate('/login'), 1000);
       } else {
         alert("failed to signup")
-        setTimeout(()=>navigate('/auth/signup'),800)
+        setTimeout(()=>navigate('/signup'),800)
       }
     });
   }
@@ -46,7 +46,7 @@ function AuthSignup() {
       />
       <p>
         Already have an account?
-        <Link className="font-medium text-primary hover:underline" to="/auth/login">
+        <Link className="font-medium text-primary hover:underline" to="/login">
           Login
         </Link>
       </p>

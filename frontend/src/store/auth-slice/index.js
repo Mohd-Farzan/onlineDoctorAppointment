@@ -2,11 +2,13 @@ import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { data } from "autoprefixer";
 import axios from "axios";
 import Cookies from 'js-cookie'
+import { Cookie } from "lucide-react";
 
 const initialState = {
-    isAuthenticated: false,
+    // isAuthenticated: Cookies.get('isAuthenticated')==='true'||false,
+    isAuthenticated: localStorage.getItem('isAuthenticated') === 'true' || false,
     isLoading: true,
-    user:null,
+    user:Cookies.get('user')? JSON.parse(Cookies.get('user')):null,
     error: null,
 };
 
@@ -15,7 +17,7 @@ export const SignupUser = createAsyncThunk(
     'auth/signup',
     async (formData, { rejectWithValue }) => {
         try {
-            const response = await axios.post('http://localhost:3000/api/auth/signup', formData, {
+            const response = await axios.post('http://localhost:3000/api/signup', formData, {
                 withCredentials: true,
             });
             return response.data;
@@ -31,8 +33,9 @@ export const checkRoute = createAsyncThunk(
     'auth/checkauth',
     async (_, { rejectWithValue }) => {
         try {
-            const token = Cookies.get('authToken'); // Get token from cookies
-            const response = await axios.get('http://localhost:3000/api/auth/checkroute', {
+            // const token = Cookies.get('authToken'); // Get token from cookies
+            const token = localStorage.getItem('token'); // Fetch the token from localStorage
+            const response = await axios.get('http://localhost:3000/api/checkroute', {
                 withCredentials: true,
                 headers: {
                     'Authorization': `Bearer ${token}`,
@@ -53,13 +56,14 @@ export const loginUser = createAsyncThunk(
     async (formData, { rejectWithValue }) => {
         try {
             console.log(formData,'forDATA')
-            const response = await axios.post('http://localhost:3000/api/auth/login', formData, {
+            const response = await axios.post('http://localhost:3000/api/login', formData, {
                 withCredentials: true,
                 
                 
             });
             if (response.data.success) {
-                Cookies.set('token', response.data.token,{ expires: 7, secure: true }); // Store the token
+                // Cookies.set('token', response.data.token,{ expires: 7, secure: true }); // Store the token
+                localStorage.setItem('token', response.data.token); // Store the token
             }
             return response.data;
             
@@ -75,10 +79,10 @@ export const logoutUser = createAsyncThunk(
     'auth/logout',
     async (_, { rejectWithValue }) => {
         try {
-            const response = await axios.post('http://localhost:3000/api/auth/logout', {}, {
+            const response = await axios.post('http://localhost:3000/api/logout', {}, {
                 withCredentials: true,
             });
-           
+            localStorage.removeItem('token');
             return response.data;
         } catch (error) {
             console.error(error);
@@ -91,7 +95,7 @@ export const forgotPassword = createAsyncThunk(
     'auth/forgotPassword', // Use consistent naming for the action type
     async (formData, { rejectWithValue }) => {
         try {
-            const response = await axios.post('http://localhost:3000/api/auth/forgot-password', formData, {
+            const response = await axios.post('http://localhost:3000/api/forgot-password', formData, {
                 withCredentials: true,
             });
             return response.data;
@@ -105,7 +109,7 @@ export const verifyOtpAndResetPswrd = createAsyncThunk(
     'auth/verifyOtpAndResetPswrd', // Remove extra spaces to keep naming consistent
     async ({ email, otp, newPassword }, { rejectWithValue }) => {
         try {
-            const response = await axios.post('http://localhost:3000/api/auth/reset-password', { email, otp, newPassword }, {
+            const response = await axios.post('http://localhost:3000/api/reset-password', { email, otp, newPassword }, {
                 withCredentials: true,
             });
             return response.data;
@@ -120,7 +124,7 @@ export const updateprofile = createAsyncThunk(
     async ({ id,formData }, { rejectWithValue }) => { // Use `id` here
         try {
             console.log(id,formData);
-            const response = await axios.put(`http://localhost:3000/api/auth/profile/${id}`, formData);
+            const response = await axios.put(`http://localhost:3000/api/profile/${id}`, formData);
             return response.data;
         } catch (error) {
             console.error(error);
@@ -139,7 +143,10 @@ const authSlice = createSlice({
             state.user = action.payload;
             state.isAuthenticated = true;
             state.error = null;
+            localStorage.setItem('isAuthenticated', 'true'); // Persist to localStorage
+            localStorage.setItem('user', JSON.stringify(action.payload));
         }
+        
         
     },
     extraReducers: (builder) => {
@@ -168,8 +175,8 @@ const authSlice = createSlice({
             })
             .addCase(loginUser.fulfilled, (state, action) => {
                 state.isLoading = false;
-                state.user = action.payload.user;
-                state.isAuthenticated = true;
+                state.user=action.payload.success?action.payload.user:null;
+                state.isAuthenticated=action.payload.success?true:false; 
                 state.error = null;
             })
             .addCase(loginUser.rejected, (state, action) => {
@@ -185,8 +192,8 @@ const authSlice = createSlice({
             })
             .addCase(checkRoute.fulfilled, (state, action) => {
                 state.isLoading = false;
-                state.user = action.payload.user || null;
-                state.isAuthenticated = action.payload.success;
+                state.user=action.payload.success?action.payload.user:null;
+                state.isAuthenticated=action.payload.success?true : false;
             })
             .addCase(checkRoute.rejected, (state, action) => {
                 state.isLoading = false;

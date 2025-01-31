@@ -21,7 +21,7 @@ app.use(cors({
 app.use(express.json());
 app.use(cookieParser());
 
-app.use('/api/auth',Authrouter);
+app.use('/api',Authrouter);
 
 
 app.listen(PORT,()=> console.log(`app running on port ${PORT}`));

@@ -13,24 +13,24 @@ import Dashboard from "./pages/admin/dashboard";
 import AdminLayout from "./Component/admin/layout";
 import ForgotPassword from "./pages/auth/forgotPassword";
 import ProfileUpdate from "./pages/home/profile";
+import Medicine from "./pages/home/medicine";
+import Appointment from "./pages/home/appointment";
 
 
 function App() {
   const dispatch = useDispatch();
-  const { isAuthenticated, user,  } = useSelector(state => state.auth);
+    const { isAuthenticated, user} = useSelector(state => state.auth);
   
   useEffect(() => {
-    if (Cookies.get("token")) { 
-      console.log(Cookies.get('token'))// Check if authToken cookie exists
+
         dispatch(checkRoute());
-    }
        
     }, [dispatch]);
      
   return( 
-  <div className='flex  h-screen bg-zinc-700'>
+  <div className="flex bg-slate-400">
   <Routes>
-        <Route path='/auth'element={<CheckRoute isAuthenticated={isAuthenticated} user={user}>
+        <Route path='/'element={<CheckRoute isAuthenticated={isAuthenticated} user={user}>
           <Authlayout/> 
         </CheckRoute>}>
           <Route path='signup' element={<AuthSignup/>}/>
@@ -43,7 +43,10 @@ function App() {
           <HomeLayout/>
         </CheckRoute>}>
           <Route path='welcome' element={<Welcome/>}/>
+          <Route path ="medicine" element={<Medicine/>}/>
           <Route path='profile' element={<ProfileUpdate/>}/>
+          <Route path='appointment' element={<Appointment/>}/>
+
 
         </Route>
 

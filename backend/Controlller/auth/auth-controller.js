@@ -162,12 +162,8 @@ const forgotPassword= async(req,res)=>{
 const updateProfile = async (req, res) => {
     try {
         const { id } = req.params; 
-        console.log("Request Params:", req.params); // To verify `id` is present
-        console.log("Request Body:", req.body);
-        console.log('hello',id)// Match `id` with the route parameter
         const { email, password, userName } = req.body;
 
-        // Find the user by ID
         const findUser = await UserModel.findById(id);
         if (!findUser) {
             return res.status(404).json({
