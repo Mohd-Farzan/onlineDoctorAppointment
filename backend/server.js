@@ -3,6 +3,7 @@ const db=require('./config/dbConnect');
 const cors = require('cors')
 const Authrouter = require('./Routes/auht/auth-routes');
 const cookieParser = require('cookie-parser');
+const doctorRouter = require('./Routes/admin/adminRoutes')
 const app=express()
 db;
 const PORT=process.env.PORT || 3000
@@ -14,14 +15,19 @@ app.use(cors({
     allowedHeaders: [
         'Content-Type',
         'Authorization',
-        'Cache-Control', // Correct spelling here
+        'Cache-Control',
+        'Accept' // Correct spelling here
     ],
     credentials: true, // Allow credentials
 }));
+app.options('*', cors());
+
 app.use(express.json());
 app.use(cookieParser());
 
 app.use('/api',Authrouter);
+app.use('/api',doctorRouter)
+
 
 
 app.listen(PORT,()=> console.log(`app running on port ${PORT}`));

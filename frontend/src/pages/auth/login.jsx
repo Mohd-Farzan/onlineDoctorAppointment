@@ -23,15 +23,15 @@ function AuthLogin() {
             if (data?.payload?.success) {
              
               alert("successfully logged in")
-              if(user.role==='user'){
-                setTimeout(() => navigate('../../home/welcome'), 1000);
+              if(user?.role==='admin'){
+                setTimeout(()=>navigate('../../admin/dashboard'),1000);
               }
               else{
-                setTimeout(()=>navigate('../../admin/dashboard'),1000);
+                setTimeout(()=>navigate('../../home/welcome'),1000);
               }
             } else {
               alert("failed to login")
-              setTimeout(()=>navigate('/signup'),800)
+              setTimeout(()=>navigate('/login'),800)
             }
           });
     }

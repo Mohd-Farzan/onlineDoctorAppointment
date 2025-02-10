@@ -1,6 +1,6 @@
 import CommonForm from '@/Component/Common/form'
 import { profileFormControls } from '@/config'
-import { updateprofile } from '@/store/auth-slice'
+import { updateProfile} from '@/store/auth-slice'
 
 import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
@@ -21,7 +21,7 @@ function ProfileUpdate() {
     event.preventDefault();
     console.log("user",user)
      
-    dispatch(updateprofile({id:user?.id, formData}))
+    dispatch(updateProfile({id:user?.id,formData}))
     
         .then((data) => {
             if (data?.payload?.success) {
@@ -36,16 +36,16 @@ function ProfileUpdate() {
         .catch((err) => console.error("Error in profile update:", err));
 }
 
-  return <div className='flex justify-center items-center'>
+  return <div className='flex justify-center items-center my-10'>
+        <div className="w-full max-w-lg bg-white p-6 shadow-lg rounded-lg border">
     <CommonForm
     formData={formData}
     setFormData={setFormData}
     formControls={profileFormControls}
     buttonText='Update'
-    
     onSubmit={onSubmit}
     />
-
+</div>
 
   </div>
 }

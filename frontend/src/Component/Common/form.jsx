@@ -1,5 +1,6 @@
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 // import { Select,SelectContent,SelectItem,SelectTrigger, SelectValue } from '@/components/ui/select';
 //import { Textarea } from '@/components/ui/textarea';
 import React from 'react';
@@ -24,29 +25,6 @@ function CommonForm({ formControls, formData, setFormData, onSubmit, buttonText 
                     />
                 );
 
-            // case 'select':
-            //     return (
-            //         <Select
-            //             onValueChange={(value) => setFormData({
-            //                 ...formData,
-            //                 [controlItem.name]: value
-            //             })}
-            //             value={value}
-            //         >
-            //             <SelectTrigger className='w-full'>
-            //                 <SelectValue placeholder={controlItem.label} />
-            //             </SelectTrigger>
-            //             <SelectContent>
-            //                 {controlItem.options && controlItem.options.length>0
-            //                 ?controlItem.options.map(optionItem => (
-            //                     <SelectItem key={optionItem.id} value={optionItem.id}>
-            //                         {optionItem.label}
-            //                     </SelectItem>
-            //                 )):null}
-            //             </SelectContent>
-            //         </Select>
-            //     );
-
             case 'textarea':
                 return (
                     <Textarea
@@ -59,6 +37,26 @@ function CommonForm({ formControls, formData, setFormData, onSubmit, buttonText 
                             [controlItem.name]: e.target.value
                         })}
                     />
+                );
+            case "select":
+                return (
+                    <Select
+                        value={formData[controlItem.name] || ""}
+                        onValueChange={(selectedValue) =>
+                            setFormData({
+                                ...formData,
+                                [controlItem.name]: selectedValue,
+                            })
+                        }
+                    >
+                        <SelectTrigger>
+                            <SelectValue placeholder={controlItem.placeholder} />
+                        </SelectTrigger>
+                        <SelectContent>
+                            <SelectItem value="admin">Admin</SelectItem>
+                            <SelectItem value="user">User</SelectItem>
+                        </SelectContent>
+                    </Select>
                 );
 
             default:

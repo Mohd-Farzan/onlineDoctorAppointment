@@ -21,6 +21,14 @@ export const registerFormControls=[
         placeholder:"enter your password ",
         componentType:"input",
         type:"password",
+    },
+    {
+        name:'role',
+        label:'Role',
+        placeholder:'select your role',
+        componentType:'select',
+        type:'select'
+        
     }
 ];
 export const loginFormControls=[
@@ -101,4 +109,58 @@ export const profileFormControls=[
         type:'text',
     }
     
+]
+export const doctorRegistrationFormControl=[
+    {
+        name:'name',
+        label:"Name",
+        placeholder:"enter your Name ",
+        componentType:"input",
+        type:"text",
+        unique:true
+    },
+    {
+        name:'email',
+        label:"email",
+        placeholder:"enter your email ",
+        componentType:"input",
+        type:"email",
+        unique:true
+    },
+    {
+        name:'address',
+        label:"Address",
+        placeholder:"Write Complete Address ",
+        componentType:"input",
+        type:"text",
+    },
+    {
+        name:'speciality',
+        label:"Speciality",
+        placeholder:"What is Your speciality ",
+        componentType:"input",
+        type:"text",
+    },
+    {
+        name:'availablity',
+        label:"Availablity",
+        placeholder:" Select Availablity",
+        componentType:"select",
+        type:"select",
+    },
+    {
+        name:'time',
+        label:"Time",
+        placeholder:"What Is Your Woking Time ",
+        componentType:"input",
+        type:"number",
+    },
+    {
+        name:'fees',
+        label:"Fees",
+        placeholder:"Write Your Charges",
+        componentType:"number",
+        type:"number",
+    }
+   
 ]

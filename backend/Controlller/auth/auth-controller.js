@@ -6,7 +6,7 @@ const crypto=require('crypto')
 
 // Signup user function
 const signupUser = async (req, res) => {
-    const { userName, email, password } = req.body;
+    const { userName, email, password ,role} = req.body;
     try {
         const userExist = await UserModel.findOne({ email });
         if (userExist) {
@@ -15,11 +15,13 @@ const signupUser = async (req, res) => {
 
         const saltRounds = 10;
         const hash_password = await bcrypt.hash(password, saltRounds);
+        const userRole = role || 'user'
 
         const newUser = new UserModel({
             userName,
             email,
             password: hash_password,
+            role:userRole
         });
 
         await newUser.save();
@@ -59,18 +61,19 @@ const loginUser = async (req, res) => {
         );
 
         // Set the JWT in a cookie
-        res.cookie('token', token, { httpOnly: true, secure: false })
-           .json({
+        res.cookie('token', token, { httpOnly: true, secure: false });
+           res.json({
                 success: true,
                 message: 'Login successful',
                 user: {
                     email: checkUser.email,
                     role: checkUser.role,
                     id: checkUser._id,
+                    token:token,
                     userName: checkUser.userName
                 },
             });
-
+           console.log(checkUser)
     } catch (error) {
         console.error("Error in login:", error);
         res.status(500).json({
@@ -94,7 +97,11 @@ const authMiddleware = (req, res, next) => {
     try {
         const decoded = jwt.verify(token, process.env.CLIENT_SECRET_KEY || 'CLIENT_SECRET_KEY');
         req.user = decoded;
-        next(); // Proceed to the next middleware or route handler
+        res.status(200).json({
+            success: true,
+            user: decoded
+        });
+        //next(); // Proceed to the next middleware or route handler
     } catch (error) {
         console.error("Error in authorization:", error.stack);
         res.status(401).json({

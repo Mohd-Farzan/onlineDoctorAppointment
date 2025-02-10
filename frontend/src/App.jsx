@@ -15,20 +15,21 @@ import ForgotPassword from "./pages/auth/forgotPassword";
 import ProfileUpdate from "./pages/home/profile";
 import Medicine from "./pages/home/medicine";
 import Appointment from "./pages/home/appointment";
+import Doctor from "./pages/home/doctor";
+import DoctorProfile from "./pages/admin/profile";
 
 
 function App() {
   const dispatch = useDispatch();
-    const { isAuthenticated, user} = useSelector(state => state.auth);
+    const { isAuthenticated, user} = useSelector((state) => state.auth);
   
   useEffect(() => {
-
-        dispatch(checkRoute());
-       
+    dispatch(checkRoute());
     }, [dispatch]);
+    
      
   return( 
-  <div className="flex bg-slate-400">
+  <div className="bg-zinc-400">
   <Routes>
         <Route path='/'element={<CheckRoute isAuthenticated={isAuthenticated} user={user}>
           <Authlayout/> 
@@ -43,7 +44,7 @@ function App() {
           <HomeLayout/>
         </CheckRoute>}>
           <Route path='welcome' element={<Welcome/>}/>
-          <Route path ="medicine" element={<Medicine/>}/>
+          <Route path ="doctor" element={<Doctor/>}/>
           <Route path='profile' element={<ProfileUpdate/>}/>
           <Route path='appointment' element={<Appointment/>}/>
 
@@ -54,6 +55,7 @@ function App() {
           <AdminLayout />
         </CheckRoute>}>
           <Route path='dashboard' element={<Dashboard/>} />
+          <Route path='profile' element={<DoctorProfile/>} />
         </Route>
     </Routes>
         

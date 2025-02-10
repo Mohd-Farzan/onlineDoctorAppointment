@@ -10,6 +10,7 @@ const initialState = {
   userName: '',
   email: '',
   password: '',
+  role:'user',
 };
 
 function AuthSignup() {
@@ -19,10 +20,8 @@ function AuthSignup() {
 
   function onSubmit(event) {
     event.preventDefault();
-    // console.log("Form data being sent:", formData);
     dispatch(SignupUser(FormData)).then((data) => {
       if (data?.payload?.success) {
-       
         alert("successfully signup")
         setTimeout(() => navigate('/login'), 1000);
       } else {

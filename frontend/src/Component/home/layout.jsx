@@ -7,15 +7,15 @@ import { SidebarProvider } from '@/components/ui/sidebar'
 
 function HomeLayout() {
   return (
-    <div className="flex h-screen w-full">
-    <div className="w-[200px] bg-blue-500">
-      <SidebarProvider>
-        <Sidebars />
+    <div className="flex min-h-screen w-full">
+    <div className="flex flex-col ">
+      <SidebarProvider className='flex h-screen'>
+        <Sidebars/>
       </SidebarProvider>
     </div>
-    <div className="flex-1 bg-muted/40 p-4 md:p-6 bg-gray-800">
+    <main className="flex-1 bg-muted/40 p-4 md:p-6 bg-purple-800">
       <Outlet />
-    </div>
+    </main>
   </div>
   )
 }

@@ -1,4 +1,5 @@
 import React from 'react'
+import { Link } from 'react-router-dom';
 
 function Dashboard() {
 
@@ -22,6 +23,7 @@ function Dashboard() {
                         BOOK NOW -
                       </button>
                     </div>
+                    <Link to='/admin/profile'>profile</Link>
                  
                   </div>
                   </div>
