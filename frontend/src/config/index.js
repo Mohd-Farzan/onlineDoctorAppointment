@@ -164,3 +164,21 @@ export const doctorRegistrationFormControl=[
     }
    
 ]
+export const doctorCategoryItems=[
+    {
+    id:'gender',
+    label:'Gender',
+    },
+    {
+        id:'experience',
+        label:'Experience',
+    },
+    {
+        id:'fees',
+        label:'Fees',
+    },
+    {
+        id:'availiblity',
+        label:'Avaliblity',
+    }
+]

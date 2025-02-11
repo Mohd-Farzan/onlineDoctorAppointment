@@ -1,22 +1,22 @@
 import React from 'react'
-import Header from '../Common/header'
-// import Sidebar from '../Common/sidebar'
 import { Outlet } from 'react-router-dom'
-import Sidebars from '../Common/sidebar'
+import Sidebars from './sidebar'
 import { SidebarProvider } from '@/components/ui/sidebar'
+import HeaderSection from './header-section'
 
 function HomeLayout() {
   return (
-    <div className="flex min-h-screen w-full">
-    <div className="flex flex-col ">
-      <SidebarProvider className='flex h-screen'>
-        <Sidebars/>
-      </SidebarProvider>
-    </div>
-    <main className="flex-1 bg-muted/40 p-4 md:p-6 bg-purple-800">
+    <><div className="flex flex-col min-h-screen w-full ">
+    <div className="flex flex-1 w-full flex-col">
+    <HeaderSection/>
+    
+    <main className=" bg-slate-100 flex flex-col mt-20 p-4 md:p-6  ">
       <Outlet />
     </main>
   </div>
+  </div>
+  </>
+
   )
 }
 

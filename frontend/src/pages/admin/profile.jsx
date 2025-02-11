@@ -12,7 +12,7 @@ const initialState={
     fees:'',
     time:'',
 }
-function DoctorProfile() {
+function AdminProfile() {
     const[formData,setFormData]=useState(initialState)
     const dispatch=useDispatch()
     function onSubmit(event){
@@ -37,4 +37,4 @@ function DoctorProfile() {
   )
 }
 
-export default DoctorProfile
+export default AdminProfile

@@ -15,8 +15,10 @@ import ForgotPassword from "./pages/auth/forgotPassword";
 import ProfileUpdate from "./pages/home/profile";
 import Medicine from "./pages/home/medicine";
 import Appointment from "./pages/home/appointment";
-import Doctor from "./pages/home/doctor";
-import DoctorProfile from "./pages/admin/profile";
+import AdminProfile from "./pages/admin/profile";
+import DoctorProfile from "./Component/home/doctor_profile";
+import DoctorPage from "./pages/home/doctor-page";
+
 
 
 function App() {
@@ -29,7 +31,7 @@ function App() {
     
      
   return( 
-  <div className="bg-zinc-400">
+  <div>
   <Routes>
         <Route path='/'element={<CheckRoute isAuthenticated={isAuthenticated} user={user}>
           <Authlayout/> 
@@ -44,7 +46,8 @@ function App() {
           <HomeLayout/>
         </CheckRoute>}>
           <Route path='welcome' element={<Welcome/>}/>
-          <Route path ="doctor" element={<Doctor/>}/>
+          <Route path ="doctor" element={<DoctorPage/>}/>
+          <Route path ="doctor-profile" element={<DoctorProfile/>}/>
           <Route path='profile' element={<ProfileUpdate/>}/>
           <Route path='appointment' element={<Appointment/>}/>
 
@@ -55,7 +58,7 @@ function App() {
           <AdminLayout />
         </CheckRoute>}>
           <Route path='dashboard' element={<Dashboard/>} />
-          <Route path='profile' element={<DoctorProfile/>} />
+          <Route path='profile' element={<AdminProfile/>} />
         </Route>
     </Routes>
         
