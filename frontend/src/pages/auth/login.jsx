@@ -48,7 +48,7 @@ function AuthLogin() {
       onSubmit={onSubmit}
     />
     <span>
-     <Link className='font-medium text-primary hover:underline' to="/auth/forgotPassword">forgot password</Link> 
+     <Link className='font-medium text-primary hover:underline' to="/forgot-password">forgot password</Link> 
     </span>
     <p>
       Don't have an Account?

@@ -11,13 +11,14 @@ import { useDispatch,useSelector } from "react-redux";
 import { checkRoute } from "./store/auth-slice";
 import Dashboard from "./pages/admin/dashboard";
 import AdminLayout from "./Component/admin/layout";
-import ForgotPassword from "./pages/auth/forgotPassword";
 import ProfileUpdate from "./pages/home/profile";
 import Medicine from "./pages/home/medicine";
 import Appointment from "./pages/home/appointment";
 import AdminProfile from "./pages/admin/profile";
 import DoctorProfile from "./Component/home/doctor_profile";
 import DoctorPage from "./pages/home/doctor-page";
+import ForgotPassword from "./pages/auth/forgotPassword";
+import ResetPassword from "./pages/auth/reset-password";
 
 
 
@@ -38,7 +39,9 @@ function App() {
         </CheckRoute>}>
           <Route path='signup' element={<AuthSignup/>}/>
           <Route path='login' element={<AuthLogin/>}/>
-          <Route path='forgotPassword' element={<ForgotPassword/>}/>
+          <Route path='forgot-password' element={<ForgotPassword/>}/>
+          <Route path='reset-password'element={<ResetPassword/>}/>
+          <Route path='forgot-password' element={<ForgotPassword/>}/> 
 
         </Route>
 

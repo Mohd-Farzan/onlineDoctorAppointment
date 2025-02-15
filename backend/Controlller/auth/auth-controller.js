@@ -1,7 +1,8 @@
-const bcrypt = require('bcrypt');
+require('dotenv').config();
+const bcrypt=require('bcryptjs')
 const UserModel = require('../../Model/userModel'); // Updated to use single model
 const jwt = require('jsonwebtoken');
-const nodemailer=require('nodemailer')
+const nodemailer = require('nodemailer')
 const crypto=require('crypto')
 
 // Signup user function
@@ -127,45 +128,53 @@ const logoutUser = (req, res) => {
 
 // Transporter for Nodemailer
 const transporter = nodemailer.createTransport({
-    service: 'mohdfarzan701@gmail.com', // or your preferred email service
+    service: "gmail",
+    port: 465,
+    secure: true, // or your preferred email service
     auth: {
       user: process.env.EMAIL, // your email
       pass: process.env.PASSWORD // your email password
     }
   });
-const forgotPassword= async(req,res)=>{
+  const forgotPassword = async (req, res) => {
     try {
-        const {email}=req.body;
-        const checkEmail= await UserModel.find({email})
-        if(!checkEmail){
-            res.status(400).json({
-                success:false,
-                message:'email is invalid '
+        const { email } = req.body;
+        const user = await UserModel.findOne({ email });
+
+        if (!user) {
+            return res.status(400).json({
+                success: false,
+                message: 'Email is invalid'
             });
         }
-        const otp= crypto.randomInt(100000,999999).toString() // requesting otp
-        user.resetOtp=otp
-        user.otpExpires=Date.now()+1*60*1000
-        await user.save()
+        const otp = crypto.randomInt(100000, 999999).toString(); 
+
+        // Save OTP and expiration time
+        user.resetOtp = otp;
+        user.otpExpires = Date.now() + 5 * 60 * 1000; // 1 min expiry
+        await user.save();
 
         await transporter.sendMail({
-            from:proccess.env.EMAIL,
-            to:user.email,
-            subject:"password OTP",
-            text:`your reset password otp is ${otp}. is expires in 1 min`
-        })
+            from: process.env.EMAIL,
+            to: user.email,
+            subject: "Password Reset OTP",
+            text: `Your reset password OTP is ${otp}. It expires in 1 min.`
+        });
+
         res.status(200).json({
-            success:true,
-            message:'otp send to your mail'
-        })
+            success: true,
+            message: 'OTP sent to your email'
+        });
+
     } catch (error) {
-        console.log(error);
+        console.error(error);
         res.status(500).json({
-            success:false,
-            message:'error sending otp'
-        })
+            success: false,
+            message: 'Error sending OTP'
+        });
     }
-}
+};
+
 const updateProfile = async (req, res) => {
     try {
         const { id } = req.params; 
@@ -204,27 +213,36 @@ const updateProfile = async (req, res) => {
     }
 };
 
-const verifyOtpAndResetPswrd= async(req,res)=>{
+const verifyOtpAndResetPswrd = async (req, res) => {
     try {
-        const {email,otp,newPassword}=req.body
-        const user=await UserModel.find({email})
+        const { email, otp, newPassword } = req.body;
+
+        // Find the user
+        const user = await UserModel.findOne({ email });
         if (!user || user.resetOtp !== otp || user.otpExpires < Date.now()) {
             return res.status(400).json({ message: 'Invalid or expired OTP' });
-          }
-        const hash_password=await bcrypt.hash(newPassword,10)
-        user.password=newPassword
-        user.resetOtp=undefined
-        user.otpExpires=undefined
-        
-        res.status(200).json({
-            success:true,
-            message:'your password is reset successfully'
-        })
+        }
+
+        // Hash new password
+        const hash_password = await bcrypt.hash(newPassword, 10);
+        user.password = hash_password;
+        user.resetOtp = undefined;
+        user.otpExpires = undefined;
+
+        // Save the user
+        await user.save();
+
+        return res.status(200).json({
+            success: true,
+            message: 'Your password has been reset successfully',
+        });
     } catch (error) {
-        res.status(400).json({
-            success:false,
-            message:'something wrong to reset password'
-        })
+        return res.status(500).json({
+            success: false,
+            message: 'Something went wrong while resetting the password',
+            error: error.message,
+        });
     }
-}
+};
+
 module.exports = { signupUser, loginUser, authMiddleware ,logoutUser ,forgotPassword,verifyOtpAndResetPswrd,updateProfile};

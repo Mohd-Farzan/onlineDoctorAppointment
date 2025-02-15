@@ -5,7 +5,7 @@ function CheckRoute({ isAuthenticated, user, children }) {
   const location = useLocation();
 
   if (!isAuthenticated) {
-    if (location.pathname === '/login' || location.pathname === '/signup' || location.pathname==='/forgotPassword') {
+    if (location.pathname === '/login' || location.pathname === '/signup' || location.pathname ==='/forgot-password' || location.pathname==='/reset-password') {
       return <>{children}</>;
     }
     return <Navigate to='/login' replace />;

@@ -1,38 +1,52 @@
 import CommonForm from '@/Component/Common/form';
-import {forgotpswrd } from '@/config'; // Adjust the path as needed
+import { Button } from '@/components/ui/button';
+import { forgotpswrd } from '@/config'; // Adjust the path as needed
 import { forgotPassword } from '@/store/auth-slice';
+import { StepBack } from 'lucide-react';
 import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
+const initialState = {
+    email: ''
 
+  };
 function ForgotPassword() {
-    const [formData, setFormData] = useState({});
+    const [formData, setFormData] = useState(initialState); 
     const dispatch = useDispatch();
-    const { message, error } = useSelector(state => state.auth);
-    const navigate=useNavigate() // Assuming auth slice contains response messages
+    const navigate = useNavigate();
 
-   function requestOtp(data){
-    console.log(data,'data')
-    if(data?.payload?.success){
-      dispatch(forgotPassword())
+    async function onSubmit(event) {
+        event.preventDefault()
+        alert('function run')
+        console.log("Submitting form:", formData);
+        dispatch(forgotPassword(formData)).then((data) => {
+            console.log("Response from forgotPassword:", data); 
+            if (data?.payload?.success) { 
+                alert("OTP sent successfully!");
+                navigate('/reset-password');
+            } else {
+                alert("Invalid email");
+            }
+        });
     }
-   }
 
     return (
         <>
-            <div>Forgot Password</div>
-            <div className='flex justify-center items-center'>
+            <div className="text-center justify-center text-xl font-bold border rounded shadow-lg w-[450px] h-1/2 p-4 mt-4">Forgot Password
+         <Button className=' flex' onClick={()=>window.history.back()}><StepBack/></Button>
+            <div className="justify-center items-center mt-4">
+                <p className='text-sm font-light'>We’ll send a verification code to this email if it matches an existing account.</p>
                 <CommonForm
                     formControls={forgotpswrd}
                     formData={formData}
                     setFormData={setFormData}
-                    buttonText='Send'
-                    requestOtp={requestOtp}
+                    buttonText="Send OTP"
+                    onSubmit={onSubmit}
                 />
-                
             </div>
-            {message && <p>{message}</p>}
-            {error && <p className="error">{error}</p>}
+           
+            </div>
+         
         </>
     );
 }

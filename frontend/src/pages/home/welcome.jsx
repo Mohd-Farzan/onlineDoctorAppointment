@@ -1,27 +1,20 @@
-import React, { useEffect } from 'react';
-import logo from '../../../public/images/logo.jpeg'
+
+import { FaceIcon } from '@radix-ui/react-icons';
+import profile from '../../assets/img/profile.png'
 import { BriefcaseMedical, CalendarCheck, GraduationCapIcon, Home, LogOut, Pill } from 'lucide-react';
-import { Button } from '@/components/ui/button';
-import { useDispatch, useSelector } from 'react-redux';
-import { logoutUser } from '@/store/auth-slice';
 import { Link, useNavigate} from 'react-router-dom';
 
-
+import { Button } from '@/components/ui/button';
+import DoctorProfile from '@/components/doctorprofile';
+import BookingCarousel from '@/Component/home/bookingCarousel';
+import doctor from "../../assets/img/doctor.jpeg"
+import doctor1 from "../../assets/img/doctor3.jpeg"
+import doctor2 from "../../assets/img/doctor2.jpeg"
 function Welcome() {
-  const dispatch=useDispatch()
-  const navigate=useNavigate()
-  // const {user}=useSelector((state)=>state.auth)
-  //   function handleLogOut(){
-  //     dispatch(logoutUser()).unwrap()
-  //     console.log(logoutUser)
-  //     alert('logout successfull')
-  //     navigate('/auth/login');
-  //   }
-    
     
   return (
     <>
-       <div className="flex items-center justify-evenly mt-5">
+       {/* <div className="flex items-center justify-evenly mt-5">
         <div className="flex space-x-4">
           <div className="max-w-sm bg-blue-700 shadow-lg rounded-lg hover:shadow-xl hover:bg-zinc-700 transition-all duration-200 ease-in-out">
             <div className="flex">
@@ -44,55 +37,87 @@ function Welcome() {
             </div>
           </div>
         </div>
-      </div>
+      </div> */}
 
       {/* Categories */}
-      <div className="con">
-        <div className="flex flex-wrap justify-center mt-7 mx-10 gap-6">
-          <div className="p-4 border-2 shadow-md rounded w-32 sm:w-40 md:w-48 bg-white hover:shadow-xl hover:bg-blue-50 transition-all duration-200 ease-in-out">
-            <GraduationCapIcon className="text-blue-600 w-6 h-6" />
+      <div className="flex flex-col p-4">
+        <div className="flex flex-wrap justify-center mt-4 mx-8 gap-8 h-[250px] p-2">
+          <div className="p-4 border-2 shadow-md rounded-2xl w-40 sm:w-48 md:w-55 bg-white hover:shadow-xl hover:bg-blue-100 transition-all duration-200 ease-in-out">
+            <img src={doctor} alt="" className='w-full ' />
             <h2 className="text-lg font-bold mt-2">
-              <Link to="/read">Doctor</Link>
+              <Link to="/read">Find Doctors Near You</Link>
             </h2>
           </div>
-          <div className="p-4 border-2 shadow-md rounded w-32 sm:w-40 md:w-48 bg-white hover:shadow-xl hover:bg-blue-50 transition-all duration-200 ease-in-out">
-            <CalendarCheck className="text-blue-500 w-6 h-6" />
+          <div className="p-4 border-2 shadow-md rounded-2xl w-40 sm:w-48 md:w-48 bg-white hover:shadow-xl hover:bg-blue-50 transition-all duration-200 ease-in-out">
+          <img src={doctor} alt="" className='w-full h-50' />
             <Link className="font-bold text-lg mt-2" to="/home/appointment">
-              <h5 className="mt-2">Appointment</h5>
+              <h5 className="mt-2">Book Your Appointment</h5>
             </Link>
           </div>
-          <div className="p-4 border-2 shadow-md rounded w-32 sm:w-40 md:w-48 bg-white hover:shadow-xl hover:bg-blue-50 transition-all duration-200 ease-in-out">
+          {/* <div className="p-4 border-2 shadow-md rounded w-32 sm:w-40 md:w-48 bg-white hover:shadow-xl hover:bg-blue-50 transition-all duration-200 ease-in-out">
             <BriefcaseMedical className="text-blue-500 w-6 h-6" />
             <h2 className="font-bold text-lg mt-2">Prescription</h2>
-          </div>
-          <div className="p-4 border-2 shadow-md rounded w-32 sm:w-40 md:w-48 bg-white hover:shadow-xl hover:bg-blue-50 transition-all duration-200 ease-in-out">
-            <Pill className="text-blue-500 w-6 h-6" />
+          </div> */}
+          <div className="p-4 border-2 shadow-md rounded-2xl w-32 sm:w-48 md:w-55 bg-white hover:shadow-xl hover:bg-blue-50 transition-all duration-200 ease-in-out">
+          <img src={doctor} alt="" className='w-full h-50' />
             <Link className="text-lg font-bold" to="/home/medicine">
               <h5 className="mt-2">Medicine</h5>
             </Link>
           </div>
         </div>
-      </div>
 
       {/* Top Doctors */}
-      <section>
-        <div className="flex items-center justify-center mt-6">
-          <h1 className="text-lg font-bold text-center">Top Doctors</h1>
-        </div>
-
-        <div className="flex flex-wrap justify-center mt-7 mx-10 gap-6">
-          {[...Array(10)].map((_, index) => (
-            <div
-              key={index}
-              className="bg-white p-4 border-2 shadow-md rounded w-32 sm:w-40 md:w-48 hover:shadow-xl hover:bg-blue-50 transition-all duration-200 ease-in-out"
-            >
-              <img src={logo} alt="Doctor" />
-              <h2 className="font-bold">Dr. Taylor Samaro</h2>
-              <span className="text-gray-500">Dental Surgeon</span>
+      <section className="py-16">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <h2 className="text-3xl font-extrabold text-gray-900 mb-8">Our Featured Doctors</h2>
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+              <DoctorProfile
+                name="Dr. Emily Johnson"
+                specialty="Cardiology"
+                imageUrl={profile}
+                rating={4.9}
+                reviewCount={120}
+                experience={15}
+                education="MD from Johns Hopkins University"
+                availableDays="Mon, Wed, Fri"
+                availableHours="9:00 AM - 5:00 PM"
+              />
+              <DoctorProfile
+                name="Dr. Michael Chen"
+                specialty="Pediatrics"
+                imageUrl={profile}
+                rating={4.8}
+                reviewCount={95}
+                experience={12}
+                education="MD from Stanford University"
+                availableDays="Tue, Thu, Sat"
+                availableHours="10:00 AM - 6:00 PM"
+              />
+              <DoctorProfile
+                name="Dr. Sarah Patel"
+                specialty="Dermatology"
+                imageUrl={profile}
+                rating={4.7}
+                reviewCount={88}
+                experience={10}
+                education="MD from Harvard Medical School"
+                availableDays="Mon, Tue, Thu"
+                availableHours="8:00 AM - 4:00 PM"
+              />
             </div>
-          ))}
-        </div>
-      </section>
+            <div className="text-center mt-8">
+              <Button variant="outline" asChild>
+                <Link to="/home/doctor">View All Doctors</Link>
+              </Button>
+            </div>
+          </div>
+        </section>
+        <section className='py-12'>
+          <div className="">
+            <BookingCarousel/>
+          </div>
+        </section>
+      </div>
     </>
   );
 }

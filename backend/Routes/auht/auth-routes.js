@@ -4,7 +4,7 @@ const router=express.Router();
 router.post('/signup',signupUser);
 router.post('/login',loginUser);
 router.post('/logout',logoutUser)
-router.post('/forgotPassword',forgotPassword)
+router.post('/forgot-password',forgotPassword)
 router.post('/reset-pswrd',verifyOtpAndResetPswrd)
 router.put('/profile/:id',updateProfile)
 router.get('/checkroute', authMiddleware , (req, res) => {

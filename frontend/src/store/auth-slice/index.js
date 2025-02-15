@@ -91,21 +91,25 @@ export const logoutUser = createAsyncThunk(
     }
 );
 
-// Forgot Password
 export const forgotPassword = createAsyncThunk(
     'auth/forgotPassword',
     async (formData, { rejectWithValue }) => {
         try {
             const response = await axios.post('http://localhost:3000/api/forgot-password', formData, {
-                withCredentials: true,
+                withCredentials: true, // Ensures cookies are sent
             });
-            return response.data;
+
+            return response.data; // Return successful response
         } catch (error) {
-            console.error(error);
-            return rejectWithValue('Invalid email');
+            console.error("Forgot Password API Error:", error);
+
+            return rejectWithValue(
+                error.response?.data?.message || 'Something went wrong. Please try again.'
+            );
         }
     }
 );
+
 
 // Verify OTP & Reset Password
 export const verifyOtpAndResetPswrd = createAsyncThunk(
@@ -123,7 +127,7 @@ export const verifyOtpAndResetPswrd = createAsyncThunk(
     }
 );
 
-// Update Profile
+// Update Profile   
 export const updateProfile = createAsyncThunk(
     'user/updateProfile',
     async ({ id, formData }, { rejectWithValue }) => {
@@ -223,7 +227,21 @@ const authSlice = createSlice({
                 state.user = null;
                 state.isAuthenticated = false;
                 state.error = null;
-            });
+            }).
+            addCase(forgotPassword.pending, (state,action)=>{
+                state.isLoading=true;
+                state.error=null;
+            })
+            .addCase(forgotPassword.fulfilled,(state,action)=>{
+                state.isLoading=false;
+                state.user=action.payload
+                state.isAuthenticated=false;
+            }).addCase(forgotPassword.rejected, (state, action) => {
+                state.isLoading = false;
+                state.user = null;
+                state.isAuthenticated = false;
+                state.error = action.payload;
+            })
     }
 });
 
