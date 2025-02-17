@@ -3,7 +3,7 @@ const db=require('./config/dbConnect');
 const cors = require('cors')
 const Authrouter = require('./Routes/auht/auth-routes');
 const cookieParser = require('cookie-parser');
-const doctorRouter = require('./Routes/admin/adminRoutes')
+const doctorRouter = require('./Routes/doctorroutes')
 const app=express()
 db;
 const PORT=process.env.PORT || 3000
@@ -27,6 +27,7 @@ app.use(cookieParser());
 
 app.use('/api',Authrouter);
 app.use('/api',doctorRouter)
+
 
 
 

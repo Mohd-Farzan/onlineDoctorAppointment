@@ -9,9 +9,9 @@ function AdminLayout() {
     <div className="flex flex-col items-center">
 
     </div>
-    <div className="flex items-center justify-center w-full px-4 py-6 sm:px-6 lg:px-8 m-4 bg-yellow-400">
+    <main className="flex items-center justify-center w-full px-4 py-6 sm:px-6 lg:px-8 m-4 bg-yellow-400">
         <Outlet/>
-    </div>
+    </main>
   </div>
 }
 

@@ -3,6 +3,7 @@ import { Outlet } from 'react-router-dom'
 import Sidebars from './sidebar'
 import { SidebarProvider } from '@/components/ui/sidebar'
 import HeaderSection from './header-section'
+import Footer from './footer'
 
 function HomeLayout() {
   return (
@@ -13,6 +14,9 @@ function HomeLayout() {
     <main className=" bg-slate-100 flex flex-col mt-20 p-4 md:p-6  ">
       <Outlet />
     </main>
+    <div className="flex bg-blue-500">
+      <Footer/>
+    </div>
   </div>
   </div>
   </>

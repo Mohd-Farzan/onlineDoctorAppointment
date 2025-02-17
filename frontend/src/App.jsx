@@ -19,6 +19,8 @@ import DoctorProfile from "./Component/home/doctor_profile";
 import DoctorPage from "./pages/home/doctor-page";
 import ForgotPassword from "./pages/auth/forgotPassword";
 import ResetPassword from "./pages/auth/reset-password";
+import CunsultPage from "./pages/home/consult";
+import ConsultForm from "./pages/home/consultForm";
 
 
 
@@ -53,6 +55,8 @@ function App() {
           <Route path ="doctor-profile" element={<DoctorProfile/>}/>
           <Route path='profile' element={<ProfileUpdate/>}/>
           <Route path='appointment' element={<Appointment/>}/>
+          <Route path='consult' element={<CunsultPage/>}/>
+          <Route path='consulting-form' element={<ConsultForm/>}/>
 
 
         </Route>

@@ -1,11 +1,10 @@
 const mongoose = require("mongoose");
 const doctorSchema =  mongoose.Schema({
-
-    Name :{
+    userName :{
         type:String,
         required:true,
     },
-    Email:{
+    email:{
         type:String,
         required:true,
     },
@@ -34,4 +33,5 @@ const doctorSchema =  mongoose.Schema({
 
 
 });
-module.exports = mongoose.model('doctor',doctorSchema);
+const doctorModel=mongoose.model('doctor',doctorSchema);
+module.exports = doctorModel

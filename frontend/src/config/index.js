@@ -182,3 +182,35 @@ export const doctorCategoryItems=[
         label:'Avaliblity',
     }
 ]
+export const specialities = [
+    {
+      name: "Gynaecology",
+      price: "499",
+      icon: "/placeholder.svg?height=80&width=80",
+    },
+    {
+      name: "Sexology",
+      price: "499",
+      icon: "/placeholder.svg?height=80&width=80",
+    },
+    {
+      name: "General physician",
+      price: "399",
+      icon: "/placeholder.svg?height=80&width=80",
+    },
+    {
+      name: "Dermatology",
+      price: "449",
+      icon: "/placeholder.svg?height=80&width=80",
+    },
+    {
+      name: "Psychiatry",
+      price: "499",
+      icon: "/placeholder.svg?height=80&width=80",
+    },
+    {
+      name: "Stomach and digestion",
+      price: "399",
+      icon: "/placeholder.svg?height=80&width=80",
+    },
+  ]
