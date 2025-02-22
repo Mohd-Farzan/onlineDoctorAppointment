@@ -1,29 +1,28 @@
 
-import { FaceIcon } from '@radix-ui/react-icons';
+
 import profile from '../../assets/img/profile.png'
 import { BriefcaseMedical, CalendarCheck, GraduationCapIcon, Home, LogOut, Pill } from 'lucide-react';
 import { Link, useNavigate} from 'react-router-dom';
 
 import { Button } from '@/components/ui/button';
-import DoctorProfile from '@/Component/home/doctorprofile';
 import BookingCarousel from '@/Component/home/bookingCarousel';
 import doctor from "../../assets/img/doctor.jpeg"
 import doctor1 from "../../assets/img/doctor3.jpeg"
 import doctor2 from "../../assets/img/doctor2.jpeg"
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
-import { useDispatch, useSelector } from 'react-redux';
 import { useEffect, useState } from 'react';
 import { fatchDoctor } from '@/store/doctor-slice';
-
+import { useDispatch, useSelector } from 'react-redux';
+import DoctorDetails from '@/Component/home/doctorDetails';
 function Welcome() {
-  // const {fatchDoctor}=useSelector((state)=>state.doctor)
+  const dispatch=useDispatch()
+  const { doctorList, isLoading, error } = useSelector((state) => state.doctor);
 
-  const [doctorList, setDoctorList] = useState([]);
-  const dispatch = useDispatch()
-  useEffect(()=>{
-    setDoctorList(dispatch(fatchDoctor()))
-    console.log(doctorList)
-  },[])
+  useEffect(() => {
+    dispatch(fatchDoctor());
+  }, [dispatch]);
+  console.log('doctor list',doctorList )
+  
   return (
     <>
       <main className='flex-grow'>
@@ -32,7 +31,7 @@ function Welcome() {
           <div className="p-4 border-2 shadow-md rounded-2xl w-40 sm:w-48 md:w-55 bg-white hover:shadow-xl hover:bg-blue-100 transition-all duration-200 ease-in-out">
             <img src={doctor} alt="" className='w-full ' />
             <h2 className="text-lg font-bold mt-2">
-              <Link to="/read">Find Doctors Near You</Link>
+              <Link to="/home/find-doctor">Find Doctors Near You</Link>
             </h2>
           </div>
           <div className="p-4 border-2 shadow-md rounded-2xl w-40 sm:w-48 md:w-48 bg-white hover:shadow-xl hover:bg-blue-50 transition-all duration-200 ease-in-out">
@@ -57,20 +56,23 @@ function Welcome() {
       <section className="py-12">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <h2 className="text-3xl font-extrabold text-gray-900 mb-8">Our Featured Doctors</h2>
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-
-            {
-              doctorList &&  doctorList.length > 0 ?
-              doctorList.map(doctorData=>
-              <DoctorProfile
-              doctor={doctorData}
-            />
-              ):<span>null</span>
-            }
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+              
+            {isLoading ? (
+        <p className='text-center font-extrabolds'>Loading doctors...</p>
+      ) : error ? (
+        <p>Error: {error}</p>
+      ) : doctorList.length > 0 ? (
+        doctorList.slice(0,6).map((doctorData) => (
+            <DoctorDetails key={doctorData._id} doctor={doctorData}/>
+        ))
+      ) : (
+        <p>No doctors found.</p>
+      )}
             </div>
             <div className="text-center mt-8">
               <Button variant="outline" asChild>
-                <Link to="/home/doctor">View All Doctors</Link>
+                <Link to="/home/find-doctor">View All Doctors</Link>
               </Button>
             </div>
           </div>

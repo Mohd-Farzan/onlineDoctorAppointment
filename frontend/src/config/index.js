@@ -112,14 +112,6 @@ export const profileFormControls=[
 ]
 export const doctorRegistrationFormControl=[
     {
-        name:'name',
-        label:"Name",
-        placeholder:"enter your Name ",
-        componentType:"input",
-        type:"text",
-        unique:true
-    },
-    {
         name:'email',
         label:"email",
         placeholder:"enter your email ",
@@ -145,8 +137,8 @@ export const doctorRegistrationFormControl=[
         name:'availablity',
         label:"Availablity",
         placeholder:" Select Availablity",
-        componentType:"select",
-        type:"select",
+        componentType:"input",
+        type:"text",
     },
     {
         name:'time',

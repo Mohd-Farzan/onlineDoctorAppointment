@@ -25,8 +25,8 @@ app.options('*', cors());
 app.use(express.json());
 app.use(cookieParser());
 
-app.use('/api',Authrouter);
-app.use('/api',doctorRouter)
+app.use('/api/auth',Authrouter);
+app.use('/api/doctor',doctorRouter)
 
 
 

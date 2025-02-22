@@ -20,8 +20,9 @@ function AuthLogin() {
         event.preventDefault()
         console.log(formData, 'FormData before dispatch');
         dispatch(loginUser(formData)).then((data) => {
+          
             if (data?.payload?.success) {
-             
+             console.log(user.role)
               alert("successfully logged in")
               if(user?.role==='admin'){
                 setTimeout(()=>navigate('../../admin/dashboard'),1000);

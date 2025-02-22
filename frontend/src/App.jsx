@@ -14,13 +14,16 @@ import AdminLayout from "./Component/admin/layout";
 import ProfileUpdate from "./pages/home/profile";
 import Medicine from "./pages/home/medicine";
 import Appointment from "./pages/home/appointment";
-import AdminProfile from "./pages/admin/profile";
+import AdminProfile from "./pages/doctor/profile";
 import DoctorProfile from "./Component/home/doctor_profile";
 import DoctorPage from "./pages/home/doctor-page";
 import ForgotPassword from "./pages/auth/forgotPassword";
 import ResetPassword from "./pages/auth/reset-password";
 import CunsultPage from "./pages/home/consult";
 import ConsultForm from "./pages/home/consultForm";
+import DoctorDashboard from "./pages/doctor/dashboard";
+import DoctorRegistration from "./pages/doctor/profile";
+import FindDoctor from "./Component/home/doctor_profile";
 
 
 
@@ -52,7 +55,7 @@ function App() {
         </CheckRoute>}>
           <Route path='welcome' element={<Welcome/>}/>
           <Route path ="doctor" element={<DoctorPage/>}/>
-          <Route path ="doctor-profile" element={<DoctorProfile/>}/>
+          <Route path ="find-doctor" element={<DoctorPage/>}/>
           <Route path='profile' element={<ProfileUpdate/>}/>
           <Route path='appointment' element={<Appointment/>}/>
           <Route path='consult' element={<CunsultPage/>}/>
@@ -65,8 +68,17 @@ function App() {
           <AdminLayout />
         </CheckRoute>}>
           <Route path='dashboard' element={<Dashboard/>} />
-          <Route path='profile' element={<AdminProfile/>} />
+          {/* <Route path='profile' element={<AdminProfile/>} /> */}
         </Route>
+
+        <Route path='/doctor' element={<CheckRoute isAuthenticated={isAuthenticated} user={user}>
+          <AdminLayout />
+        </CheckRoute>}>
+          <Route path='dashboard' element={<DoctorDashboard/>} />
+          <Route path='profile' element={<DoctorRegistration/>} />
+          
+        </Route>
+
     </Routes>
         
   </div>  

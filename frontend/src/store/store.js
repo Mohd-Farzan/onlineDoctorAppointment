@@ -4,7 +4,7 @@ import authReducer from './auth-slice/index'
 // import ShopProductSlice from './shop/products-slice'
 // import userSlice from './user-slice/index'
 // import AdminSlice from './admin-slice/index'
-import doctorSlice from './doctor-slice/index';
+import doctorSlice from './doctor-slice/index'
 const store=configureStore({
     reducer:{
         auth:authReducer,

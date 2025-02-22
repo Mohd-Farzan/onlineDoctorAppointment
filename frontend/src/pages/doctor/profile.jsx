@@ -1,18 +1,17 @@
 import CommonForm from '@/Component/Common/form'
 import { doctorRegistrationFormControl } from '@/config'
-import { doctorRegistration } from '@/store/admin-slice'
+import { doctorRegistration } from '@/store/doctor-slice'
 import React, { useState } from 'react'
 import { useDispatch } from 'react-redux'
 const initialState={
-    name:'',
-    email:'',
-    address:'',
     speciality:'',
     availablity:'',
-    fees:'',
+    email:'',
+    address:'',
     time:'',
+    fees:'',
 }
-function AdminProfile() {
+function DoctorRegistration() {
     const[formData,setFormData]=useState(initialState)
     const dispatch=useDispatch()
     function onSubmit(event){
@@ -37,4 +36,4 @@ function AdminProfile() {
   )
 }
 
-export default AdminProfile
+export default DoctorRegistration

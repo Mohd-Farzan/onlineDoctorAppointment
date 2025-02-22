@@ -15,7 +15,7 @@ export const SignupUser = createAsyncThunk(
     'auth/signup',
     async (formData, { rejectWithValue }) => {
         try {
-            const response = await axios.post('http://localhost:3000/api/signup', formData, {
+            const response = await axios.post('http://localhost:3000/api/auth/signup', formData, {
                 withCredentials: true,
             });
             console.log("response",response.data);
@@ -33,7 +33,7 @@ export const checkRoute = createAsyncThunk(
     async (_, { rejectWithValue }) => {
         try {
             const token = Cookies.get('token'); // Get token from cookies
-            const response = await axios.get('http://localhost:3000/api/checkroute', {
+            const response = await axios.get('http://localhost:3000/api/auth/checkroute', {
                 withCredentials: true,
                 headers: {
                     'Authorization': `Bearer ${token}`,
@@ -54,7 +54,7 @@ export const loginUser = createAsyncThunk(
     'auth/login',
     async (formData, { rejectWithValue }) => {
         try {
-            const response = await axios.post('http://localhost:3000/api/login', formData, {
+            const response = await axios.post('http://localhost:3000/api/auth/login', formData, {
                 withCredentials: true,
             });
 
@@ -75,7 +75,7 @@ export const logoutUser = createAsyncThunk(
     'auth/logout',
     async (_, { rejectWithValue }) => {
         try {
-            const response = await axios.post('http://localhost:3000/api/logout', {}, {
+            const response = await axios.post('http://localhost:3000/api/auth/logout', {}, {
                 withCredentials: true,
             });
 
@@ -95,13 +95,13 @@ export const forgotPassword = createAsyncThunk(
     'auth/forgotPassword',
     async (formData, { rejectWithValue }) => {
         try {
-            const response = await axios.post('http://localhost:3000/api/forgot-password', formData, {
+            const response = await axios.post('http://localhost:3000/api/auth/forgot-password', formData, {
                 withCredentials: true, // Ensures cookies are sent
             });
 
             return response.data; // Return successful response
         } catch (error) {
-            console.error("Forgot Password API Error:", error);
+            console.error("Forgot Password api Error:", error);
 
             return rejectWithValue(
                 error.response?.data?.message || 'Something went wrong. Please try again.'
@@ -116,7 +116,7 @@ export const verifyOtpAndResetPswrd = createAsyncThunk(
     'auth/verifyOtpAndResetPswrd',
     async ({ email, otp, newPassword }, { rejectWithValue }) => {
         try {
-            const response = await axios.post('http://localhost:3000/api/reset-password', { email, otp, newPassword }, {
+            const response = await axios.post('http://localhost:3000/api/auth/reset-password', { email, otp, newPassword }, {
                 withCredentials: true,
             });
             return response.data;
@@ -132,7 +132,7 @@ export const updateProfile = createAsyncThunk(
     'user/updateProfile',
     async ({ id, formData }, { rejectWithValue }) => {
         try {
-            const response = await axios.put(`http://localhost:3000/api/profile/${id}`, formData);
+            const response = await axios.put(`http://localhost:3000/api/auth/profile/${id}`, formData);
             return response.data;
         } catch (error) {
             console.error(error);

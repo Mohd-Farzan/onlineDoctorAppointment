@@ -21,6 +21,14 @@ function CheckRoute({ isAuthenticated, user, children }) {
         return <Navigate to='/admin/dashboard' />;
       }
     }
+    if(user?.role === 'doctor'){
+      if(location.pathname.includes('/admin') || location.pathname.includes('/user') || location.pathname === '/login'){
+        return <Navigate to='/doctor/dashboard'/>;
+      }
+      if(location.pathname.includes('/doctor')){
+        return <>{children}</>
+      }
+    }
     if (user?.role === 'user') {
       if (location.pathname.includes('/admin') || location.pathname === '/login' || location.pathname === '/signup') {
         return <Navigate to='/home/welcome' replace />;

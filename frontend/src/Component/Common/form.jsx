@@ -55,6 +55,7 @@ function CommonForm({ formControls, formData, setFormData, onSubmit, buttonText 
                         <SelectContent>
                             <SelectItem value="admin">Admin</SelectItem>
                             <SelectItem value="user">User</SelectItem>
+                            <SelectItem value = "doctor">Doctor</SelectItem>
                         </SelectContent>
                     </Select>
                 );

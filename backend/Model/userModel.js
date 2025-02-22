@@ -23,6 +23,10 @@ const userSchema = new mongoose.Schema({
     },
     otpExpires:{
         type:Date
+    },
+    doctorProfile:{
+        type:mongoose.Schema.Types.ObjectId,
+        ref:'doctorModel'
     }
 }, { timestamps: true });
 

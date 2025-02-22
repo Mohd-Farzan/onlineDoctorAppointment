@@ -1,6 +1,6 @@
 const mongoose = require("mongoose");
-const doctorSchema =  mongoose.Schema({
-    userName :{
+const doctorSchema = new mongoose.Schema({
+    name :{
         type:String,
         required:true,
     },
@@ -8,24 +8,23 @@ const doctorSchema =  mongoose.Schema({
         type:String,
         required:true,
     },
-    Address:{
+    address:{
         type:String,
         required:true,
     },
-    Speciality :{
+    speciality :{
         type:String,
         required:true,
     },
-    Availability: [{
+    availablity: [{
         type: String,
-        enum: ['morning', 'afternoon', 'evening', 'notavailable'],  
         default: 'notavailable'  
     }],
-    Time:{
+    time:{
         type:String,
         require:true,
     },
-    Fees:{
+    fees:{
         type:Number,
         require:true,
     }
@@ -33,5 +32,5 @@ const doctorSchema =  mongoose.Schema({
 
 
 });
-const doctorModel=mongoose.model('doctor',doctorSchema);
+const doctorModel=mongoose.model('doctorModel',doctorSchema);
 module.exports = doctorModel
