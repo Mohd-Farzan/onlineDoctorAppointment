@@ -5,10 +5,12 @@ import authReducer from './auth-slice/index'
 // import userSlice from './user-slice/index'
 // import AdminSlice from './admin-slice/index'
 import doctorSlice from './doctor-slice/index'
+import contactSlice from './contact-slice/index'
 const store=configureStore({
     reducer:{
         auth:authReducer,
-        doctor:doctorSlice
+        doctor:doctorSlice,
+        contact:contactSlice
         // doctor:AdminSlice,
         
        

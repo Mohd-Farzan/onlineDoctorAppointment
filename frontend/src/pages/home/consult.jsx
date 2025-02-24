@@ -2,24 +2,26 @@ import { Check, ChevronRight, MessageSquare, Sparkles, Stethoscope, Users } from
 
 import { Button } from "@/components/ui/button"
 import { Card } from "@/components/ui/card"
-import { specialities } from "@/config"
 import { Link } from "react-router-dom"
 import image from '../../assets/img/counsult.webp'
+import BenefitCard from "@/Component/home/benifit"
+import { useDispatch, useSelector } from "react-redux"
+import { useEffect } from "react"
+import { fatchDoctor } from "@/store/doctor-slice"
+import { specialities } from "@/config"
+
 function CunsultPage() {
-      function BenefitCard({ title, description }) {
-        return (
-          <div className="space-y-2">
-            <div className="flex items-start gap-2">
-              <Check className="w-5 h-5 text-primary mt-1 shrink-0" />
-              <h3 className="font-semibold text-lg">{title}</h3>
-            </div>
-            <p className="text-gray-600 text-sm pl-7">{description}</p>
-          </div>
-        )
-      }
+  const {doctorList}=useSelector((state)=>state.doctor);
+  const dispatch=useDispatch()
+  useEffect(() => {
+    dispatch(fatchDoctor()).then((data) => {
+      console.log(data); 
+    });
+  },[]);
+  console.log(doctorList,"cunsultPage")
   return (
     <div className="min-h-screen ">
-      <section className="container px-4 py-8 mx-auto">
+      <section className="container px-4 py-8 mx-auto bg-pink-500 bg-opacity-10">
         <div className="grid lg:grid-cols-2 gap-8 items-center">
           <div className="space-y-6">
             <div className="space-y-2">
@@ -76,37 +78,43 @@ function CunsultPage() {
       </section>
       <section className="container px-4 py-8 mx-auto">
         <div className="flex justify-between items-center mb-6">
-          <h2 className="text-2xl font-bold text-gray-900">25+ Specialities</h2>
+          <h2 className="text-2xl font-bold text-gray-900">30+ Specialities</h2>
+          <Link to= "/home/doctor">
           <Button variant="outline" className="hidden sm:flex items-center gap-2">
             See all Specialities
             <ChevronRight className="w-4 h-4" />
           </Button>
+          </Link>
+         
         </div>
 
         <p className="text-gray-600 mb-6">Consult with top doctors across specialities</p>
 
         <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4 overflow-x-auto pb-4">
-          {specialities.map((specialty, i) => (
-            <Card key={i} className="relative group">
+          
+          {
+          doctorList.slice(0,6).map((doctor) => (
+            <Card key={doctor._id} className="relative group">
               <div className="p-4 text-center space-y-2">
                 <div className="w-20 h-20 mx-auto mb-3">
                   <img
-                    src={specialty.icon || "/placeholder.svg"}
-                    alt={specialty.name}
+                    src={image}
+                    alt={doctor.name}
                     width={80}
                     height={80}
-                    className="w-full h-full object-contain"
+                    className="w-full h-full object-contain rounded"
                   />
                 </div>
-                <h3 className="font-medium text-sm">{specialty.name}</h3>
-                <p className="text-gray-600">₹{specialty.price}</p>
+                <h3 className="font-medium text-sm">{doctor.speciality}</h3>
+                <p className="text-gray-600">₹{doctor.fees}</p>
                 <Link to="/home/consulting-form" className="text-blue-500 text-sm hover:underline inline-flex items-center gap-1">
                   Consult now
                   <ChevronRight className="w-4 h-4" />
                 </Link>
               </div>
             </Card>
-          ))}
+          ))
+          }
         </div>
       </section>
 
@@ -123,20 +131,20 @@ function CunsultPage() {
         <p className="text-gray-600 mb-6">Consult with top doctors across specialities</p>
 
         <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4 overflow-x-auto pb-4">
-          {specialities.map((specialty, i) => (
-            <Card key={i} className="relative group">
+          {doctorList.slice(0,6).map((doctor) => (
+            <Card key={doctor._id} className="relative group">
               <div className="p-4 text-center space-y-2">
                 <div className="w-20 h-20 mx-auto mb-3">
                   <img
-                    src={specialty.icon || "/placeholder.svg"}
-                    alt={specialty.name}
+                    src={image}
+                    alt={doctor.name}
                     width={80}
                     height={80}
                     className="w-full h-full object-contain"
                   />
                 </div>
-                <h3 className="font-medium text-sm">{specialty.name}</h3>
-                <p className="text-gray-600">₹{specialty.price}</p>
+                <h3 className="font-medium text-sm">{doctor.speciality}</h3>
+                <p className="text-gray-600">₹{doctor.fees}</p>
                 <Link to="/home/consulting-form" className="text-blue-500 text-sm hover:underline inline-flex items-center gap-1">
                   Consult now
                   <ChevronRight className="w-4 h-4" />
@@ -155,7 +163,7 @@ function CunsultPage() {
             <div className="w-16 h-16 mx-auto mb-4 bg-gray-100 rounded-full flex items-center justify-center">
               <Sparkles className="w-8 h-8 text-primary" />
             </div>
-            <p className="text-sm">Select a speciality or symptom</p>
+            <p className="text-sm">Select a doctor or symptom</p>
           </div>
           <div className="text-center">
             <div className="w-16 h-16 mx-auto mb-4 bg-gray-100 rounded-full flex items-center justify-center">
@@ -195,7 +203,7 @@ function CunsultPage() {
           </div>
         </div>
       </section>
-      <section className="mb-16">
+      <section className="mb-16 ">
         <h2 className="text-2xl font-bold mb-8">Benefits of Online Consultation</h2>
         <BenefitCard/>
       </section>

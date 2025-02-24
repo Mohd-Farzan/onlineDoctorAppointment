@@ -61,7 +61,7 @@ function DoctorProfiles() {
                   <Button variant="outline" className="w-full sm:w-auto">
                     View Profile 
                   </Button>
-                  <Link to ='book-appointment'> <Button className="w-full  sm:w-auto bg-blue-600 hover:bg-blue-700">
+                  <Link to ='/home/book-appointment'> <Button className="w-full  sm:w-auto bg-blue-600 hover:bg-blue-700">
                     Book Appointment
                   </Button></Link>
                 </div>

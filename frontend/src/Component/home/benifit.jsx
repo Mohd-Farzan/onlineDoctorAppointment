@@ -1,16 +1,10 @@
-function BenefitCard({ title, description }) {
-    return (
-      <div className="space-y-2">
-        <div className="flex items-start gap-2">
-          <Check className="w-5 h-5 text-primary mt-1 shrink-0" />
-          <h3 className="font-semibold text-lg">{title}</h3>
-        </div>
-        <p className="text-gray-600 text-sm pl-7">{description}</p>
-      </div>
-    )
-  }
 
-<div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8 p-6 border rounded-lg">
+import React from 'react'
+import BenefitCard from './benifit-card-component'
+
+function OnlineBenifitSection() {
+  return (
+    <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8 p-6 border rounded-lg bg-pink-400 bg-opacity-15">
           <BenefitCard
             title="Consult Top Doctors 24x7"
             description="Connect instantly with a 24x7 specialist or choose to video visit a particular doctor."
@@ -32,4 +26,6 @@ function BenefitCard({ title, description }) {
             description="Get a valid digital prescription and a 7-day, free follow-up for further clarifications."
           />
         </div>
-export default BenefitCard
+  )
+}
+export default OnlineBenifitSection

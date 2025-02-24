@@ -24,6 +24,10 @@ import ConsultForm from "./pages/home/consultForm";
 import DoctorDashboard from "./pages/doctor/dashboard";
 import DoctorRegistration from "./pages/doctor/profile";
 import FindDoctor from "./Component/home/doctor_profile";
+import Services from "./pages/home/services";
+import AppointmentForm from "./pages/home/appointmentForm";
+import AboutUs from "./pages/home/aboutPage";
+import Contact from "./pages/home/contact";
 
 
 
@@ -60,6 +64,12 @@ function App() {
           <Route path='appointment' element={<Appointment/>}/>
           <Route path='consult' element={<CunsultPage/>}/>
           <Route path='consulting-form' element={<ConsultForm/>}/>
+          <Route path='services'elenent={<Services/>}/>
+          <Route path = 'book-appointment'element={<AppointmentForm/>}/>
+          <Route path = 'about'element={<AboutUs/>}/>
+          <Route path = 'contact' element={<Contact/>}/>
+
+
 
 
         </Route>

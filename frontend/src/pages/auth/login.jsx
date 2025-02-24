@@ -27,6 +27,9 @@ function AuthLogin() {
               if(user?.role==='admin'){
                 setTimeout(()=>navigate('../../admin/dashboard'),1000);
               }
+              if(user?.role === 'doctor'){
+                setTimeout(()=>navigate('../../doctor/dashboard'),1000);
+              }
               else{
                 setTimeout(()=>navigate('../../home/welcome'),1000);
               }
