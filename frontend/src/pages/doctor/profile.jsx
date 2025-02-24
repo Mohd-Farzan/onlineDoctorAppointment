@@ -4,6 +4,7 @@ import { doctorRegistration } from '@/store/doctor-slice'
 import React, { useState } from 'react'
 import { useDispatch } from 'react-redux'
 const initialState={
+    name:'',
     speciality:'',
     availablity:'',
     email:'',

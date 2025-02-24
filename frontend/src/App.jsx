@@ -68,7 +68,7 @@ function App() {
           <AdminLayout />
         </CheckRoute>}>
           <Route path='dashboard' element={<Dashboard/>} />
-          {/* <Route path='profile' element={<AdminProfile/>} /> */}
+          <Route path='profile' element={<AdminProfile/>} />
         </Route>
 
         <Route path='/doctor' element={<CheckRoute isAuthenticated={isAuthenticated} user={user}>
@@ -76,6 +76,7 @@ function App() {
         </CheckRoute>}>
           <Route path='dashboard' element={<DoctorDashboard/>} />
           <Route path='profile' element={<DoctorRegistration/>} />
+
           
         </Route>
 
