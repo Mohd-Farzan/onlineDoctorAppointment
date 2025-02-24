@@ -1,23 +1,25 @@
 const mongoose = require("mongoose");
 const appointmentSchema =  mongoose.Schema({
 
-    Patient :{
+    patient :{
         type:String,
 
     },
-    Doctor :{
-        type:mongoose.Schema.TypesObjectId, ref:'doctor'
+    doctor :{
+        // type:mongoose.Schema.TypesObjectId, ref:'doctor'
+        type:String
     },
-    Date:{
+    date:{
         type:Date,
     },
-    Time : {
+    time : {
         type:String,
     },
-Status :{
+status :{
     type:String,
-    enum : ['pending','confirmed','cancelled'],
+    // enum : ['pending','confirmed','cancelled'],
 }
 
 });
-module.exports = mongoose.model('appointment',appointmentSchema);
+const Appointment=mongoose.model('appointment',appointmentSchema);
+module.exports = Appointment
