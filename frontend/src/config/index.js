@@ -112,6 +112,13 @@ export const profileFormControls=[
 ]
 export const doctorRegistrationFormControl=[
     {
+        name:'name',
+        label:"Name",
+        placeholder:"enter your Name ",
+        componentType:"input",
+        type:"text",
+    },
+    {
         name:'email',
         label:"email",
         placeholder:"enter your email ",
@@ -206,3 +213,37 @@ export const specialities = [
       icon: "/placeholder.svg?height=80&width=80",
     },
   ]
+export const contactForm=[
+    
+        {
+            name:'name',
+            label:"Name",
+            placeholder:"Your Name? ",
+            componentType:"input",
+            type:"text"
+        },
+        {
+            name:'email',
+            label:"Email",
+            placeholder:"Your Email? ",
+            componentType:"input",
+            type:"email",
+            unique:true
+        },
+        {
+            name:'phone',
+            label:"Phone",
+            placeholder:"Your Phone Number ? ",
+            componentType:"input",
+            type:"text",
+            unique:true
+        },
+        {
+            name:'message',
+            label:"Message",
+            placeholder:"What's In Your Mind ",
+            componentType:"input",
+            type:"text",
+        },
+    
+]

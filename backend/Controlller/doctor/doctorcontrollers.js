@@ -5,7 +5,7 @@ const createDoctor = async (req, res) => {
     if (!name || !speciality || !email || !address || !time || !fees ) {
       return res.status(400).json({
         success: false,
-        message: 'All fields are required: name, speciality, email, address, time, fees, userId',
+        message: 'All fields are required: name, speciality, email, address, time, fees,',
       });
     }
   
