@@ -15,9 +15,9 @@ function HeaderSection() {
       <div className="mx-auto px-4 w-full">
         <div className="flex items-center justify-between h-20">
           <div className="flex items-center">
-            <a href="#" className="text-2xl font-bold text-primary">
+            <Link to = '/home/welcome' className="text-2xl font-bold text-primary">
               Doctorist
-            </a>
+            </Link>
             <div className="hidden md:flex ml-10 space-x-8">
               <Link to="/home/doctor" className="hover:text-slate-200">
                 Find Doctors

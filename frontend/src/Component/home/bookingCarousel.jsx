@@ -13,10 +13,12 @@ import dentist from '../../assets/img/dentist.jpeg';
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
 import { fatchDoctor } from "@/store/doctor-slice";
+import Appointment from "@/pages/home/appointment";
 
 function BookingCarousel() {
   const dispatch=useDispatch()
   const {doctorList}=useSelector((state)=>state.doctor)
+  const user=useSelector((state)=>state.auth);
   useEffect(()=>{
     dispatch(fatchDoctor)
   },[dispatch])
@@ -58,6 +60,7 @@ function BookingCarousel() {
                       <p className="text-sm text-muted-foreground line-clamp-2">
                         {doctor.address}
                       </p>
+                      
                     </div>
 
                     <div className="mt-auto">
@@ -66,7 +69,7 @@ function BookingCarousel() {
                         <span>Next available: {doctor.availablity}</span>
                       </div>
                       
-                      <Button className="w-full">
+                      <Button onClick={()=><Appointment doctorId={doctor._id} userId={user.user.id} handleAppointment={handleAppointment()}/>} className="w-full">
                         Book Appointment
                       </Button>
                     </div>
