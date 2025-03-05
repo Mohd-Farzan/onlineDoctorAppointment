@@ -1,42 +1,69 @@
-import { useState } from "react"
-import { SearchIcon, UserIcon } from "lucide-react"
-import {Link} from 'react-router-dom'
+import { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { doctorRegistration, fatchDoctor } from "@/store/doctor-slice"; // Ensure correct function name
+import { SearchIcon, UserIcon } from "lucide-react";
+import { Link } from "react-router-dom";
 
 export default function Dashboard() {
+  const dispatch = useDispatch();
+  const doctorList = useSelector((state) => state.doctor?.doctorList || []); // Ensure doctorList is properly extracted
+  const patients = [
+    { name: "M.J Jackson", time: "12:00" },
+    { name: "Ms Johnson", time: "12:30" },
+    { name: "Mariyam", time: "1:00" },
+  ];
+
+  useEffect(() => {
+    dispatch(fatchDoctor());
+  }, [dispatch]);
+
+  console.log("Doctor List:", doctorList);
 
   return (
-    <>
-    
+    <div className="flex-1">
+     <div className="mt-6 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+  {/* Total Patients */}
+  <div className="bg-blue-500 text-white p-6 rounded-2xl shadow-lg hover:scale-105 transition-transform">
+    <h3 className="text-xl font-semibold">Total Patients</h3>
+    <p className="text-4xl font-bold mt-2">{patients.length}</p>
+    <span className="text-sm opacity-80">Till Today</span>
+  </div>
 
-        {/* <main className="flex-1 overflow-x-hidden overflow-y-auto"> */}
-          <div className="  flex-1">
-            {/* <h3 className="text-gray-700 text-3xl font-medium">Dashboard</h3> */}
+  {/* Today's Patients */}
+  <div className="bg-yellow-500 text-white p-6 rounded-2xl shadow-lg hover:scale-105 transition-transform">
+    <h3 className="text-xl font-semibold">Today's Patients</h3>
+    <p className="text-4xl font-bold mt-2">{patients.length}</p>
+    <span className="text-sm opacity-80">21 DEC 2021</span>
+  </div>
 
-            <div className="mt-4 grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
-              <StatCard    title="Total Patients" value="2000+" subtitle="Till Today" bgColor="bg-blue-500" />
-              <StatCard   title="Today's Patients" value="068" subtitle="21 DEC 2021" bgColor="bg-yellow-500" />
-              <StatCard   title="Today's Appointments" value="085" subtitle="21 DEC 2023" bgColor="bg-green-500" />
-            </div>
+  {/* Today's Appointments */}
+  <div className="bg-green-500 text-white p-6 rounded-2xl shadow-lg hover:scale-105 transition-transform">
+    <h3 className="text-xl font-semibold">Today's Appointments</h3>
+    <p className="text-4xl font-bold mt-2">{doctorList.length}</p>
+    <span className="text-sm opacity-80">21 DEC 2023</span>
+  </div>
+</div>
 
-            <div className="mt-8  gap-6 scroll-m-5  ">
-              <div className="bg-white shadow rounded-lg p-4">
-                <h2 className="text-gray-700 text-lg font-semibold pb-4">Today's Patients</h2>
-                <TodayPatientsTable />
-              </div>
-              <div className="bg-white mt-5 shadow rounded-lg p-4">
-                <h2 className="text-gray-700 text-lg font-semibold pb-4">Next Patients</h2>
-                <NextPatientsTable />
-              </div>
-            </div>
 
-            <div className="mt-8 bg-white shadow rounded-lg p-4">
-              <h2 className="text-gray-700 text-lg font-semibold pb-4">Doctor Names</h2>
-              <DoctorNamesTable />
-            </div>
-          </div>
-        {/* </main> */}
-    </>
-  )
+      <div className="mt-8 gap-6 scroll-m-5">
+        <div className="bg-white shadow rounded-lg p-4">
+          <h2 className="text-gray-700 text-lg font-semibold pb-4">Today's Patients</h2>
+          <TodayPatientsTable />
+        </div>
+       
+       
+      </div>
+      <div className="bg-white mt-4 shadow rounded-lg p-4">
+          <h2 className="text-gray-700 text-lg font-semibold pb-4">Next's Patients</h2>
+          <NextPatientsTable />
+        </div>
+
+      <div className="mt-8 bg-white shadow rounded-lg p-4">
+        <h2 className="text-gray-700 text-lg font-semibold pb-4">Doctor Names</h2>
+        <DoctorNamesTable doctorList={doctorList} />
+      </div>
+    </div>
+  );
 }
 
 function StatCard({ title, value, subtitle, bgColor }) {
@@ -46,7 +73,7 @@ function StatCard({ title, value, subtitle, bgColor }) {
       <p className="text-3xl font-bold mt-2">{value}</p>
       <p className="text-sm mt-2">{subtitle}</p>
     </div>
-  )
+  );
 }
 
 function TodayPatientsTable() {
@@ -54,162 +81,77 @@ function TodayPatientsTable() {
     { name: "M.J Jackson", time: "12:00" },
     { name: "Ms Johnson", time: "12:30" },
     { name: "Mariyam", time: "1:00" },
-    // Add more patients as needed
-  ]
-
+  ];
   return (
     <table className="min-w-full leading-normal">
       <thead>
         <tr>
-          <th className="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
-            Patient
-          </th>
-          <th className="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
-            Name
-          </th>
-          <th className="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
-            Time
-          </th>
+          <th className="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">Name</th>
+          <th className="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">Time</th>
         </tr>
       </thead>
       <tbody>
         {patients.map((patient, index) => (
-          <tr key={index}>
-            <td className="px-5 py-5 border-b border-gray-200 bg-white text-sm">
-              <div className="flex items-center">
-                <div className="flex-shrink-0 w-10 h-10">
-                  {/* <img className="w-full h-full rounded-full" src={logo}  alt="Patient" /> */}
-                </div>
-              </div>
-            </td>
-            <td className="px-5 py-5 border-b border-gray-200 bg-white text-sm">
-              <p className="text-gray-900 whitespace-no-wrap">{patient.name}</p>
-            </td>
-            <td className="px-5 py-5 border-b border-gray-200 bg-white text-sm">
-              <p className="text-gray-900 whitespace-no-wrap">{patient.time}</p>
-            </td>
+          <tr key={index} className="hover:bg-gray-50">
+            <td className="px-5 py-5 border-b border-gray-200 bg-white text-sm">{patient.name}</td>
+            <td className="px-5 py-5 border-b border-gray-200 bg-white text-sm">{patient.time}</td>
           </tr>
         ))}
       </tbody>
     </table>
-  )
+  );
 }
 
-function NextPatientsTable() {  
+function NextPatientsTable() {
   const patients = [
-    { id: 1, name: "John Doe", doctorName: "Dr. Smith", appointmentNo: 1, disease: "Flu", status: "Waiting" },
-    {
-      id: 2,
-      name: "Jane Smith",
-      doctorName: "Dr. Johnson",
-      appointmentNo: 2,
-      disease: "Check-up",
-      status: "In Progress",
-    },
-    {
-      id: 3,
-      name: "Jane Smith",
-      doctorName: "Dr. Johnson",
-      appointmentNo: 2,
-      disease: "Check-up",
-      status: "In Progress",
-    },
-    // Add more patients as needed
-  ]
-
+    { name: " Jackson", time: "12:00" },
+    { name: "Ms Johnson", time: "12:30" },
+    { name: "Mariyam", time: "1:00" },
+    { name: "Mariyam", time: "1:00" },
+  ];
   return (
-    <div className="overflow-x-auto">
     <table className="min-w-full leading-normal">
       <thead>
         <tr>
-          {["ID", "Name", "Doctor Name", "Appointment No", "Disease", "Status"].map((header) => (
-            <th
-              key={header}
-              className="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider"
-            >
-              {header}
-            </th>
-          ))}
+          <th className="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">Name</th>
+          <th className="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">Time</th>
         </tr>
       </thead>
       <tbody>
-        {patients.map((patient) => (
-          <tr key={patient.id} className="hover:bg-gray-50">
-            {[
-              patient.id,
-              patient.name,
-              patient.doctorName,
-              patient.appointmentNo,
-              patient.disease,
-              patient.status,
-            ].map((value, index) => (
-              <td
-                key={index}
-                className="px-5 py-5 border-b border-gray-200 bg-white text-sm"
-              >
-                <p className="text-gray-900 whitespace-nowrap">{value}</p>
-              </td>
-            ))}
+        {patients.map((patient, index) => (
+          <tr key={index} className="hover:bg-gray-50">
+            <td className="px-5 py-5 border-b border-gray-200 bg-white text-sm">{patient.name}</td>
+            <td className="px-5 py-5 border-b border-gray-200 bg-white text-sm">{patient.time}</td>
           </tr>
         ))}
       </tbody>
     </table>
-  </div>
-  
-  )
+  );
 }
 
-function DoctorNamesTable() {
-  const doctors = [
-    {
-      name: "Dr. John Smith",
-      position: "Cardiologist",
-      office: "New York",
-      age: 45,
-      startDate: "2015/01/01",
-      salary: "$200,000",
-    },
-    {
-      name: "Dr. Sarah Johnson",
-      position: "Pediatrician",
-      office: "Los Angeles",
-      age: 38,
-      startDate: "2018/06/15",
-      salary: "$180,000",
-    },
-    // Add more doctors as needed
-  ];
-
-  const headers = ["Name", "Position", "Office", "Age", "Start Date", "Salary"];
+function DoctorNamesTable({ doctorList }) {
+  if (!doctorList || doctorList.length === 0) {
+    return <p className="text-gray-700">No doctors available.</p>;
+  }
 
   return (
     <div className="overflow-x-auto">
       <table className="min-w-full leading-normal">
         <thead>
           <tr>
-            {headers.map((header, index) => (
-              <th
-                key={index}
-                className="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider"
-              >
-                {header}
-              </th>
+            {['Name', 'Specialty', 'Availability', 'Start Date', 'Salary'].map((header, index) => (
+              <th key={index} className="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">{header}</th>
             ))}
           </tr>
         </thead>
         <tbody>
-          {doctors.map((doctor, index) => (
+          {doctorList.map((doctor, index) => (
             <tr key={index} className="hover:bg-gray-50">
-              {Object.values(doctor).map((value, idx) => (
-                <td
-                  key={idx}
-                  className={`px-5 py-5 border-b border-gray-200 bg-white text-sm ${
-                    idx === 3 || idx === 5 ? "text-center" : "text-left"
-                  }`}
-                >
-                  <p className="text-gray-900 whitespace-nowrap">{value}</p>
-                </td>
-              ))}
+              <td className="px-5 py-5 border-b border-gray-200 bg-white text-sm">{doctor.name}</td>
+              <td className="px-5 py-5 border-b border-gray-200 bg-white text-sm">{doctor.speciality}</td>
+              <td className="px-5 py-5 border-b border-gray-200 bg-white text-sm">{doctor.availablity}</td>
+              <td className="px-5 py-5 border-b border-gray-200 bg-white text-sm">{doctor.time}</td>
+              <td className="px-5 py-5 border-b border-gray-200 bg-white text-sm">{doctor.fees}</td>
             </tr>
           ))}
         </tbody>

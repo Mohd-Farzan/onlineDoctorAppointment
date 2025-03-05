@@ -1,12 +1,17 @@
 import  React, { useState } from "react" // Added import for React
 import { Link } from "react-router-dom"
 // import logo from '../../../public/images/a.jpeg'
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 
+import { logoutUser } from '@/store/auth-slice';
 
 export function Sidebar() {
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const user=useSelector((state)=>state.auth);
+  const dispatch= useDispatch();
+  function handleLogOut(){
+    dispatch(logoutUser());
+  }
 
   return (
  <>
@@ -55,9 +60,15 @@ export function Sidebar() {
             Tables
           </Link>
         </li>
+        <li   className="block py-2 px-4 text-sm hover:bg-gray-700 rounded"
+                    onClick={handleLogOut}>
+                      <span>Logout</span>
+
+        </li>
       </ul>
     </nav>
   </aside>
+
 </div>
 
  </> 

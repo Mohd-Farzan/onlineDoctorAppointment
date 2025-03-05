@@ -9,13 +9,13 @@ const initialState = {
     error: null,
 };
 
-// Signup action
+
 export const appointmentData = createAsyncThunk(
     'appointment/createAppointment',
     async (formData, { rejectWithValue }) => {
         try {
             const response = await axios.post('http://localhost:3000/api/appointment/create-appointment',formData);
-                                                http://localhost:3000/api/appointment/create-appointment
+                                               
                 
                 return response.data;
         } catch (error) {

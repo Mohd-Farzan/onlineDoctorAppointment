@@ -1,6 +1,7 @@
 import { Calendar } from 'lucide-react';
 import profile from '../../assets/img/dietitian.jpeg';
 import { Button } from '@/components/ui/button';
+import { Link } from 'react-router-dom';
 
 export default function DoctorDetails({ doctor }) {
   return (
@@ -28,9 +29,9 @@ export default function DoctorDetails({ doctor }) {
             {doctor.address}
           </p>
 
-          <Button className="w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 rounded-lg transition-all duration-200">
-            Book Appointment
-          </Button>
+          <Link to ='/home/book-appointment'> <Button className="w-full  sm:w-auto bg-blue-600 hover:bg-blue-700">
+                             Book Appointment
+                           </Button></Link>
         </div>
       </div>
     </div>
