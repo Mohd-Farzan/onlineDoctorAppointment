@@ -1,5 +1,5 @@
 const mongoose = require("mongoose");
-const appointmentSchema =  mongoose.Schema({
+const appointmentSchema = new mongoose.Schema({
 
     patient :{
         type:String,
@@ -7,7 +7,7 @@ const appointmentSchema =  mongoose.Schema({
     },
     doctor :{
         // type:mongoose.Schema.TypesObjectId, ref:'doctor'
-        type:String
+        type:String,
     },
     date:{
         type:Date,

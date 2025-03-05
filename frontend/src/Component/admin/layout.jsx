@@ -1,18 +1,33 @@
-import React from 'react'
-import { Outlet } from 'react-router-dom'
+import { Sidebar } from "./sidebar";
+import { Header } from "./header";
+import { Outlet } from "react-router-dom";
 
-function AdminLayout() {
-  return <div className='w-full flex items-center mt-2 min:h-screen'>
-    <div className="flex bg-blue-500">
+export default function DashboardLayout() {
+  return (
+    <>
+   <div className="w-full flex h-screen">
+  {/* Sidebar - Fixed on the left side */}
+  <div className="h-screen w-64 bg-blue-500 flex-shrink-0 fixed inset-y-0 left-0 z-50">
+    <Sidebar />
+  </div>
 
+  {/* Main Content (Shifted Right to Avoid Overlapping Sidebar) */}
+  <div className="flex flex-col flex-grow pl-64">
+    {/* Header Section */}
+    <div className="w-full">
+      <Header />
     </div>
-    <div className="flex flex-col items-center">
 
-    </div>
-    <main className="flex items-center justify-center w-full px-4 py-6 sm:px-6 lg:px-8 m-4 bg-yellow-400">
-        <Outlet/>
+    {/* Page Content */}
+    <main className="flex-grow w-full px-4 py-6 sm:px-6 lg:px-8 m-4 overflow-auto">
+      <Outlet />
     </main>
   </div>
+</div>
+
+
+   
+    </>
+  );
 }
 
-export default AdminLayout

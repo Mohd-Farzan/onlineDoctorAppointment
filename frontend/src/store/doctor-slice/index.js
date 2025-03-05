@@ -42,7 +42,7 @@ export const fatchDoctor = createAsyncThunk(
 const doctorSlice = createSlice({
   name: "doctor",
   initialState,
-  reducers: {}, // Remove unused reducers
+  reducers: {},
   extraReducers: (builder) => {
     builder
       .addCase(doctorRegistration.pending, (state) => {
@@ -51,7 +51,7 @@ const doctorSlice = createSlice({
       })
       .addCase(doctorRegistration.fulfilled, (state, action) => {
         state.isLoading = false;
-        state.doctorList.push(action.payload.data);
+        state.doctorList=action.payload.data;
         state.error = null;
       })
       .addCase(doctorRegistration.rejected, (state, action) => {

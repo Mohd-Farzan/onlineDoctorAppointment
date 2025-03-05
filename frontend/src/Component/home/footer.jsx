@@ -41,8 +41,9 @@ function Footer() {
         </div>
         <div className="text-center md:text-left">
           <h3 className="text-lg font-semibold mb-4">Contact</h3>
-          <p className="">Phone : (+91)6387980421</p>
-          <p className="">Email : mohdfarzan701@gmail.com</p>
+          <p className="">Phone : (+91)6387980421 (8707018191)</p>
+          <p className="">Email : mohdfarzan701@gmail.com || Sayyedfaiz336@gmail.com
+          </p>
         </div>
       </div>
   

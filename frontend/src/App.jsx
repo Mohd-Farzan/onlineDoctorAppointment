@@ -28,7 +28,9 @@ import Services from "./pages/home/services";
 import AppointmentForm from "./pages/home/appointmentForm";
 import AboutUs from "./pages/home/aboutPage";
 import Contact from "./pages/home/contact";
-
+import DoctorAppointment from "./pages/admin/appointment"
+import DoctorChart from "./pages/admin/chart"
+import Doctortable from "./pages/admin/Table";
 
 
 function App() {
@@ -78,7 +80,12 @@ function App() {
           <AdminLayout />
         </CheckRoute>}>
           <Route path='dashboard' element={<Dashboard/>} />
-          {/* <Route path='profile' element={<AdminProfile/>} /> */}
+          <Route path='profile' element={<AdminProfile/>} />
+          <Route path='appointment' element={<DoctorAppointment/>} />
+          <Route path='chart' element={<DoctorChart/>} />
+          <Route path='table' element={<Doctortable/>} />
+
+
         </Route>
 
         <Route path='/doctor' element={<CheckRoute isAuthenticated={isAuthenticated} user={user}>
@@ -86,6 +93,8 @@ function App() {
         </CheckRoute>}>
           <Route path='dashboard' element={<DoctorDashboard/>} />
           <Route path='profile' element={<DoctorRegistration/>} />
+
+
           
         </Route>
 
