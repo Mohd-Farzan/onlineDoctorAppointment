@@ -8,6 +8,7 @@ const initialState = {
     name: '',
     speciality: '',
     availability: '',
+    contact:'',
     email: '',
     address: '',
     time: '',

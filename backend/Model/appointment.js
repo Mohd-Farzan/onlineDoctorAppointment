@@ -1,24 +1,15 @@
 const mongoose = require("mongoose");
 const appointmentSchema = new mongoose.Schema({
 
-    patient :{
-        type:String,
-
+    patient:String,
+    doctor :String,
+    specialty: String,
+    availableDays: [String], // ['Monday', 'Wednesday']
+    workingHours: {
+      start: String, // '09:00'
+      end: String    // '17:00'
     },
-    doctor :{
-        // type:mongoose.Schema.TypesObjectId, ref:'doctor'
-        type:String,
-    },
-    date:{
-        type:Date,
-    },
-    time : {
-        type:String,
-    },
-status :{
-    type:String,
-    // enum : ['pending','confirmed','cancelled'],
-}
+    appointmentDuration: Number // in minutes (e.g., 30)
 
 });
 const Appointment=mongoose.model('appointment',appointmentSchema);

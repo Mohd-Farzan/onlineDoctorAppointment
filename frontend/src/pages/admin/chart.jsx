@@ -29,8 +29,7 @@ const data = [
 ];
 
 const COLORS = ["#FF5733", "#3498db", "#27ae60"];
-
-export default function PieChartComponent() {
+function PieChartComponent() {
   return (
     <div className="w-screen h-screen flex items-center justify-center mt-3 mr-3 ">
     <div className="w-full max-w-4xl h-full flex items-center justify-center">
@@ -57,3 +56,4 @@ export default function PieChartComponent() {
   </div>
   );
 }
+export default PieChartComponent

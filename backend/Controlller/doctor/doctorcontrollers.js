@@ -1,7 +1,7 @@
 const doctorModel=require('../../Model/doctor');
 const UserModel = require('../../Model/userModel');
 const createDoctor = async (req, res) => {
-    const { name, speciality, availablity, email, address, time, fees  } = req.body;
+    const { name, speciality, availablity, contact,email, address, time, fees  } = req.body;
     if (!name || !speciality || !email || !address || !time || !fees ) {
       return res.status(400).json({
         success: false,
@@ -22,6 +22,7 @@ const createDoctor = async (req, res) => {
         name,
         speciality,
         availablity,
+        contact,
         email,
         address,
         time,

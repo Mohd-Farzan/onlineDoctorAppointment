@@ -20,6 +20,9 @@ const doctorSchema = new mongoose.Schema({
         type: String,
         default: 'notavailable'  
     }],
+    contact:{
+        type:Number,
+    },
     time:{
         type:String,
         require:true,

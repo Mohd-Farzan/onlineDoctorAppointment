@@ -4,9 +4,9 @@ import { doctorRegistration, fatchDoctor } from "@/store/doctor-slice"; // Ensur
 import { SearchIcon, UserIcon } from "lucide-react";
 import { Link } from "react-router-dom";
 
-export default function Dashboard() {
+function Dashboard() {
   const dispatch = useDispatch();
-  const doctorList = useSelector((state) => state.doctor?.doctorList || []); // Ensure doctorList is properly extracted
+  const { doctorList, loading, error } = useSelector((state) => state.doctor); // Extract loading and error states
   const patients = [
     { name: "M.J Jackson", time: "12:00" },
     { name: "Ms Johnson", time: "12:30" },
@@ -14,53 +14,60 @@ export default function Dashboard() {
   ];
 
   useEffect(() => {
-    dispatch(fatchDoctor());
+    dispatch(fatchDoctor()); // Ensure this action fetches the doctor list
   }, [dispatch]);
 
-  console.log("Doctor List:", doctorList);
+  console.log("Doctor List:", doctorList); // Debug: Check the structure of doctorList
+
+  // Handle loading state
+  if (loading) {
+    return <p>Loading...</p>;
+  }
+
+  // Handle error state
+  if (error) {
+    return <p>Error: {error}</p>;
+  }
 
   return (
     <div className="flex-1">
-     <div className="mt-6 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-  {/* Total Patients */}
-  <div className="bg-blue-500 text-white p-6 rounded-2xl shadow-lg hover:scale-105 transition-transform">
-    <h3 className="text-xl font-semibold">Total Patients</h3>
-    <p className="text-4xl font-bold mt-2">{patients.length}</p>
-    <span className="text-sm opacity-80">Till Today</span>
-  </div>
+      <div className="mt-6 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+        {/* Total Patients */}
+        <div className="bg-blue-500 text-white p-6 rounded-2xl shadow-lg hover:scale-105 transition-transform">
+          <h3 className="text-xl font-semibold">Total Patients</h3>
+          <p className="text-4xl font-bold mt-2">{patients.length}</p>
+          <span className="text-sm opacity-80">Till Today</span>
+        </div>
 
-  {/* Today's Patients */}
-  <div className="bg-yellow-500 text-white p-6 rounded-2xl shadow-lg hover:scale-105 transition-transform">
-    <h3 className="text-xl font-semibold">Today's Patients</h3>
-    <p className="text-4xl font-bold mt-2">{patients.length}</p>
-    <span className="text-sm opacity-80">21 DEC 2021</span>
-  </div>
+        {/* Today's Patients */}
+        <div className="bg-yellow-500 text-white p-6 rounded-2xl shadow-lg hover:scale-105 transition-transform">
+          <h3 className="text-xl font-semibold">Today's Patients</h3>
+          <p className="text-4xl font-bold mt-2">{patients.length}</p>
+          <span className="text-sm opacity-80">21 DEC 2021</span>
+        </div>
 
-  {/* Today's Appointments */}
-  <div className="bg-green-500 text-white p-6 rounded-2xl shadow-lg hover:scale-105 transition-transform">
-    <h3 className="text-xl font-semibold">Today's Appointments</h3>
-    <p className="text-4xl font-bold mt-2">{doctorList.length}</p>
-    <span className="text-sm opacity-80">21 DEC 2023</span>
-  </div>
-</div>
-
+        {/* Today's Appointments */}
+        <div className="bg-green-500 text-white p-6 rounded-2xl shadow-lg hover:scale-105 transition-transform">
+          <h3 className="text-xl font-semibold">Today's Appointments</h3>
+          <p className="text-4xl font-bold mt-2">{doctorList?.length ?? 0}</p> {/* Safely access length */}
+          <span className="text-sm opacity-80">21 DEC 2023</span>
+        </div>
+      </div>
 
       <div className="mt-8 gap-6 scroll-m-5">
         <div className="bg-white shadow rounded-lg p-4">
           <h2 className="text-gray-700 text-lg font-semibold pb-4">Today's Patients</h2>
           <TodayPatientsTable />
         </div>
-       
-       
       </div>
       <div className="bg-white mt-4 shadow rounded-lg p-4">
-          <h2 className="text-gray-700 text-lg font-semibold pb-4">Next's Patients</h2>
-          <NextPatientsTable />
-        </div>
+        <h2 className="text-gray-700 text-lg font-semibold pb-4">Next's Patients</h2>
+        <NextPatientsTable />
+      </div>
 
       <div className="mt-8 bg-white shadow rounded-lg p-4">
         <h2 className="text-gray-700 text-lg font-semibold pb-4">Doctor Names</h2>
-        <DoctorNamesTable doctorList={doctorList} />
+        <DoctorNamesTable doctorList={Array.isArray(doctorList) ? doctorList : []} /> {/* Ensure doctorList is always an array */}
       </div>
     </div>
   );
@@ -130,7 +137,8 @@ function NextPatientsTable() {
 }
 
 function DoctorNamesTable({ doctorList }) {
-  if (!doctorList || doctorList.length === 0) {
+  // Ensure doctorList is an array before using .map
+  if (!Array.isArray(doctorList)) {
     return <p className="text-gray-700">No doctors available.</p>;
   }
 
@@ -159,3 +167,5 @@ function DoctorNamesTable({ doctorList }) {
     </div>
   );
 }
+
+export default Dashboard;

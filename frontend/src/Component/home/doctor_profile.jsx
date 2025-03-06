@@ -12,12 +12,14 @@ function DoctorProfiles() {
   useEffect(() => {
     dispatch(fatchDoctor());
   }, [dispatch]);
-
+  function handleContactInfo(contact){
+    alert(contact.contact)
+  }
   if (isLoading) return <p className="text-center py-8">Loading doctors...</p>;
   if (error) return <p className="text-center text-red-500 py-8">Error: {error}</p>;
 
   return (
-    <div className="max-w-6xl mx-auto px-4 py-8">
+    <div className="max-w-6xl mx-auto px-4 py-8 ">
       <div className="bg-white rounded-xl shadow-lg p-8">
         <h2 className="text-3xl font-bold text-gray-900 mb-8">Available Doctors</h2>
         
@@ -58,8 +60,9 @@ function DoctorProfiles() {
 
                 {/* Action Buttons */}
                 <div className="flex flex-col items-start justify-start sm:flex-col gap-2 mt-4">
-                  <Button variant="outline" className="w-full sm:w-auto">
-                    View Profile 
+                  <Button variant="outline" className="w-full sm:w-auto" onClick={()=>handleContactInfo({contact:doctor.contact})}>
+                    Contact Info
+                  {/* <span className="box border-2 bg-blue-950">{doctor.contact}</span> */}
                   </Button>
                   <Link to ='/home/book-appointment'> <Button className="w-full  sm:w-auto bg-blue-600 hover:bg-blue-700">
                     Book Appointment

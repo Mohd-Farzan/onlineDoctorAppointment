@@ -148,6 +148,13 @@ export const doctorRegistrationFormControl=[
         type:"text",
     },
     {
+        name:'contact',
+        label:"contact Number",
+        placeholder:" Enter your phone Number",
+        componentType:"input",
+        type:"number",
+    },
+    {
         name:'time',
         label:"Time",
         placeholder:"What Is Your Woking Time ",
