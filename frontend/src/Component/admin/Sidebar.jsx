@@ -46,20 +46,20 @@ export function Sidebar() {
           </Link>
         </li>
         <li className="mb-2">
-          <Link to="/admin/profile" className="block py-2 px-4 text-sm hover:bg-gray-700 rounded">
+          <Link to="/doctor/profile" className="block py-2 px-4 text-sm hover:bg-gray-700 rounded">
             Profile
           </Link>
         </li>
-        <li className="mb-2">
+        {/* <li className="mb-2">
           <Link to="/admin/chart" className="block py-2 px-4 text-sm hover:bg-gray-700 rounded">
             Charts
           </Link>
-        </li>
-        <li className="mb-2">
+        </li> */}
+        {/* <li className="mb-2">
           <Link to="/admin/table" className="block py-2 px-4 text-sm hover:bg-gray-700 rounded">
             Tables
           </Link>
-        </li>
+        </li> */}
         <li   className="block py-2 px-4 text-sm hover:bg-gray-700 rounded"
                     onClick={handleLogOut}>
                       <span>Logout</span>

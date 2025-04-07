@@ -43,14 +43,14 @@ function Dashboard() {
         <div className="bg-yellow-500 text-white p-6 rounded-2xl shadow-lg hover:scale-105 transition-transform">
           <h3 className="text-xl font-semibold">Today's Patients</h3>
           <p className="text-4xl font-bold mt-2">{patients.length}</p>
-          <span className="text-sm opacity-80">21 DEC 2021</span>
+          <span className="text-sm opacity-80">3 March 2025</span>
         </div>
 
         {/* Today's Appointments */}
         <div className="bg-green-500 text-white p-6 rounded-2xl shadow-lg hover:scale-105 transition-transform">
           <h3 className="text-xl font-semibold">Today's Appointments</h3>
           <p className="text-4xl font-bold mt-2">{doctorList?.length ?? 0}</p> {/* Safely access length */}
-          <span className="text-sm opacity-80">21 DEC 2023</span>
+          <span className="text-sm opacity-80">3 March 2025</span>
         </div>
       </div>
 

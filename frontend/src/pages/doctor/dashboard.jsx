@@ -13,8 +13,8 @@ export default function Dashboard() {
 
             <div className="mt-4 grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
               <StatCard    title="Total Patients" value="2000+" subtitle="Till Today" bgColor="bg-blue-500" />
-              <StatCard   title="Today's Patients" value="068" subtitle="21 DEC 2021" bgColor="bg-yellow-500" />
-              <StatCard   title="Today's Appointments" value="085" subtitle="21 DEC 2023" bgColor="bg-green-500" />
+              <StatCard   title="Today's Patients" value="068" subtitle="3/22/2025" bgColor="bg-yellow-500" />
+              <StatCard   title="Today's Appointments" value="085" subtitle="3/22/2025" bgColor="bg-green-500" />
             </div>
 
             <div className="mt-8  gap-6 scroll-m-5  ">

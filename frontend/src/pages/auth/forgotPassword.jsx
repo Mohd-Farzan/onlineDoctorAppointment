@@ -17,8 +17,7 @@ function ForgotPassword() {
 
     async function onSubmit(event) {
         event.preventDefault()
-        alert('function run')
-        console.log("Submitting form:", formData);
+        // console.log("Submitting form:", formData);
         dispatch(forgotPassword(formData)).then((data) => {
             console.log("Response from forgotPassword:", data); 
             if (data?.payload?.success) { 

@@ -15,9 +15,7 @@ export const appointmentData = createAsyncThunk(
     async (formData, { rejectWithValue }) => {
         try {
             const response = await axios.post('http://localhost:3000/api/appointment/create-appointment',formData);
-                                               
-                
-                return response.data;
+            return response.data;
         } catch (error) {
             console.error(error);
             return rejectWithValue('something wrong with profile');

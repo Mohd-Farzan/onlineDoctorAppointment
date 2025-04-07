@@ -143,7 +143,7 @@ export const doctorRegistrationFormControl=[
     {
         name:'availablity',
         label:"Availablity",
-        placeholder:" Select Availablity",
+        placeholder:"example:['morning','evening','night']",
         componentType:"input",
         type:"text",
     },
@@ -157,16 +157,16 @@ export const doctorRegistrationFormControl=[
     {
         name:'time',
         label:"Time",
-        placeholder:"What Is Your Woking Time ",
+        placeholder:"set time in sequnce of your availablity like morning:11Am,evening:5pm type only time",
         componentType:"input",
-        type:"number",
+        type:"text",
     },
     {
         name:'fees',
         label:"Fees",
         placeholder:"Write Your Charges",
         componentType:"number",
-        type:"number",
+        type:"text",
     }
    
 ]

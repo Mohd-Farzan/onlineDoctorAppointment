@@ -1,13 +1,14 @@
+import { appointmentData } from "@/store/appointment-slice";
 import { fatchDoctor } from "@/store/doctor-slice";
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
 const initialState = {
-  patientName: "",
-  doctor: "",
-  date: "",
-  time: "",
-  reason: "",
+  patient : '',
+  doctor : '',
+  date : '',
+  time : '',
+  reason : '',
 };
 
 export default function AppointmentForm() {
@@ -26,9 +27,16 @@ export default function AppointmentForm() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log("Appointment Booked:");
-    alert("Your appointment has been booked successfully!",formData);
-    setFormData(initialState);
+    dispatch(appointmentData(formData)).then((data)=>{
+      if(data?.payload?.success){
+        alert("Your form is subbmitted")
+      }
+      else{
+        alert("something wrong please check your input data")
+      }
+    })
+    
+
   };
 
   return (
@@ -44,8 +52,8 @@ export default function AppointmentForm() {
             <label className="block text-sm font-medium text-gray-700">Patient Name</label>
             <input
               type="text"
-              name="patientName"
-              value={formData.patientName}
+              name="patient"
+              value={formData.patient}
               onChange={handleChange}
               required
               className="w-full p-2 border border-gray-300 rounded mt-1 focus:outline-none focus:ring-2 focus:ring-blue-500"
@@ -109,6 +117,7 @@ export default function AppointmentForm() {
               className="w-full p-2 border border-gray-300 rounded mt-1 focus:outline-none focus:ring-2 focus:ring-blue-500"
             ></textarea>
           </div>
+
 
           {/* Submit Button */}
           <button 

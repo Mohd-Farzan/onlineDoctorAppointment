@@ -14,6 +14,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
 import { fatchDoctor } from "@/store/doctor-slice";
 import Appointment from "@/pages/home/appointment";
+import { Link } from "react-router-dom";
 
 function BookingCarousel() {
   const dispatch=useDispatch()
@@ -68,10 +69,11 @@ function BookingCarousel() {
                         <Calendar className="w-4 h-4" />
                         <span>Next available: {doctor.availablity}</span>
                       </div>
-                      
-                      <Button onClick={()=><Appointment doctorId={doctor._id} userId={user.user.id} handleAppointment={handleAppointment()}/>} className="w-full">
+                      <Link to = "/home/book-appointment">
+                      <Button className="w-full">
                         Book Appointment
                       </Button>
+                      </Link>
                     </div>
                   </div>
                 </div>

@@ -1,10 +1,11 @@
 import { SearchIcon, UserIcon } from "lucide-react"
 import { Bell, Mail } from "lucide-react"
-
+import profile from "../../assets/img/profile.png"
 import { useState } from "react";
 
 export function Header() {
   const [sidebarOpen, setSidebarOpen] = useState(false);
+  
 
   return (
     <div className="flex-1 flex h-[80%] flex-col overflow-hidden">
@@ -33,8 +34,9 @@ export function Header() {
               </div>
             </div>
             <button className="ml-4 text-gray-500 focus:outline-none focus:text-gray-700">
-              <UserIcon className="h-6 w-6" />
+               <img src={profile} alt="profile" className="w-12 h-12" />
             </button>
+            
           </div>
         </div>
       </header>

@@ -6,14 +6,11 @@ const createAppointment = async (req, res) => {
     const {
 
       patient,
-
       doctor,
-
       date,
-
       time,
-
-      status }= req.body;
+      reason,
+      }= req.body;
     if (!patient || !doctor) {
       return res.status(400).json({
         success: false,
@@ -27,13 +24,11 @@ const createAppointment = async (req, res) => {
     const newAppointment = new Appointment({
       patient,
       doctor,
-      date,
+      date: new Date(date),
       time,
-      status,
+      reason,
     });
     await newAppointment.save();
-    console.log("ksdlml", newAppointment);
-
     res.status(200).json({
       success: true,
       message: 'Your Appointment is shedule you will recieve an email please check ',
