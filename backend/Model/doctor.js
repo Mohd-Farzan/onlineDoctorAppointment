@@ -1,8 +1,8 @@
 const mongoose = require("mongoose");
 
 const availabilitySchema = new mongoose.Schema({
-    date: {
-        type: Date,
+    days: {
+        type: String,
         required: true
     },
     times: [{

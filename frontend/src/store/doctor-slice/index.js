@@ -2,11 +2,12 @@ import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
 
 const initialState = {
-  isLoading: false,  // Changed initial state to false
+  isLoading: false,
   doctorList: [],
   error: null,
 };
 
+// Register Doctor
 export const doctorRegistration = createAsyncThunk(
   "doctor/registration",
   async (formData, { rejectWithValue }) => {
@@ -25,22 +26,21 @@ export const doctorRegistration = createAsyncThunk(
   }
 );
 
-// Fixed typo in 'fatchDoctor' (was 'fatchDoctor')
+// Fetch Doctor
 export const fatchDoctor = createAsyncThunk(
   "doctor/fatchDoctor",
   async (_, { rejectWithValue }) => {
     try {
       const response = await axios.get(
         "http://localhost:3000/api/doctor/show-doctor",
-        { withCredentials: true }  // Added credentials if needed
+        { withCredentials: true }
       );
-      
-      // Transform data to ensure proper structure
+
       return {
         ...response.data,
-        data: response.data.data.map(doctor => ({
+        data: response.data.data.map((doctor) => ({
           ...doctor,
-          availability: doctor.availability || []  // Ensure availability exists
+          availability: doctor.availability || []
         }))
       };
     } catch (error) {
@@ -51,22 +51,40 @@ export const fatchDoctor = createAsyncThunk(
   }
 );
 
+// Update Doctor Profile
+export const updateDoctorProfile = createAsyncThunk(
+  "doctor/updateDoctorProfile",
+  async (formData, { rejectWithValue }) => {
+    try {
+      const response = await axios.put(
+        "http://localhost:3000/api/doctor/update-doctor",
+        formData,
+        { withCredentials: true }
+      );
+      return response.data;
+    } catch (error) {
+      return rejectWithValue(
+        error.response?.data?.message || "Profile update failed"
+      );
+    }
+  }
+);
+
 const doctorSlice = createSlice({
   name: "doctor",
   initialState,
   reducers: {
-    // Optional: Add a reset reducer if needed
-    resetDoctorState: () => initialState
+    resetDoctorState: () => initialState,
   },
   extraReducers: (builder) => {
     builder
+      // Registration
       .addCase(doctorRegistration.pending, (state) => {
         state.isLoading = true;
         state.error = null;
       })
       .addCase(doctorRegistration.fulfilled, (state, action) => {
         state.isLoading = false;
-        // Ensure we're not overwriting existing doctors
         state.doctorList = [...state.doctorList, action.payload.data];
         state.error = null;
       })
@@ -74,17 +92,39 @@ const doctorSlice = createSlice({
         state.isLoading = false;
         state.error = action.payload;
       })
+
+      // Fetch
       .addCase(fatchDoctor.pending, (state) => {
         state.isLoading = true;
         state.error = null;
       })
       .addCase(fatchDoctor.fulfilled, (state, action) => {
         state.isLoading = false;
-        // Ensure data structure matches expectations
         state.doctorList = action.payload.data || [];
         state.error = null;
       })
       .addCase(fatchDoctor.rejected, (state, action) => {
+        state.isLoading = false;
+        state.error = action.payload;
+      })
+
+      // Update
+      .addCase(updateDoctorProfile.pending, (state) => {
+        state.isLoading = true;
+        state.error = null;
+      })
+      .addCase(updateDoctorProfile.fulfilled, (state, action) => {
+        state.isLoading = false;
+        const updatedDoctor = action.payload.data;
+
+        // Update the doctorList
+        state.doctorList = state.doctorList.map((doctor) =>
+          doctor._id === updatedDoctor._id ? updatedDoctor : doctor
+        );
+
+        state.error = null;
+      })
+      .addCase(updateDoctorProfile.rejected, (state, action) => {
         state.isLoading = false;
         state.error = action.payload;
       });

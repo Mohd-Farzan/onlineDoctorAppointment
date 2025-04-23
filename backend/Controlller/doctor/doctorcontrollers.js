@@ -2,9 +2,9 @@ const Doctor = require('../../Model/doctor');
 
 const createDoctor = async (req, res) => {
     const { name, speciality, availability, contact, email, address, fees } = req.body;
-    
+
     // Validation
-    if ( !speciality || !address || !fees || !contact) {
+    if (!name || !email || !speciality || !address || !fees || !contact) {
         return res.status(400).json({
             success: false,
             message: 'All fields are required',
@@ -13,20 +13,26 @@ const createDoctor = async (req, res) => {
 
     try {
         // Validate availability structure
-        if(!Array.isArray(availability)){
-          return res.status(400).json({
-              success: false,
-              message: 'Availability must be an array of date/time slots',
-          });
+        if (!Array.isArray(availability)) {
+            return res.status(400).json({
+                success: false,
+                message: 'Availability must be an array of day/time slots',
+            });
         }
 
         // Process times from string to array
         const processedAvailability = availability.map(slot => ({
-            date: slot.date,
+            days: slot.days,
             times: slot.times.split(',').map(t => t.trim())
         }));
 
-        const existingDoctor = await Doctor.findOne({ email });
+        // Trim basic inputs
+        const trimmedEmail = email.trim();
+        const trimmedName = name.trim();
+        const trimmedContact = contact.trim();
+
+        // Check if doctor with same email exists
+        const existingDoctor = await Doctor.findOne({ email: trimmedEmail });
         if (existingDoctor) {
             return res.status(400).json({
                 success: false,
@@ -35,23 +41,23 @@ const createDoctor = async (req, res) => {
         }
 
         const newDoctor = new Doctor({
-            name,
+            name: trimmedName,
             speciality,
             availability: processedAvailability,
-            contact,
-            email,
-            address,
+            contact: trimmedContact,
+            email: trimmedEmail,
+            address: address.trim(),
             fees,
         });
 
         await newDoctor.save();
-        
+
         res.status(201).json({
             success: true,
             message: 'Registration completed successfully',
             data: newDoctor
         });
-        
+
     } catch (err) {
         console.error('Error creating doctor:', err);
         res.status(500).json({
@@ -64,8 +70,7 @@ const createDoctor = async (req, res) => {
 
 const showDoctor = async (req, res) => {
     try {
-        const doctors = await Doctor.find({})
-           
+        const doctors = await Doctor.find({});
 
         if (!doctors.length) {
             return res.status(404).json({
@@ -74,21 +79,24 @@ const showDoctor = async (req, res) => {
             });
         }
 
-        // Format dates
-        const formattedDoctors = doctors.map(doctor => ({
-            ...doctor,
-            availability: doctor.availability.map(slot => ({
-                date: new Date(slot.date).toISOString().split('T')[0],
-                times: slot.times
-            }))
-        }));
+        // Format doctors with proper object conversion
+        const formattedDoctors = doctors.map(doc => {
+            const doctor = doc.toObject();
+            return {
+                ...doctor,
+                availability: doctor.availability.map(slot => ({
+                    days: slot.days,
+                    times: slot.times
+                }))
+            };
+        });
 
         res.status(200).json({
             success: true,
             message: "Doctors fetched successfully",
             data: formattedDoctors,
         });
-        
+
     } catch (err) {
         res.status(500).json({
             success: false,
@@ -97,5 +105,56 @@ const showDoctor = async (req, res) => {
         });
     }
 };
+const updateDoctorProfile = async (req, res) => {
+    const { email } = req.body;
 
-module.exports = { createDoctor, showDoctor };
+    if (!email) {
+        return res.status(400).json({
+            success: false,
+            message: 'Email is required to update profile',
+        });
+    }
+
+    try {
+        const doctor = await Doctor.findOne({ email });
+
+        if (!doctor) {
+            return res.status(404).json({
+                success: false,
+                message: 'Doctor not found',
+            });
+        }
+
+        // Update only the fields provided
+        const fieldsToUpdate = ['name', 'speciality', 'contact', 'address', 'fees'];
+        fieldsToUpdate.forEach(field => {
+            if (req.body[field]) {
+                doctor[field] = req.body[field];
+            }
+        });
+
+        if (Array.isArray(req.body.availability)) {
+            doctor.availability = req.body.availability.map(slot => ({
+                days: slot.days,
+                times: slot.times.split(',').map(t => t.trim())
+            }));
+        }
+
+        await doctor.save();
+
+        res.status(200).json({
+            success: true,
+            message: 'Doctor profile updated successfully',
+            data: doctor,
+        });
+
+    } catch (err) {
+        console.error('Error updating doctor profile:', err);
+        res.status(500).json({
+            success: false,
+            message: 'Failed to update doctor profile',
+            error: err.message,
+        });
+    }
+};
+module.exports = { createDoctor, showDoctor,updateDoctorProfile };

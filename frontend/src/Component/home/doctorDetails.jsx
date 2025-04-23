@@ -4,12 +4,24 @@ import { Button } from '@/components/ui/button';
 import { Link } from 'react-router-dom';
 
 export default function DoctorDetails({ doctor }) {
-  const availability = doctor._doc.availability?.[0];
-  const formattedDate = availability
-    ? new Date(availability.date).toISOString().split('T')[0]
+  // 1) guard entirely missing prop
+  if (!doctor) return null;
+
+  // 2) normalize the “data” object whether it's a mongoose doc or plain
+  const data = doctor._doc ?? doctor;
+
+  // 3) pull fields safely
+  const { name, fees, address, availability = [] } = data;
+
+  // 4) get the next slot
+  const nextSlot = Array.isArray(availability) ? availability[0] : undefined;
+
+  // 5) format date if present
+  const formattedDate = nextSlot?.days
+    ?nextSlot.days
     : 'No upcoming slots';
 
-  const firstTimeSlot = availability?.times?.[0] || 'N/A';
+  const firstTime = nextSlot?.times?.[0] ?? 'N/A';
 
   return (
     <div className="w-full max-w-sm mx-auto">
@@ -17,30 +29,33 @@ export default function DoctorDetails({ doctor }) {
         <div className="relative h-48 w-full overflow-hidden">
           <img
             src={profile}
-            alt={doctor.name}
+            alt={name}
             className="object-cover w-full h-full"
           />
         </div>
         <div className="p-6 flex flex-col flex-grow">
           <div className="mb-2 text-zinc-950">
-            <h3 className="font-semibold text-xl mb-1 ">{doctor._doc.name}</h3>
-            {/* <p className="text-sm mb-2">{doctor._doc.speciality}</p> */}
-            <p className='text-sm  mb-2 text-red-500 font-semibold'>₹{doctor._doc.fees}</p>
-        </div>
+            <h3 className="font-semibold text-xl mb-1">{name}</h3>
+            <p className="text-sm mb-2 text-red-500 font-semibold">₹{fees}</p>
+          </div>
 
-        <div className="flex items-center gap-2 text-sm text-zinc-950 mb-4">
+          <div className="flex items-center gap-2 text-sm text-zinc-950 mb-4">
             <Calendar className="w-4 h-4" />
             <span>
-              Next available: <span className='text-green-500 font-bold'>{formattedDate} at {firstTimeSlot}</span>
+              Next available:{' '}
+              <span className="text-green-500 font-bold">
+                {formattedDate} at {firstTime}
+              </span>
             </span>
           </div>
-          <p className="text-sm  mb-6">
-            {doctor.address}
-          </p>
 
-          <Link to ='/home/book-appointment'> <Button className="w-full  sm:w-auto bg-blue-600 hover:bg-blue-700">
-                             Book Appointment
-                           </Button></Link>
+          <p className="text-sm mb-6">{address}</p>
+
+          <Link to="/home/book-appointment">
+            <Button className="w-full sm:w-auto bg-blue-600 hover:bg-blue-700">
+              Book Appointment
+            </Button>
+          </Link>
         </div>
       </div>
     </div>
