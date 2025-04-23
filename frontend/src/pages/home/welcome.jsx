@@ -19,7 +19,7 @@ function Welcome() {
   const { doctorList, isLoading, error } = useSelector((state) => state.doctor);
 
   useEffect(() => {
-    dispatch(fatchDoctor());
+    dispatch(fatchDoctor(doctorList));
   }, [dispatch]);
   console.log('doctor list',doctorList )
   

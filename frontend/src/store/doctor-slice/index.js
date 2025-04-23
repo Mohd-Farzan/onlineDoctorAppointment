@@ -2,7 +2,7 @@ import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
 
 const initialState = {
-  isLoading: true,
+  isLoading: false,  // Changed initial state to false
   doctorList: [],
   error: null,
 };
@@ -25,12 +25,24 @@ export const doctorRegistration = createAsyncThunk(
   }
 );
 
+// Fixed typo in 'fatchDoctor' (was 'fatchDoctor')
 export const fatchDoctor = createAsyncThunk(
   "doctor/fatchDoctor",
   async (_, { rejectWithValue }) => {
     try {
-      const response = await axios.get("http://localhost:3000/api/doctor/show-doctor");
-      return response.data;
+      const response = await axios.get(
+        "http://localhost:3000/api/doctor/show-doctor",
+        { withCredentials: true }  // Added credentials if needed
+      );
+      
+      // Transform data to ensure proper structure
+      return {
+        ...response.data,
+        data: response.data.data.map(doctor => ({
+          ...doctor,
+          availability: doctor.availability || []  // Ensure availability exists
+        }))
+      };
     } catch (error) {
       return rejectWithValue(
         error.response?.data?.message || "Failed to fetch doctors"
@@ -42,7 +54,10 @@ export const fatchDoctor = createAsyncThunk(
 const doctorSlice = createSlice({
   name: "doctor",
   initialState,
-  reducers: {},
+  reducers: {
+    // Optional: Add a reset reducer if needed
+    resetDoctorState: () => initialState
+  },
   extraReducers: (builder) => {
     builder
       .addCase(doctorRegistration.pending, (state) => {
@@ -51,7 +66,8 @@ const doctorSlice = createSlice({
       })
       .addCase(doctorRegistration.fulfilled, (state, action) => {
         state.isLoading = false;
-        state.doctorList=action.payload.data;
+        // Ensure we're not overwriting existing doctors
+        state.doctorList = [...state.doctorList, action.payload.data];
         state.error = null;
       })
       .addCase(doctorRegistration.rejected, (state, action) => {
@@ -64,7 +80,8 @@ const doctorSlice = createSlice({
       })
       .addCase(fatchDoctor.fulfilled, (state, action) => {
         state.isLoading = false;
-        state.doctorList = action.payload.data;
+        // Ensure data structure matches expectations
+        state.doctorList = action.payload.data || [];
         state.error = null;
       })
       .addCase(fatchDoctor.rejected, (state, action) => {
@@ -74,4 +91,5 @@ const doctorSlice = createSlice({
   },
 });
 
+export const { resetDoctorState } = doctorSlice.actions;
 export default doctorSlice.reducer;

@@ -110,66 +110,74 @@ export const profileFormControls=[
     }
     
 ]
-export const doctorRegistrationFormControl=[
+export const doctorRegistrationFormControl = [
     {
-        name:'name',
-        label:"Name",
-        placeholder:"enter your Name ",
-        componentType:"input",
-        type:"text",
+        name: 'name',
+        label: "Name",
+        placeholder: "Enter your name",
+        componentType: "input",
+        type: "text",
     },
     {
-        name:'email',
-        label:"email",
-        placeholder:"enter your email ",
-        componentType:"input",
-        type:"email",
-        unique:true
+        name: 'email',
+        label: "Email",
+        placeholder: "Enter your email",
+        componentType: "input",
+        type: "email",
+        unique: true
     },
     {
-        name:'address',
-        label:"Address",
-        placeholder:"Write Complete Address ",
-        componentType:"input",
-        type:"text",
+        name: 'address',
+        label: "Address",
+        placeholder: "Write complete address",
+        componentType: "input",
+        type: "text",
     },
     {
-        name:'speciality',
-        label:"Speciality",
-        placeholder:"What is Your speciality ",
-        componentType:"input",
-        type:"text",
+        name: 'speciality',
+        label: "Speciality",
+        placeholder: "Your medical speciality",
+        componentType: "input",
+        type: "text",
     },
     {
-        name:'availablity',
-        label:"Availablity",
-        placeholder:"example:['morning','evening','night']",
-        componentType:"input",
-        type:"text",
+        name: 'availability',
+        label: "Available Dates & Times",
+        componentType: "dateLoop",
+        fields: [
+            {
+                name: 'date',
+                type: 'date',
+                placeholder: 'Select available date',
+                label: "Date"
+            },
+            {
+                name: 'times',
+                type: 'text',
+                placeholder: '09:00,11:00,14:00',
+                label: "Available Times",
+                description: "Comma-separated times in 24h format"
+            }
+        ],
+        addMoreText: "Add another date slot"
     },
     {
-        name:'contact',
-        label:"contact Number",
-        placeholder:" Enter your phone Number",
-        componentType:"input",
-        type:"number",
+        name: 'contact',
+        label: "Contact Number",
+        placeholder: "Enter phone number with country code",
+        componentType: "input",
+        type: "tel",  // Changed from number to tel
+        pattern: "^[+]?[0-9\\s-]{6,20}$"
     },
     {
-        name:'time',
-        label:"Time",
-        placeholder:"set time in sequnce of your availablity like morning:11Am,evening:5pm type only time",
-        componentType:"input",
-        type:"text",
-    },
-    {
-        name:'fees',
-        label:"Fees",
-        placeholder:"Write Your Charges",
-        componentType:"number",
-        type:"text",
+        name: 'fees',
+        label: "Consultation Fees",
+        placeholder: "Enter amount in USD",
+        componentType: "input",
+        type: "number",  // Changed from text to number
+        min: 0
     }
-   
-]
+];
 export const doctorCategoryItems=[
     {
     id:'gender',

@@ -1,44 +1,65 @@
 const Appointment = require("../../Model/appointment");
 const doctorModel = require("../../Model/doctor");
+const UserModel = require("../../Model/userModel");
+const nodemailer = require('nodemailer')
 
 const createAppointment = async (req, res) => {
   try {
-    const {
+    const { patient, email, doctor: doctorId, date, time, reason } = req.body;
 
-      patient,
-      doctor,
-      date,
-      time,
-      reason,
-      }= req.body;
-    if (!patient || !doctor) {
+    if (!patient || !email || !doctorId) {
       return res.status(400).json({
         success: false,
-        message: 'doctor required!!.',
-
+        message: "Patient, email, and doctor are all required.",
       });
     }
 
+    // 1) look up doctor name
+    const doc = await doctorModel.findById(doctorId);
+    if (!doc) {
+      return res.status(404).json({
+        success: false,
+        message: "Doctor not found",
+      });
+    }
 
-
+    // 2) create & save
     const newAppointment = new Appointment({
       patient,
-      doctor,
-      date: new Date(date),
+      email,
+      doctor: doc.name,      // store name if you like
+      date:   new Date(date),
       time,
       reason,
     });
     await newAppointment.save();
+
+    // 3) send confirmation email
+    await transporter.sendMail({
+      from:    process.env.EMAIL_USER,
+      to:      email,
+      subject: "Your Appointment is Confirmed",
+      html: `
+        <h2>Hi ${patient},</h2>
+        <p>Your appointment with <strong>Dr. ${doc.name}</strong> is booked for 
+           <strong>${new Date(date).toLocaleDateString()} @ ${time}</strong>.</p>
+        <p>Reason: ${reason}</p>
+        <p>Thank you for choosing our service!</p>
+      `,
+    });
+
+    // 4) respond
     res.status(200).json({
       success: true,
-      message: 'Your Appointment is shedule you will recieve an email please check ',
-      data: newAppointment
+      message:
+        "Your appointment is scheduled — please check your email for details.",
+      data: newAppointment,
     });
   } catch (err) {
-    console.error('Error creating doctor:', err);
+    console.error("Error creating appointment:", err);
     res.status(500).json({
       success: false,
-      message: 'Failed to create doctor',
+      message: "Failed to create appointment",
       error: err.message || err,
     });
   }
@@ -80,4 +101,44 @@ const AppointmentDoc = async (req, res) => {
     console.log(e)
   }
 }
-module.exports = { createAppointment, AppointmentDoc }
+const transporter = nodemailer.createTransport({
+  service: "gmail",
+  port: 465,
+  secure: true, // or your preferred email service
+  auth: {
+    user: process.env.EMAIL, // your email
+    pass: process.env.PASSWORD // your email password
+  }
+});
+const appointmentConfirmationEmail = async (req, res) => {
+  try {
+      const { email } = req.body;
+      const user = await UserModel.findOne({ email });
+
+      if (!user) {
+          return res.status(400).json({
+              success: false,
+              message: 'Email is invalid'
+          });
+      }
+      await transporter.sendMail({
+          from: process.env.EMAIL,
+          to: user.email,
+          subject: "Appointment Confirmation",
+          text:" Conguratulations Your Appointment Is Booked Successfully ! Our team Connect you soon..."
+      });
+
+      res.status(200).json({
+          success: true,
+          message: 'msg send to email'
+      });
+
+  } catch (error) {
+      console.error(error);
+      res.status(500).json({
+          success: false,
+          message: 'Error sending msg'
+      });
+  }
+};
+module.exports = { createAppointment, AppointmentDoc ,appointmentConfirmationEmail}
