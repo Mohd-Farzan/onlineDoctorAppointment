@@ -128,7 +128,7 @@ const availableTimes = selectedDoctor?.availability
             >
               <option value="" disabled>-- Choose Doctor --</option>
               {doctorList.map(doctor => (
-                <option key={doctor.id} value={doctor.id}>
+                <option key={doctor.name} value={doctor.name}>
                   {doctor.name}
                 </option>
               ))}

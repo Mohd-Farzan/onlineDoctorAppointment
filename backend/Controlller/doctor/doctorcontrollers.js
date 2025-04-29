@@ -1,3 +1,4 @@
+const appointment = require('../../Model/appointment');
 const Doctor = require('../../Model/doctor');
 
 const createDoctor = async (req, res) => {
@@ -158,4 +159,31 @@ const updateDoctorProfile = async (req, res) => {
         });
     }
 };
-module.exports = { createDoctor, showDoctor,updateDoctorProfile };
+const showAppointmentInDoctorPanel = async(req,res)=>{
+    try {
+        const patient = await appointment.find(email)
+        console.log(patient,"patient")
+        if(!patient){
+            return res.status(404).json({
+                success:false,
+                message:"patient not found"
+            })
+        }
+        const availablePatient = patient.map(p => {
+            return {
+                ...patient,
+                
+            };
+        });
+
+        res.status(200).json({
+            success: true,
+            message: "Doctors fetched successfully",
+            data: formattedDoctors,
+        });
+
+    } catch (error) {
+        
+    }
+}
+module.exports = { createDoctor, showDoctor,updateDoctorProfile,showAppointmentInDoctorPanel };

@@ -31,9 +31,4 @@ app.use('/api/auth',Authrouter);
 app.use('/api/doctor',doctorRouter)
 app.use('/api/contact',contactRouter)
 app.use('/api/appointment',appointmentRoute)
-
-
-
-
-
 app.listen(PORT,()=> console.log(`app running on port ${PORT}`));
