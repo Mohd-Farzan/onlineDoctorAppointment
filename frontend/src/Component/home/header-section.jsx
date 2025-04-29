@@ -11,7 +11,7 @@ function HeaderSection() {
     dispatch(logoutUser());
   }
   return (
-    <nav className="border-b fixed top-0 left-0 text-zinc-900 font-semibold transition-all z-50 p-4duration-300 bg-blue-500 w-full">
+    <nav className="border-b fixed top-0 left-0 text-zinc-900 font-semibold transition-all z-50 p-2 duration-300 bg-blue-400 w-full">
       <div className="mx-auto px-4 w-full">
         <div className="flex items-center justify-between h-20">
           <div className="flex items-center">

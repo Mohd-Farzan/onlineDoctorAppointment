@@ -5,9 +5,9 @@ const nodemailer = require('nodemailer')
 
 const createAppointment = async (req, res) => {
   try {
-    const { patient, email, doctor: doctorId, date, time, reason } = req.body;
+    const { patient, email, doctor, days, times, reason } = req.body;
 
-    if (!patient || !email || !doctorId) {
+    if (!patient || !email || !doctor) {
       return res.status(400).json({
         success: false,
         message: "Patient, email, and doctor are all required.",
@@ -15,7 +15,7 @@ const createAppointment = async (req, res) => {
     }
 
     // 1) look up doctor name
-    const doc = await doctorModel.findById(doctorId);
+    const doc = await doctorModel.find(doctor.name);
     if (!doc) {
       return res.status(404).json({
         success: false,
@@ -27,9 +27,9 @@ const createAppointment = async (req, res) => {
     const newAppointment = new Appointment({
       patient,
       email,
-      doctor: doc.name,      // store name if you like
-      date:   new Date(date),
-      time,
+      doctor,      // store name if you like
+      days,
+      times,
       reason,
     });
     await newAppointment.save();
@@ -42,7 +42,7 @@ const createAppointment = async (req, res) => {
       html: `
         <h2>Hi ${patient},</h2>
         <p>Your appointment with <strong>Dr. ${doc.name}</strong> is booked for 
-           <strong>${new Date(date).toLocaleDateString()} @ ${time}</strong>.</p>
+           <strong>${days} @ ${times}</strong>.</p>
         <p>Reason: ${reason}</p>
         <p>Thank you for choosing our service!</p>
       `,

@@ -8,8 +8,8 @@ const initialState = {
   patient: "",
   doctor: "",
   email:"",
-  date: "",
-  time: "",
+  days: "",
+  times: "",
   reason: "",
 };
 
@@ -30,13 +30,13 @@ export default function AppointmentForm() {
     dispatch(fatchDoctor());
   }, [dispatch]);
 
-  // Reset date/time when doctor or date changes
+  // Reset days/time when doctor or days changes
   useEffect(() => {
-    if (formData.doctor) setFormData((p) => ({ ...p, date: "", time: "" }));
+    if (formData.doctor) setFormData((p) => ({ ...p, days: "", times: "" }));
   }, [formData.doctor]);
   useEffect(() => {
-    if (formData.date) setFormData((p) => ({ ...p, time: "" }));
-  }, [formData.date]);
+    if (formData.days) setFormData((p) => ({ ...p, times: "" }));
+  }, [formData.days]);
 
   const handleChange = (e) =>
     setFormData((p) => ({ ...p, [e.target.name]: e.target.value }));
@@ -55,27 +55,28 @@ export default function AppointmentForm() {
   };
   console.log(appointmentData,"appointment Data")
 
-  // ✔️ Now matches on id
-  const selectedDoctor = doctorList.find(d => d.id === formData.doctor);
+  const selectedDoctor = doctorList.find(d => d.name === formData.doctor);
+  
+console.log(selectedDoctor,"Selected")
+// Get available days
+const availableDays = selectedDoctor?.availability
+  ? Array.from(new Set(
+      selectedDoctor.availability.map(slot => slot.days)
+    )).sort()
+  : [];
 
-  // ▶️ Normalize dates to "YYYY‑MM‑DD"
-  const availableDates = selectedDoctor?.availability
-    ? Array.from(new Set(
-        selectedDoctor.availability.map(slot =>
-          new Date(slot.date).toISOString().slice(0, 10)
-        )
-      )).sort()
-    : [];
 
-  // ▶️ Filter times for the chosen date
-  const availableTimes = selectedDoctor?.availability
-    ?.filter(slot =>
-      new Date(slot.date).toISOString().slice(0, 10) === formData.date
-    )
-    .flatMap(slot => slot.times || [])
-    .filter(t => typeof t === "string")
-    .sort()
-    || [];
+// Get available times for selected day
+const availableTimes = selectedDoctor?.availability
+  ?.filter(slot => slot.days === formData.days)
+  .flatMap(slot => slot.times || [])
+  .sort()
+  || [];
+
+
+    console.log(formData,"formDATA")
+    console.log(formData.doctor,"DOCTOR")
+    console.log(formData.days,"DAYS")
 
   return (
     <div className="flex items-center justify-center min-h-screen bg-gray-100 px-4">
@@ -133,24 +134,25 @@ export default function AppointmentForm() {
               ))}
             </select>
           </div>
+        
 
-          {/* Date Selection */}
+          {/* days Selection */}
           {formData.doctor && (
             <div>
               <label className="block text-sm font-medium text-gray-700">
-                Available Dates
+                Available days
               </label>
               <select
-                name="date"
-                value={formData.date}
+                name="days"
+                value={formData.days}
                 onChange={handleChange}
                 required
                 className="w-full p-2 border border-gray-300 rounded mt-1 focus:outline-none focus:ring-2 focus:ring-blue-500"
               >
-                <option value="" disabled>Select Date</option>
-                {availableDates.map(date => (
-                  <option key={date} value={date}>
-                    {date}
+                <option value="" disabled>Select days</option>
+                {availableDays.map(days => (
+                  <option key={days} value={days}>
+                    {days}
                   </option>
                 ))}
               </select>
@@ -158,14 +160,14 @@ export default function AppointmentForm() {
           )}
 
           {/* Time Selection */}
-          {formData.date && (
+          {formData.days && (
             <div>
               <label className="block text-sm font-medium text-gray-700">
                 Available Times
               </label>
               <select
-                name="time"
-                value={formData.time}
+                name="times"
+                value={formData.times}
                 onChange={handleChange}
                 required
                 className="w-full p-2 border border-gray-300 rounded mt-1 focus:outline-none focus:ring-2 focus:ring-blue-500"

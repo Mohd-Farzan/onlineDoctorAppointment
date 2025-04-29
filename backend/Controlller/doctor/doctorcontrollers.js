@@ -126,7 +126,7 @@ const updateDoctorProfile = async (req, res) => {
         }
 
         // Update only the fields provided
-        const fieldsToUpdate = ['name', 'speciality', 'contact', 'address', 'fees'];
+        const fieldsToUpdate = ['name', 'speciality', 'contact', 'address', 'fees','availability'];
         fieldsToUpdate.forEach(field => {
             if (req.body[field]) {
                 doctor[field] = req.body[field];
@@ -136,9 +136,10 @@ const updateDoctorProfile = async (req, res) => {
         if (Array.isArray(req.body.availability)) {
             doctor.availability = req.body.availability.map(slot => ({
                 days: slot.days,
-                times: slot.times.split(',').map(t => t.trim())
+                times: typeof slot.times === 'string' ? slot.times.split(',').map(t => t.trim()) : slot.times
             }));
         }
+        
 
         await doctor.save();
 

@@ -35,8 +35,8 @@ export const fatchDoctor = createAsyncThunk(
         "http://localhost:3000/api/doctor/show-doctor",
         { withCredentials: true }
       );
-
       return {
+
         ...response.data,
         data: response.data.data.map((doctor) => ({
           ...doctor,

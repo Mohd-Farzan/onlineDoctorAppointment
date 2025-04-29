@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { doctorRegistration, updateDoctorProfile, fatchDoctor } from '@/store/doctor-slice';
 import { doctorRegistrationFormControl } from '@/config';
+import Cookies from 'js-cookie';
 
 export default function DoctorRegistrationForm() {
   const dispatch = useDispatch();
@@ -20,25 +21,27 @@ export default function DoctorRegistrationForm() {
   const [isEditing, setIsEditing] = useState(false);
 
   // 1) Fetch doctors on mount (so we can find “my” profile)
-  useEffect(() => {
-    dispatch(fatchDoctor());
-  }, [dispatch]);
- 
-  useEffect(() => {
-    if (doctorList.length && formData.email) {
-      const me = doctorList.find(d => d._doc.email === formData.email);
-      console.log(me)
-      if (me) {
-        setFormData({  name: me.name,
-            email: me.email,
-            address: me.address,
-            speciality: me.speciality,
-            availability: me.availability.length ? me.availability : [{ days:'', times:'' }],
-            contact: me.contact,
-            fees: me.fees });
-        setIsEditing(true);
+  useEffect(() => { 
+    const getDoctor = async () => {
+      const user = JSON.parse(Cookies.get("user"));
+      const doctor = await dispatch(fatchDoctor());
+      if (doctor.payload.data.length !== 0) {
+        const me = doctor.payload.data.find(d => d.email === user.email);
+        if (me) {
+          setFormData({  name: me.name,
+              email: me.email,
+              address: me.address,
+              speciality: me.speciality,
+              availability: me.availability.length ? me.availability : [{ days:'', times:'' }],
+              contact: me.contact,
+              fees: me.fees });
+          setIsEditing(true);
+        }
       }
+      
     }
+
+    getDoctor();
   }, []);
  
 
@@ -47,17 +50,22 @@ export default function DoctorRegistrationForm() {
 
 
   // 3) Handle form changes (including availability array)
-  const handleInputChange = (e, idx) => {
+  const handleInputChange = (e) => {
     const { name, value } = e.target;
     if (name.startsWith('availability')) {
       const [_, index, field] = name.split('.');
-      const updated = [...formData.availability];
-      updated[index][field] = value;
+      const updated = formData.availability.map((slot, idx) => {
+        if (idx === Number(index)) {
+          return { ...slot, [field]: value };  // Create a new object for this slot
+        }
+        return slot;
+      });
       setFormData(f => ({ ...f, availability: updated }));
     } else {
       setFormData(f => ({ ...f, [name]: value }));
     }
   };
+  
 
   const addDateField = () =>
     setFormData(f => ({

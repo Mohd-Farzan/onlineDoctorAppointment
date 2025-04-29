@@ -14,7 +14,7 @@ function HomeLayout() {
     <main className=" bg-slate-100 flex flex-col mt-20 p-4 md:p-6  ">
       <Outlet />
     </main>
-    <div className="flex  bg-blue-500">
+    <div className="flex  bg-blue-400 ">
       <Footer/>
     </div>
   </div>
