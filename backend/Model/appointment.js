@@ -9,4 +9,5 @@
     reason:  String,
   });
 
+  
   module.exports = mongoose.model("Appointment", appointmentSchema);

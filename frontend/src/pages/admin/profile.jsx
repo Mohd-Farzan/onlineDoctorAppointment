@@ -102,7 +102,7 @@ export default function DoctorRegistrationForm() {
   if (isLoading) return <p className="p-4 text-center">Loading…</p>;
 
   return (
-    <form onSubmit={handleSubmit} className="space-y-4 max-w-lg mx-auto p-6 bg-white rounded-lg shadow-md">
+    <form  onSubmit={handleSubmit} className="space-y-4 max-w-lg mx-auto p-6 bg-white rounded-lg shadow-md">
       <h2 className="text-2xl font-bold text-center mb-6">
         {isEditing ? 'Edit Your Profile' : 'Doctor Registration'}
       </h2>
