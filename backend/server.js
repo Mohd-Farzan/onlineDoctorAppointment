@@ -9,6 +9,7 @@ const appointmentRoute= require('./Routes/appointmentroutes')
 const app=express()
 db;
 const PORT=process.env.PORT || 3000
+app.use(express.json());
 
 
 app.use(cors({
@@ -24,7 +25,6 @@ app.use(cors({
 }));
 app.options('*', cors());
 
-app.use(express.json());
 app.use(cookieParser());
 
 app.use('/api/auth',Authrouter);

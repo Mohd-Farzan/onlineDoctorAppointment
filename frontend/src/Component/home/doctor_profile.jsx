@@ -86,11 +86,16 @@ function DoctorProfiles() {
                       <Phone className="w-4 h-4 mr-2" /> Contact Clinic
                     </Button>
                    
-                    <Button
+                    <Button 
                       className="w-full bg-[#22a5d8] hover:bg-[#1d94c4] text-white py-2"
-                      onClick={() => { <DoctorAppointmentForm setSelectedDoctor={data}  setShowBookingModal={true} /> }}
+                      onClick={() => { 
+                     
+                        <DoctorAppointmentForm setSelectedDoctor={data}  setShowBookingModal={true} /> }}
                     >
-                      Book Appointment
+
+                                <Link className="font-bold text-lg mt-2" to="/home/book-appointment">
+  Book Appointment</Link>
+
                     </Button>
 
                     {selectedDoctor && (

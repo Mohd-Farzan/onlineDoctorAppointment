@@ -31,6 +31,7 @@ import Contact from "./pages/home/contact";
 import DoctorAppointment from "./pages/admin/appointment"
 import DoctorChart from "./pages/admin/chart"
 import Doctortable from "./pages/admin/Table";
+import DoctorAppoint from "./pages/doctor/doctorappointment"
 
 
 function App() {
@@ -93,6 +94,8 @@ function App() {
         </CheckRoute>}>
           <Route path='dashboard' element={<DoctorDashboard/>} />
           <Route path='profile' element={<DoctorRegistration/>} />
+          <Route path='appointment' element={<DoctorAppoint/>} />
+          
 
 
           

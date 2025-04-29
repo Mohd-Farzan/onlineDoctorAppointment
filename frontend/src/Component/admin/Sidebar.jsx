@@ -41,7 +41,7 @@ export function Sidebar() {
           </Link>
         </li>
         <li className="mb-2">
-          <Link to="/admin/appointment" className="block py-2 px-4 text-sm hover:bg-gray-700 rounded">
+          <Link to="/doctor/appointment" className="block py-2 px-4 text-sm hover:bg-gray-700 rounded">
             Appointment
           </Link>
         </li>

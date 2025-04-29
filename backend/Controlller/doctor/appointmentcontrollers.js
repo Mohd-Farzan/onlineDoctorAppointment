@@ -115,6 +115,7 @@ const appointmentConfirmationEmail = async (req, res) => {
       const { email } = req.body;
       const user = await UserModel.findOne({ email });
 
+
       if (!user) {
           return res.status(400).json({
               success: false,
@@ -141,4 +142,35 @@ const appointmentConfirmationEmail = async (req, res) => {
       });
   }
 };
-module.exports = { createAppointment, AppointmentDoc ,appointmentConfirmationEmail}
+
+const DoctorAppointment = async (req, res) => {
+  const { email } = req.body;
+  console.log('Email from body:', email);
+
+  try {
+    const appointment = await Appointment.findOne({ email });
+    console.log('Appointment:', appointment);
+
+    if (!appointment) {
+      return res.status(404).json({ message: "Appointment not found" });
+    }
+
+    const doctor = await doctorModel.findOne({ name: appointment.doctor });
+    console.log('Doctor:', doctor);
+
+    if (!doctor) {
+      return res.status(404).json({ message: "Doctor not found" });
+    }
+
+    res.status(200).json({ appointment, doctor });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: "Server error" });
+  }
+};
+
+
+
+
+
+module.exports = { createAppointment, AppointmentDoc ,appointmentConfirmationEmail,DoctorAppointment}
