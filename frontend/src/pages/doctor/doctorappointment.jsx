@@ -1,25 +1,38 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
+import { useDispatch, useSelector } from "react-redux";
+import { showAppointment } from "@/store/appointment-slice";
 
-const appointments = [
-  {
-    id: 1,
-    name: "John Doe",
-    time: "April 29, 2025 - 10:00 AM",
-  },
-  {
-    id: 2,
-    name: "Jane Smith",
-    time: "April 29, 2025 - 11:30 AM",
-  },
-  {
-    id: 3,
-    name: "Alice Johnson",
-    time: "April 29, 2025 - 01:00 PM",
-  },
-];
+// const appointments = [
+//   {
+//     id: 1,
+//     name: "John Doe",
+//     time: "April 29, 2025 - 10:00 AM",
+//   },
+//   {
+//     id: 2,
+//     name: "Jane Smith",
+//     time: "April 29, 2025 - 11:30 AM",
+//   },
+//   {
+//     id: 3,
+//     name: "Alice Johnson",
+//     time: "April 29, 2025 - 01:00 PM",
+//   },
+// ];
 
 export default function AppointmentSchedule() {
+  const [appointments, setAppointments] = useState([])
+  const appointmentList=useSelector((state)=>state.appointment)
+  const dispatch=useDispatch()
+  useEffect(()=>{
+    const getAppointment = async () => {
+      const appointment = await dispatch(showAppointment())
+      setAppointments(appointment.payload.data)
+    }
+    getAppointment()
+  },[])
+
   const handleAccept = (id) => {
     console.log("Accepted appointment with ID:", id);
     alert("accept")
@@ -33,7 +46,7 @@ export default function AppointmentSchedule() {
     <>
         <h1>Appoitment Schedule</h1>
     <div className="p-6 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-      {appointments.map((appointment) => (
+      {appointments.length !== 0 && appointments.map((appointment) => (
         <div key={appointment.id} className="rounded-2xl shadow-md p-4 bg-white">
           <div className="flex flex-col space-y-4">
             <div>

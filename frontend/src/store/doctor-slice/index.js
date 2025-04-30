@@ -69,7 +69,6 @@ export const updateDoctorProfile = createAsyncThunk(
     }
   }
 );
-
 const doctorSlice = createSlice({
   name: "doctor",
   initialState,
@@ -127,7 +126,7 @@ const doctorSlice = createSlice({
       .addCase(updateDoctorProfile.rejected, (state, action) => {
         state.isLoading = false;
         state.error = action.payload;
-      });
+      })
   },
 });
 

@@ -6,7 +6,7 @@ import { redirect, useNavigate } from "react-router-dom";
 
 const initialState = {
   patient: "",
-  doctor: "",
+  doctorId: "",
   email:"",
   days: "",
   times: "",
@@ -43,7 +43,13 @@ export default function AppointmentForm() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    dispatch(appointmentData(formData)).then((res) => {
+    dispatch(appointmentData({
+      doctorId: formData.doctorId,
+      patient: formData.patient,
+      email: formData.email,
+      reason: formData.reason,
+      days: formData.days,
+      times: formData.times})).then((res) => {
       if (res?.payload?.success) {
         alert("Your Appointment Is Booked now check Your Email");
         navigate("/home/welcome")
@@ -53,9 +59,9 @@ export default function AppointmentForm() {
       }
     });
   };
-  console.log(appointmentData,"appointment Data")
+  console.log(doctorList,"appointment Data")
 
-  const selectedDoctor = doctorList.find(d => d.name === formData.doctor);
+  const selectedDoctor = doctorList.find(d => d._id === formData.doctorId);
   
 console.log(selectedDoctor,"Selected")
 // Get available days
@@ -120,15 +126,15 @@ const availableTimes = selectedDoctor?.availability
               Select Doctor
             </label>
             <select
-              name="doctor"
-              value={formData.doctor}
+              name="doctorId"
+              value={formData.doctorId}
               onChange={handleChange}
               required
               className="w-full p-2 border border-blue-300 rounded mt-1 focus:outline-none focus:ring-2 focus:ring-blue-500"
             >
               <option value="" disabled>-- Choose Doctor --</option>
               {doctorList.map(doctor => (
-                <option key={doctor.name} value={doctor.name}>
+                <option key={doctor.id} value={doctor._id}>
                   {doctor.name}
                 </option>
               ))}
@@ -137,7 +143,7 @@ const availableTimes = selectedDoctor?.availability
         
 
           {/* days Selection */}
-          {formData.doctor && (
+          {formData.doctorId && (
             <div>
               <label className="block text-sm font-medium text-gray-700">
                 Available days
