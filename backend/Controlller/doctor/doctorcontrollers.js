@@ -160,8 +160,10 @@ const updateDoctorProfile = async (req, res) => {
     }
 };
 const showAppointmentInDoctorPanel = async(req,res)=>{
+    const {email} = req.body;
+    console.log(req.body)
     try {
-        const patient = await appointment.find(email)
+        const patient = await appointment.find(email);
         console.log(patient,"patient")
         if(!patient){
             return res.status(404).json({

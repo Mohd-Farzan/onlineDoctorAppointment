@@ -2,6 +2,7 @@ import { X } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { useState } from "react";
+import { Link } from "react-router-dom";
 
 const ConsultationForm = () => {
   const [symptom, setSymptom] = useState("");
@@ -14,7 +15,7 @@ const ConsultationForm = () => {
           Consult with a Doctor
         </h2>
         <button className="text-gray-500 hover:text-gray-700">
-          <X className="w-6 h-6" />
+        <Link  to='/home/consult'>  <X className="w-6 h-6" /></Link>
         </button>
       </div>
 
