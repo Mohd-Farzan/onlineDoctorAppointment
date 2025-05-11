@@ -188,4 +188,5 @@ const showAppointmentInDoctorPanel = async(req,res)=>{
         
     }
 }
+
 module.exports = { createDoctor, showDoctor,updateDoctorProfile,showAppointmentInDoctorPanel };

@@ -44,6 +44,9 @@ function HeaderSection() {
               <Link to="/home/profile" className=" hover:text-slate-200">
                 Profile
               </Link>
+              <Link to="/home/chatuser" className=" hover:text-slate-200">
+                Chat
+              </Link>
               <Link onClick={handleLogOut} className=" hover:text-slate-200">
                 Logout
               </Link>
