@@ -1,5 +1,6 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
+import Cookies from "js-cookie";
 
 const initialState = {
   isLoading: false,
@@ -17,6 +18,9 @@ export const doctorRegistration = createAsyncThunk(
         formData,
         { withCredentials: true }
       );
+      if(response.data.success){
+        Cookies.set('doctor', JSON.stringify(response.data.user), { expires: 7, secure: true }); 
+      }
       return response.data;
     } catch (error) {
       return rejectWithValue(
@@ -74,6 +78,9 @@ const doctorSlice = createSlice({
   initialState,
   reducers: {
     resetDoctorState: () => initialState,
+    setUser(state,action){
+      Cookies.set('doctor', JSON.stringify(action.payload), { expires: 7, secure: true });
+    }
   },
   extraReducers: (builder) => {
     builder
@@ -130,5 +137,6 @@ const doctorSlice = createSlice({
   },
 });
 
+export const { setUser } = doctorSlice.actions;
 export const { resetDoctorState } = doctorSlice.actions;
 export default doctorSlice.reducer;

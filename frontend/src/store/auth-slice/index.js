@@ -40,7 +40,7 @@ export const checkRoute = createAsyncThunk(
                     'Cache-Control': 'no-store, no-cache, must-revalidate, proxy-revalidate',
                 },
             });
-            console.log("checkRoute Response:", response.data);
+         
             return response.data;
         } catch (error) {
             const message = error.response?.data || 'An error occurred';
@@ -60,6 +60,7 @@ export const loginUser = createAsyncThunk(
 
             if (response.data.success) {
                 Cookies.set('token', response.data.token, { expires: 7, secure: true }); // Store the token
+                
                 Cookies.set('user', JSON.stringify(response.data.user), { expires: 7, secure: true }); // Store user data
             }
             return response.data;

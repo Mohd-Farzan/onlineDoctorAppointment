@@ -1,39 +1,30 @@
 const appointment = require('../../Model/appointment');
 const Doctor = require('../../Model/doctor');
+const UserModel = require('../../Model/userModel');
 
 const createDoctor = async (req, res) => {
-    const { name, speciality, availability, contact, email, address, fees } = req.body;
+    const { name, speciality, availability, contact, email, address, fees, doctorId } = req.body;
 
     // Validation
-    if (!name || !email || !speciality || !address || !fees || !contact) {
+    if (!name || !email || !speciality || !address || !fees || !contact || !doctorId) {
         return res.status(400).json({
             success: false,
-            message: 'All fields are required',
+            message: 'All fields including userId are required',
         });
     }
 
     try {
-        // Validate availability structure
-        if (!Array.isArray(availability)) {
-            return res.status(400).json({
+        // Check if user exists
+        const user = await UserModel.findById(doctorId);
+        if (!user) {
+            return res.status(404).json({
                 success: false,
-                message: 'Availability must be an array of day/time slots',
+                message: 'User not found',
             });
         }
 
-        // Process times from string to array
-        const processedAvailability = availability.map(slot => ({
-            days: slot.days,
-            times: slot.times.split(',').map(t => t.trim())
-        }));
-
-        // Trim basic inputs
-        const trimmedEmail = email.trim();
-        const trimmedName = name.trim();
-        const trimmedContact = contact.trim();
-
         // Check if doctor with same email exists
-        const existingDoctor = await Doctor.findOne({ email: trimmedEmail });
+        const existingDoctor = await Doctor.findOne({ email: email.trim() });
         if (existingDoctor) {
             return res.status(400).json({
                 success: false,
@@ -41,21 +32,32 @@ const createDoctor = async (req, res) => {
             });
         }
 
+        // Create new doctor
         const newDoctor = new Doctor({
-            name: trimmedName,
+            doctorId,
+            name: name.trim(),
             speciality,
-            availability: processedAvailability,
-            contact: trimmedContact,
-            email: trimmedEmail,
+            availability: availability.map(slot => ({
+                days: slot.days,
+                times: slot.times.split(',').map(t => t.trim())
+            })),
+            contact: contact.trim(),
+            email: email.trim(),
             address: address.trim(),
             fees,
         });
 
         await newDoctor.save();
 
+        // Update user's doctorProfile
+        await UserModel.findByIdAndUpdate(doctorId, { 
+            doctorId: newDoctor._id,
+            // role: 'doctor' // Optional: Update role
+        });
+
         res.status(201).json({
             success: true,
-            message: 'Registration completed successfully',
+            message: 'Doctor registration completed successfully',
             data: newDoctor
         });
 

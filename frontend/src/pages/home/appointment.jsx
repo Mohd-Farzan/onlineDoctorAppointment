@@ -1,19 +1,8 @@
-"use client"
-
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import { Calendar, Clock, Edit } from "lucide-react"
-// import { format } from "date-fns"
-
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
-import {
-  Dialog,
-  DialogContent,
-  DialogDescription,
-  DialogFooter,
-  DialogHeader,
-  DialogTitle,
-} from "@/components/ui/dialog"
+import {Dialog,DialogContent,DialogDescription,DialogFooter,DialogHeader,DialogTitle,} from "@/components/ui/dialog"
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
@@ -21,106 +10,115 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table"
 import { Badge } from "@/components/ui/badge"
+import { useDispatch, useSelector } from "react-redux"
+import { userAppointment } from "@/store/appointment-slice"
 
 // Sample appointment data
-const initialAppointments = [
-  {
-    id: 1,
-    title: "Dental Checkup",
-    date: "2025-03-10",
-    time: "10:00 AM",
-    location: "Smile Dental Clinic",
-    status: "upcoming",
-  },
-  {
-    id: 2,
-    title: "Annual Physical",
-    date: "2025-03-15",
-    time: "2:30 PM",
-    location: "City Health Center",
-    status: "upcoming",
-  },
-  {
-    id: 3,
-    title: "Eye Examination",
-    date: "2025-03-20",
-    time: "11:15 AM",
-    location: "Vision Care Center",
-    status: "upcoming",
-  },
-  {
-    id: 4,
-    title: "Therapy Session",
-    date: "2025-02-28",
-    time: "4:00 PM",
-    location: "Wellness Center",
-    status: "completed",
-  },
-  {
-    id: 5,
-    title: "Dermatologist",
-    date: "2025-02-15",
-    time: "9:30 AM",
-    location: "Skin Care Clinic",
-    status: "cancelled",
-  },
-]
+// const initialAppointments = [
+//   {
+//     id: 1,
+//     title: "Dental Checkup",
+//     date: "2025-03-10",
+//     time: "10:00 AM",
+//     location: "Smile Dental Clinic",
+//     status: "upcoming",
+//   },
+//   {
+//     id: 2,
+//     title: "Annual Physical",
+//     date: "2025-03-15",
+//     time: "2:30 PM",
+//     location: "City Health Center",
+//     status: "upcoming",
+//   },
+//   {
+//     id: 3,
+//     title: "Eye Examination",
+//     date: "2025-03-20",
+//     time: "11:15 AM",
+//     location: "Vision Care Center",
+//     status: "upcoming",
+//   },
+//   {
+//     id: 4,
+//     title: "Therapy Session",
+//     date: "2025-02-28",
+//     time: "4:00 PM",
+//     location: "Wellness Center",
+//     status: "completed",
+//   },
+//   {
+//     id: 5,
+//     title: "Dermatologist",
+//     date: "2025-02-15",
+//     time: "9:30 AM",
+//     location: "Skin Care Clinic",
+//     status: "cancelled",
+//   },
+// ]
 
 function Appointment() {
-  const [appointments, setAppointments] = useState(initialAppointments)
+  // const [appointments, setAppointments] = useState()
+  // const appointments=useSelector((state)=>state.appointment)
   const [editingAppointment, setEditingAppointment] = useState(null)
   const [isEditDialogOpen, setIsEditDialogOpen] = useState(false)
   const [activeTab, setActiveTab] = useState("upcoming")
-
+  const dispatch=useDispatch()
+  useEffect(()=>{
+    dispatch(userAppointment())
+  })
+   
+  
+  console.log(userAppointment,"safd")
   // Filter appointments based on active tab
-  const filteredAppointments = appointments.filter((appointment) => appointment.status === activeTab)
+  // const filteredAppointments = appointments.filter((appointment) => appointment.status === activeTab)
 
-  const handleEdit = (appointment) => {
-    setEditingAppointment({ ...appointment })
-    setIsEditDialogOpen(true)
-  }
+  // const handleEdit = (appointment) => {
+  //   setEditingAppointment({ ...appointment })
+  //   setIsEditDialogOpen(true)
+  // }
 
-  const handleSaveEdit = () => {
-    if (editingAppointment) {
-      setAppointments(
-        appointments.map((appointment) =>
-          appointment.id === editingAppointment.id ? editingAppointment : appointment,
-        ),
-      )
-      setIsEditDialogOpen(false)
-      setEditingAppointment(null)
-    }
-  }
+  // const handleSaveEdit = () => {
+  //   if (editingAppointment) {
+  //     setAppointments(
+  //       appointments.map((appointment) =>
+  //         appointment.id === editingAppointment.id ? editingAppointment : appointment,
+  //       ),
+  //     )
+  //     setIsEditDialogOpen(false)
+  //     setEditingAppointment(null)
+  //   }
+  // }
 
-  const handleCancel = (id) => {
-    setAppointments(
-      appointments.map((appointment) =>
-        appointment.id === id ? { ...appointment, status: "cancelled" } : appointment,
-      ),
-    )
-  }
+  // const handleCancel = (id) => {
+  //   setAppointments(
+  //     appointments.map((appointment) =>
+  //       appointment.id === id ? { ...appointment, status: "cancelled" } : appointment,
+  //     ),
+  //   )
+  // }
 
-  const handleInputChange = (e) => {
-    const { name, value } = e.target
-    setEditingAppointment({ ...editingAppointment, [name]: value })
-  }
+  // const handleInputChange = (e) => {
+  //   const { name, value } = e.target
+  //   setEditingAppointment({ ...editingAppointment, [name]: value })
+  // }
 
-  const handleSelectChange = (name, value) => {
-    setEditingAppointment({ ...editingAppointment, [name]: value })
-  }
+  // const handleSelectChange = (name, value) => {
+  //   setEditingAppointment({ ...editingAppointment, [name]: value })
+  // }
 
-  const getStatusBadge = (status) => {
-    switch (status) {
-      case "upcoming":
-        return <Badge variant="default">Upcoming</Badge>
-      case "completed":
-        return <Badge variant="success" className='bg-green-600 text-white'>Completed</Badge>
-      case "cancelled":
-        return <Badge variant="destructive">Cancelled</Badge>
-      default:
-        return <Badge>Unknown</Badge>
-    }
-  }
+  // const getStatusBadge = (status) => {
+  //   switch (status) {
+  //     case "upcoming":
+  //       return <Badge variant="default">Upcoming</Badge>
+  //     case "completed":
+  //       return <Badge variant="success" className='bg-green-600 text-white'>Completed</Badge>
+  //     case "cancelled":
+  //       return <Badge variant="destructive">Cancelled</Badge>
+  //     default:
+  //       return <Badge>Unknown</Badge>
+  //   }
+  // }
 
   return (
     <>
@@ -130,7 +128,7 @@ function Appointment() {
         <CardDescription>View, edit, and manage your upcoming appointments</CardDescription>
       </CardHeader>
       <CardContent>
-        <Tabs defaultValue="upcoming" value={activeTab} onValueChange={setActiveTab} className="w-full">
+        {/* <Tabs defaultValue="upcoming" value={activeTab} onValueChange={setActiveTab} className="w-full">
           <TabsList className="grid w-full grid-cols-3 mb-4">
             <TabsTrigger value="upcoming">Upcoming</TabsTrigger>
             <TabsTrigger value="completed">Completed</TabsTrigger>
@@ -210,7 +208,7 @@ function Appointment() {
         </Tabs>
 
         {/* Edit Appointment Dialog */}
-        <Dialog open={isEditDialogOpen} onOpenChange={setIsEditDialogOpen}>
+        {/* <Dialog open={isEditDialogOpen} onOpenChange={setIsEditDialogOpen}>
           <DialogContent className="sm:max-w-[425px]">
             <DialogHeader>
               <DialogTitle>Edit Appointment</DialogTitle>
@@ -274,8 +272,8 @@ function Appointment() {
               <Button onClick={handleSaveEdit}>Save Changes</Button>
             </DialogFooter>
           </DialogContent>
-        </Dialog>
-      </CardContent>
+        </Dialog> */}
+      </CardContent> 
     </Card>
     </>
   )

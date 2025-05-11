@@ -24,9 +24,9 @@ const userSchema = new mongoose.Schema({
     otpExpires:{
         type:Date
     },
-    doctorProfile:{
+    doctorId:{
         type:mongoose.Schema.Types.ObjectId,
-        ref:'doctorModel'
+        ref:'Doctor'
     }
 }, { timestamps: true });
 

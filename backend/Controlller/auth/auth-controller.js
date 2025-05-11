@@ -56,10 +56,11 @@ const loginUser = async (req, res) => {
         }
 
         const token = jwt.sign(
-            { id: checkUser._id, role: checkUser.role, email: checkUser.email, userName: checkUser.userName },
+            { id: checkUser._id, role: checkUser.role, email: checkUser.email,doctorId:checkUser.doctorId },
             process.env.CLIENT_SECRET_KEY || 'CLIENT_SECRET_KEY', // Use environment variable for secret
             { expiresIn: '60m' }
         );
+        console.log(token,"token")
 
         // Set the JWT in a cookie
         res.cookie('token', token, { httpOnly: true, secure: false });
@@ -71,7 +72,8 @@ const loginUser = async (req, res) => {
                     role: checkUser.role,
                     id: checkUser._id,
                     token:token,
-                    userName: checkUser.userName
+                    userName: checkUser.userName,
+                    doctorId:checkUser.doctorId
                 },
             });
            console.log(checkUser)
@@ -102,7 +104,7 @@ const authMiddleware = (req, res, next) => {
             success: true,
             user: decoded
         });
-        //next(); // Proceed to the next middleware or route handler
+        next(); // Proceed to the next middleware or route handler
     } catch (error) {
         console.error("Error in authorization:", error.stack);
         res.status(401).json({

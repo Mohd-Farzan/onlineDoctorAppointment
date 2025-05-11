@@ -1,5 +1,4 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import { data } from "autoprefixer";
 import axios from "axios";
 import Cookies from 'js-cookie'
 
@@ -24,20 +23,36 @@ export const appointmentData = createAsyncThunk(
 );
 
 export const showAppointment = createAsyncThunk(
-  "doctor/updateDoctorProfile",
+  "doctor/getAppointments",
   async (_, { rejectWithValue }) => {
-      try {
-        const doctor = JSON.parse(Cookies.get("user"));
+    try {
+      const user = JSON.parse(Cookies.get("user"));
+      if (!user?.doctorId) throw new Error("No doctor ID found");
+      console.log(user.doctorId,"idFromlogin")
       const response = await axios.get(
-        `http://localhost:3000/api/appointment/get-appointment/${doctor.id}`,
-        
+        `http://localhost:3000/api/appointment/get-appointment/${user.doctorId}`,
         { withCredentials: true }
       );
       return response.data;
     } catch (error) {
-      return rejectWithValue(
-        error.response?.data?.message || "fetching data failed"
+      return rejectWithValue(error.message || "Failed to fetch appointments");
+    }
+  }
+);
+export const userAppointment = createAsyncThunk(
+  "user/userAppointment",
+  async (_, { rejectWithValue }) => {
+    try {
+      const user = JSON.parse(Cookies.get("user"));
+      if (!user?.id) throw new Error("No doctor ID found");
+      console.log(user.id,"idFromlogin")
+      const response = await axios.get(
+        `http://localhost:3000/api/appointment/fetch-appointment/${user.id}`,
+        { withCredentials: true }
       );
+      return response.data;
+    } catch (error) {
+      return rejectWithValue(error.message || "Failed to fetch appointments");
     }
   }
 );
@@ -71,6 +86,19 @@ const appointmentSlice = createSlice({
                 state.error = null;
               })
               .addCase(showAppointment.rejected, (state, action) => {
+                state.isLoading = false;
+                state.error = action.payload;
+              })
+              .addCase(userAppointment.pending, (state) => {
+                state.isLoading = true;
+                state.error = null;
+              })
+              .addCase(userAppointment.fulfilled, (state, action) => {
+                state.isLoading = false;
+                state.appointment = action.payload.data || [];
+                state.error = null;
+              })
+              .addCase(userAppointment.rejected, (state, action) => {
                 state.isLoading = false;
                 state.error = action.payload;
               })

@@ -4,6 +4,7 @@ import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { redirect, useNavigate } from "react-router-dom";
 
+
 const initialState = {
   patient: "",
   doctorId: "",
@@ -32,8 +33,8 @@ export default function AppointmentForm() {
 
   // Reset days/time when doctor or days changes
   useEffect(() => {
-    if (formData.doctor) setFormData((p) => ({ ...p, days: "", times: "" }));
-  }, [formData.doctor]);
+    if (formData.doctorId) setFormData((p) => ({ ...p, days: "", times: "" }));
+  }, [formData.doctorId]);
   useEffect(() => {
     if (formData.days) setFormData((p) => ({ ...p, times: "" }));
   }, [formData.days]);
@@ -62,10 +63,7 @@ export default function AppointmentForm() {
   console.log(doctorList,"appointment Data")
 
   const selectedDoctor = doctorList.find(d => d._id === formData.doctorId);
-  
-console.log(selectedDoctor,"Selected")
-// Get available days
-const availableDays = selectedDoctor?.availability
+  const availableDays = selectedDoctor?.availability
   ? Array.from(new Set(
       selectedDoctor.availability.map(slot => slot.days)
     )).sort()
@@ -81,8 +79,7 @@ const availableTimes = selectedDoctor?.availability
 
 
     console.log(formData,"formDATA")
-    console.log(formData.doctor,"DOCTOR")
-    console.log(formData.days,"DAYS")
+    console.log(formData.doctorId,"DOCTOR")
 
   return (
     <div className="flex items-center justify-center min-h-screen bg-gray-100 px-4">

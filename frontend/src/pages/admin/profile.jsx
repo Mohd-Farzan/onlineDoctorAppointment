@@ -7,11 +7,12 @@ import Cookies from 'js-cookie';
 export default function DoctorRegistrationForm() {
   const dispatch = useDispatch();
   const { doctorList, isLoading } = useSelector(state => state.doctor);
-  const { user } = useSelector(state => state.auth); 
+  const user = JSON.parse(Cookies.get("user"))
 
   const [formData, setFormData] = useState({
-    name: '',
-    email: '',
+    doctorId:user.id,
+    name: user.userName,
+    email: user.email,
     address: '',
     speciality: '',
     availability: [{ days: '', times: '' }],
