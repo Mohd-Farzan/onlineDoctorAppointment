@@ -4,7 +4,6 @@ const UserModel = require("../../Model/userModel");
 const nodemailer = require('nodemailer');
 const mongoose = require('mongoose');
 
-// --- Create Appointment ---
 const createAppointment = async (req, res) => {
     try {
         const { patient, email, doctorId, days, times, reason } = req.body;

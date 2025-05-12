@@ -32,6 +32,9 @@ import DoctorAppointment from "./pages/admin/appointment"
 import DoctorChart from "./pages/admin/chart"
 import Doctortable from "./pages/admin/Table";
 import DoctorAppoint from "./pages/doctor/doctorappointment"
+import DocMeeting from "./pages/doctor/DocMeeting";
+import Chat from "./pages/home/chat";
+import ChatUser from "./pages/home/Chatuser"
 
 
 function App() {
@@ -71,6 +74,10 @@ function App() {
           <Route path = 'book-appointment'element={<AppointmentForm/>}/>
           <Route path = 'about'element={<AboutUs/>}/>
           <Route path = 'contact' element={<Contact/>}/>
+          <Route path = 'chatuser' element={<ChatUser/>}/>
+          <Route path = 'chat/:id' element={<Chat/>}/>
+
+
 
 
 
@@ -95,6 +102,8 @@ function App() {
           <Route path='dashboard' element={<DoctorDashboard/>} />
           <Route path='profile' element={<DoctorRegistration/>} />
           <Route path='appointment' element={<DoctorAppoint/>} />
+          <Route path='create-meeting' element={<DocMeeting/>} />
+          
           
 
 

@@ -161,40 +161,34 @@ const updateDoctorProfile = async (req, res) => {
         });
     }
 };
-const showAppointmentInDoctorPanel = async (req, res) => {
+const showAppointmentInDoctorPanel = async(req,res)=>{
+    const {email} = req.body;
+    console.log(req.body)
     try {
-      const id = req.params; 
-  
-      const appointments = await appointment.findById({ doctor:id });
-        console.log(appointments,"app")
-      if (!appointments || appointments.length === 0) {
-        return res.status(404).json({
-          success: false,
-          message: "No appointments found for this doctor",
+        const patient = await appointment.find(email);
+        console.log(patient,"patient")
+        if(!patient){
+            return res.status(404).json({
+                success:false,
+                message:"patient not found"
+            })
+        }
+        const availablePatient = patient.map(p => {
+            return {
+                ...patient,
+                
+            };
         });
-      }
-  
-      const formattedAppointments = appointments.map(p => ({
-        patient: p.patient,
-        email: p.email,
-        days: p.days,
-        times: p.times,
-        reason: p.reason,
-      }));
-  
-      return res.status(200).json({
-        success: true,
-        message: "Appointments fetched successfully",
-        data: formattedAppointments,
-      });
+
+        res.status(200).json({
+            success: true,
+            message: "Doctors fetched successfully",
+            data: formattedDoctors,
+        });
+
     } catch (error) {
-      console.error("Error:", error);
-      return res.status(500).json({
-        success: false,
-        message: "Failed to fetch appointments",
-        error: error.message,
-      });
+        
     }
-  };
-  
+}
+
 module.exports = { createDoctor, showDoctor,updateDoctorProfile,showAppointmentInDoctorPanel };

@@ -1,5 +1,5 @@
 const express = require("express");
-const { createAppointment, appointmentConfirmationEmail, getMyAppointments} = require("../Controlller/doctor/appointmentcontrollers");
+const { createAppointment,AppointmentDoc, appointmentConfirmationEmail} = require("../Controlller/doctor/appointmentcontrollers");
 const { updateDoctorProfile } = require("../Controlller/doctor/doctorcontrollers");
 const fetchAppointment = require("../Controlller/Appointment.Controller");
 const router = express.Router();

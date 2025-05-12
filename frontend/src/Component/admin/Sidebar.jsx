@@ -50,6 +50,11 @@ export function Sidebar() {
             Profile
           </Link>
         </li>
+        <li className="mb-2">
+          <Link to="/doctor/create-meeting" className="block py-2 px-4 text-sm hover:bg-gray-700 rounded">
+            Create Meeting
+          </Link>
+        </li>
         {/* <li className="mb-2">
           <Link to="/admin/chart" className="block py-2 px-4 text-sm hover:bg-gray-700 rounded">
             Charts
