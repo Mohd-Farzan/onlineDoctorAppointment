@@ -24,13 +24,13 @@ function AuthLogin() {
             if (data?.payload?.success) {
              console.log(user.role)
               alert("successfully logged in")
+              if(user?.role ==='doctor'){
+                setTimeout(()=>navigate('../../doctor/dashboard'),1000);
+              }
               if(user?.role==='admin'){
                 setTimeout(()=>navigate('../../admin/dashboard'),1000);
               }
-              if(user?.role === 'doctor'){
-                setTimeout(()=>navigate('../../doctor/dashboard'),1000);
-              }
-              else{
+              else if(user?.role==='user'){
                 setTimeout(()=>navigate('../../home/welcome'),1000);
               }
             } else {

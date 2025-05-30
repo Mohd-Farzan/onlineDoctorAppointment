@@ -1,6 +1,7 @@
 import { useState } from "react"
 import { SearchIcon, UserIcon } from "lucide-react"
 import {Link} from 'react-router-dom'
+import TodayPatientsTable from "@/Component/doctor/patientData"
 
 export default function Dashboard() {
 
@@ -47,117 +48,6 @@ function StatCard({ title, value, subtitle, bgColor }) {
     </div>
   )
 }
-
-function TodayPatientsTable() {
-  const patients = [
-    { name: "M.J Jackson", time: "12:00" },
-    { name: "Ms Johnson", time: "12:30" },
-    { name: "Mariyam", time: "1:00" },
-    // Add more patients as needed
-  ]
-
-  return (
-    <table className="min-w-full leading-normal">
-      <thead>
-        <tr>
-          <th className="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
-            Patient
-          </th>
-          <th className="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
-            Name
-          </th>
-          <th className="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
-            Time
-          </th>
-        </tr>
-      </thead>
-      <tbody>
-        {patients.map((patient, index) => (
-          <tr key={index}>
-            <td className="px-5 py-5 border-b border-gray-200 bg-white text-sm">
-              <div className="flex items-center">
-                <div className="flex-shrink-0 w-10 h-10">
-                  {/* <img className="w-full h-full rounded-full" src={logo}  alt="Patient" /> */}
-                </div>
-              </div>
-            </td>
-            <td className="px-5 py-5 border-b border-gray-200 bg-white text-sm">
-              <p className="text-gray-900 whitespace-no-wrap">{patient.name}</p>
-            </td>
-            <td className="px-5 py-5 border-b border-gray-200 bg-white text-sm">
-              <p className="text-gray-900 whitespace-no-wrap">{patient.time}</p>
-            </td>
-          </tr>
-        ))}
-      </tbody>
-    </table>
-  )
-}
-
-function NextPatientsTable() {  
-  const patients = [
-    { id: 1, name: "John Doe", doctorName: "Dr. Smith", appointmentNo: 1, disease: "Flu", status: "Waiting" },
-    {
-      id: 2,
-      name: "Jane Smith",
-      doctorName: "Dr. Johnson",
-      appointmentNo: 2,
-      disease: "Check-up",
-      status: "In Progress",
-    },
-    {
-      id: 3,
-      name: "Jane Smith",
-      doctorName: "Dr. Johnson",
-      appointmentNo: 2,
-      disease: "Check-up",
-      status: "In Progress",
-    },
-    // Add more patients as needed
-  ]
-
-  return (
-    <div className="overflow-x-auto">
-    <table className="min-w-full leading-normal">
-      <thead>
-        <tr>
-          {["ID", "Name", "Doctor Name", "Appointment No", "Disease", "Status"].map((header) => (
-            <th
-              key={header}
-              className="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider"
-            >
-              {header}
-            </th>
-          ))}
-        </tr>
-      </thead>
-      <tbody>
-        {patients.map((patient) => (
-          <tr key={patient.id} className="hover:bg-gray-50">
-            {[
-              patient.id,
-              patient.name,
-              patient.doctorName,
-              patient.appointmentNo,
-              patient.disease,
-              patient.status,
-            ].map((value, index) => (
-              <td
-                key={index}
-                className="px-5 py-5 border-b border-gray-200 bg-white text-sm"
-              >
-                <p className="text-gray-900 whitespace-nowrap">{value}</p>
-              </td>
-            ))}
-          </tr>
-        ))}
-      </tbody>
-    </table>
-  </div>
-  
-  )
-}
-
 function DoctorNamesTable() {
   const doctors = [
     {

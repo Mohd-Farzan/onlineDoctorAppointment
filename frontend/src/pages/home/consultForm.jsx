@@ -3,10 +3,14 @@ import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { useState } from "react";
 import { Link } from "react-router-dom";
-
+const initialState={
+problem:"",
+phone:""
+}
 const ConsultationForm = () => {
   const [symptom, setSymptom] = useState("");
   const [phoneNumber, setPhoneNumber] = useState("");
+  
 
   return (
     <div className="bg-white rounded-lg shadow-lg p-8 max-w-xl mx-auto">
@@ -29,14 +33,9 @@ const ConsultationForm = () => {
             value={symptom}
             onChange={(e) => setSymptom(e.target.value)}
             className="w-full"
+            name="problem"
           />
           <p className="text-sm text-gray-500 mt-1">Min 4 characters</p>
-        </div>
-
-        <div>
-          <p className="text-gray-700 mb-4">
-            A relevant speciality will be shown below...
-          </p>
         </div>
 
         <div>
@@ -52,6 +51,7 @@ const ConsultationForm = () => {
               value={phoneNumber}
               onChange={(e) => setPhoneNumber(e.target.value)}
               className="rounded-l-none"
+              name="phone"
             />
           </div>
         </div>

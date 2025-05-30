@@ -22,7 +22,7 @@ export default function AppointmentSchedule() {
           setAppointments(result.payload.data);
         } else {
           setError("Failed to load appointments");
-          alert.error("Failed to load appointments");
+          alert("Failed to load appointments");
         }
       } catch (err) {
         setError(err.message);
