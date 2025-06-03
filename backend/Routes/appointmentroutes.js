@@ -7,7 +7,9 @@ router.post("/create-appointment",createAppointment);
 router.get("/get-appointment/:userId",getMyAppointments);
 router.get('/fetch-appointment/:email',fetchAppointment);
 router.post("/appointment-confirmation-email",appointmentConfirmationEmail)
-// router.post('appointment-cancelation-mail',AppointmentCancelationMail)
+//router.post('/appointment-cancelation-mail',AppointmentCancelationMail)
+
+
 router.put('/update-doctor-profile',updateDoctorProfile)
 router.post('/accept/:_id',acceptAppointment)
 router.post('/cancle-appointment/:_id/:email',cancelAppointment)
