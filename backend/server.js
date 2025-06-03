@@ -28,7 +28,7 @@ app.use(express.json());
 
 
 app.use(cors({
-    origin: 'https://pc-pulsecare.netlify.app/', 
+    origin: 'https://pc-pulsecare.netlify.app', 
     methods: ['GET', 'POST', 'DELETE', 'UPDATE', 'OPTIONS','PUT'], 
     allowedHeaders: [
         'Content-Type',
