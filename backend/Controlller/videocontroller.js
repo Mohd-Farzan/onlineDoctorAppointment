@@ -1,5 +1,7 @@
 // controllers/videoController.js
 const axios = require("axios");
+const requestData=require('../Model/videoCallingRequestModel');
+const Doctor = require("../Model/doctor");
 
 const getZoomAccessToken = async () => {
   const ZOOM_CLIENT_ID="49i6kMp5Q6OXRGxiRU4O2Q";
@@ -57,4 +59,36 @@ const createZoomMeeting = async (req, res) => {
     res.status(500).json({ message: "Failed to create Zoom meeting." });
   }
 };
-module.exports = {createZoomMeeting}
+const videoCallingRequestForm=async(req,res)=>{
+  try {
+      const { problem,phone,speciality, email} = req.body;
+      if(!problem || !phone || !speciality){
+          return res.status(400).json({
+            success:false,
+            message:"all field required"
+          })
+      }
+      const newRequest = new requestData({
+        problem,
+        phone,
+        speciality,
+        email
+      });
+      
+      await Doctor.updateMany({speciality:speciality},{ "$push": { requests: newRequest } })
+
+      res.status(200).json({
+        success: true, // Correct the success field to true
+        message: "your form is submitted our team contact you...",
+        data: newRequest
+      });
+    } catch (error) {
+      console.error("Error:", error);
+      res.status(500).json({
+        success: false,
+        message: "Internal server error",
+        error:error.message
+      });
+    }
+}
+module.exports = {createZoomMeeting,videoCallingRequestForm}

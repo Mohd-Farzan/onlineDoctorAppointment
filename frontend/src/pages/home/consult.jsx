@@ -107,10 +107,12 @@ function CunsultPage() {
                 </div>
                 <h3 className="font-medium text-sm">{doctor.speciality}</h3>
                 <p className="text-gray-600">₹{doctor.fees}</p>
-                <Link to="/home/consulting-form" className="text-blue-500 text-sm hover:underline inline-flex items-center gap-1">
+                
+                <Link to="/home/consulting-form"   state={{ speciality: doctor.speciality }}className="text-blue-500 text-sm hover:underline inline-flex items-center gap-1">
                   Consult now
                   <ChevronRight className="w-4 h-4" />
                 </Link>
+                
               </div>
             </Card>
           ))

@@ -44,7 +44,7 @@ export const userAppointment = createAsyncThunk(
   async (_, { rejectWithValue }) => {
     try {
       const user = JSON.parse(Cookies.get("user"));
-      console.log(user.email,"EMAIL FROM LOGIN")
+      // console.log(user.email,"EMAIL FROM LOGIN")
       const response = await axios.get(
         `http://localhost:3000/api/appointment/fetch-appointment/${user.email}`,
         { withCredentials: true }
@@ -58,18 +58,34 @@ export const userAppointment = createAsyncThunk(
 
 export const cancleAppointment = createAsyncThunk(
   "user/cancleAppointment",
-  async (id, { rejectWithValue }) => {
+  async ({_id,email},thunkAPI) => {
     try {
-      const response = await axios.delete(
-        `http://localhost:3000/api/appointment/cancle-appointment/${id}`,
-        { withCredentials: true }
+      const response = await axios.post(
+        `http://localhost:3000/api/appointment/cancle-appointment/${_id}/${email}`,
+       
       );
       return response.data;
     } catch (error) {
-      return rejectWithValue(error.message || "Failed to fetch appointments");
+      return thunkAPI.rejectWithValue(error.response.data);
     }
   }
 );
+export const acceptAppointment = createAsyncThunk(
+  "appointment/accept",
+  async ({ _id, email }, thunkAPI) => {
+    try {
+      const res = await axios.post(`http://localhost:3000/api/appointment/accept/${_id}`, {
+        email
+      });
+      console.log(res.data,"data")
+      return res.data;
+      
+    } catch (err) {
+      return thunkAPI.rejectWithValue(err.response.data);
+    }
+  }
+);
+
 // user slice
 const appointmentSlice = createSlice({
     name: "appointment",
@@ -116,16 +132,7 @@ const appointmentSlice = createSlice({
                 state.isLoading = false;
                 state.error = action.payload;
               })
-              .addCase(cancleAppointment.pending, (state) => {
-                state.isLoading = true;
-                state.error = null;
-              })
-              .addCase(cancleAppointment.fulfilled, (state, action) => {
-              const index = state.appointment.findIndex(app => app._id === action.payload._id);
-                if (index !== -1) {
-                  state.appointment[index] = action.payload;
-                }
-              })
+              
 
     }
 });

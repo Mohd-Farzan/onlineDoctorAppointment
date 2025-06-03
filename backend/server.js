@@ -9,6 +9,7 @@ const contactRouter= require('./Routes/contactRoute')
 // const { Server } = require('socket.io');
 const appointmentRoute= require('./Routes/appointmentroutes')
 const chatRoutes=require('./Routes/chatRoutes')
+const DocRequestRouter = require("./Routes/requestVideo");
 const videoRoutes=require('./Routes/meet')
 const app=express()
 
@@ -62,6 +63,7 @@ app.use('/api/auth',Authrouter);
 app.use('/api/doctor',doctorRouter)
 app.use('/api/contact',contactRouter)
 app.use('/api/appointment',appointmentRoute)
-app.use('/api/chat', chatRoutes); 
+app.use("/api", DocRequestRouter)
+// app.use('/api/chat', chatRoutes); 
 app.use('/api/video', videoRoutes);
 app.listen(PORT,()=> console.log(`app running on port ${PORT}`));

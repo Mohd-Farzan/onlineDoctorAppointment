@@ -5,112 +5,173 @@ const nodemailer = require('nodemailer');
 const mongoose = require('mongoose');
 
 const createAppointment = async (req, res) => {
-    try {
-        const { patient, email, doctorId, days, times, reason ,status} = req.body;
+  try {
+    const { patient, email, doctorId, days, times, reason } = req.body;
 
-        // 1) Enhanced validation
-        if (!patient || !email || !doctorId || !days || !times) {
-            return res.status(400).json({
-                success: false,
-                message: 'All fields are required',
-                requiredFields: ['patient', 'email', 'doctorId', 'days', 'times']
-            });
-        }
-
-        // Validate email format
-        if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
-            return res.status(400).json({
-                success: false,
-                message: 'Invalid email format'
-            });
-        }
-
-        // 2) Verify doctor exists
-        const doc = await doctorModel.findById(doctorId).lean();
-        if (!doc) {
-            return res.status(404).json({ 
-                success: false, 
-                message: 'Doctor not found',
-                suggestion: 'Please check the doctor ID'
-            });
-        }
-
-        // 3) Prepare appointment entry with timestamps
-        const entry = {
-            patient: patient.trim(),
-            email: email.trim().toLowerCase(),
-            days: days.trim(),
-            times: times.trim(),
-            reason: reason?.trim(),
-            createdAt: new Date()
-        };
-
-        // 4) Find or create appointment
-        let appt = await Appointment.findOne({ 'doctor.doctorId': doctorId });
-        
-        if (appt) {
-            // Check for duplicate appointment
-            // const existingAppointment = appt.patient.find(
-            //     apt => apt.email === entry.email && 
-            //            apt.days === entry.days && 
-            //            apt.times === entry.times
-            // );
-            
-            // if (existingAppointment) {
-            //     return res.status(409).json({
-            //         success: false,
-            //         message: 'Appointment already exists for this time slot'
-            //     });
-            // }
-
-            appt.patient.push(entry);
-            await appt.save();
-        } else {
-            appt = await Appointment.create({
-                doctor: {
-                    doctorId: doc._id.toString(),
-                    doctorname: doc.name,
-                    specialty: doc.speciality
-                },
-                patient: [entry],
-                status: "Upcoming", // ✅ correct placement
-        appointmentDateTime: new Date() 
-            });
-        }
-
-        // 5) Send confirmation email (uncomment when ready)
-        
-        await sendAppointmentConfirmation({
-            to: email,
-            patientName: patient,
-            doctorName: doc.name,
-            day: days,
-            time: times,
-            reason
-        });
-        
-
-        // 6) Return response with appointment details
-        return res.status(201).json({
-            success: true,
-            message: 'Appointment booked successfully',
-            data: {
-                appointmentId: appt._id,
-                doctor: appt.doctor,
-                patient: entry,
-                bookedAt: entry.createdAt
-            }
-        });
-
-    } catch (err) {
-        console.error('Error creating appointment:', err);
-        return res.status(500).json({
-            success: false,
-            message: 'Failed to create appointment',
-            error: process.env.NODE_ENV === 'development' ? err.message : undefined
-        });
+    // Validation
+    if (!patient || !email || !doctorId || !days || !times) {
+      return res.status(400).json({
+        success: false,
+        message: 'All fields are required',
+        requiredFields: ['patient', 'email', 'doctorId', 'days', 'times']
+      });
     }
+
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+      return res.status(400).json({
+        success: false,
+        message: 'Invalid email format'
+      });
+    }
+
+    // Verify doctor exists
+    const doc = await doctorModel.findById(doctorId).lean();
+    if (!doc) {
+      return res.status(404).json({ 
+        success: false, 
+        message: 'Doctor not found',
+        suggestion: 'Please check the doctor ID'
+      });
+    }
+
+    // Prepare appointment entry
+    const entry = {
+      patient: patient.trim(),
+      email: email.trim().toLowerCase(),
+      days: days.trim(),
+      times: times.trim(),
+      reason: reason?.trim() || '',
+      status: "pending", // always start as pending
+      appointmentDateTime: new Date(), // consider generating from days+times if possible
+      videoRoomLink: ''
+    };
+
+    // Find or create appointment document
+    let appt = await Appointment.findOne({ 'doctor.doctorId': doctorId });
+
+    if (appt) {
+      // Uncomment below to avoid duplicate appointments
+      /*
+      const existing = appt.patient.find(pat => 
+        pat.email === entry.email && pat.days === entry.days && pat.times === entry.times
+      );
+      if (existing) {
+        return res.status(409).json({
+          success: false,
+          message: 'Appointment already exists for this time slot'
+        });
+      }
+      */
+      
+      appt.patient.push(entry);
+      await appt.save();
+    } else {
+      appt = await Appointment.create({
+        doctor: {
+          doctorId: doc._id.toString(),
+          doctorname: doc.name,
+          specialty: doc.speciality // keep consistent with your model's spelling
+        },
+        patient: [entry],
+      });
+    }
+
+    // Send confirmation email (optional)
+    /*
+    await sendAppointmentConfirmation({
+      to: email,
+      patientName: patient,
+      doctorName: doc.name,
+      day: days,
+      time: times,
+      reason
+    });
+    */
+
+    return res.status(201).json({
+      success: true,
+      message: 'Appointment booked successfully',
+      data: {
+        appointmentId: appt._id,
+        doctor: appt.doctor,
+        patient: entry,
+        bookedAt: new Date()
+      }
+    });
+
+  } catch (err) {
+    console.error('Error creating appointment:', err);
+    return res.status(500).json({
+      success: false,
+      message: 'Failed to create appointment',
+      error: err.message,
+    });
+  }
 };
+
+
+
+const acceptAppointment = async (req, res) => {
+  try {
+    const { _id } = req.params;
+    const { email } = req.body;
+
+    if (!mongoose.Types.ObjectId.isValid(_id)) {
+      return res.status(400).json({ success: false, message: "Invalid appointment ID" });
+    }
+    console.log(_id, "ID");
+
+    const appointment = await Appointment.findById(_id);
+
+    if (!appointment) {
+      return res.status(404).json({ success: false, message: "Appointment ID not found" });
+    }
+
+    // Find patient inside patient array
+    const matchedPatient = appointment.patient.find(p => p.email === email);
+
+    if (!matchedPatient) {
+      return res.status(404).json({ success: false, message: "Patient not found in appointment" });
+    }
+
+    // Update status to 'accepted'
+    matchedPatient.status = "accepted";
+
+    // Save the appointment document with updated status
+    await appointment.save();
+
+    // Extract data for email
+    const patientName = matchedPatient.patient;
+    const doctorName = appointment.doctor?.doctorname;
+    const day = matchedPatient.days;
+    const time = matchedPatient.times;
+    const reason = matchedPatient.reason || '';
+
+    await sendAppointmentConfirmation({
+      to: email,
+      patientName,
+      doctorName,
+      day,
+      time,
+      reason
+    });
+
+    return res.status(200).json({
+      success: true,
+      message: "Appointment accepted and confirmation email sent successfully",
+    });
+
+  } catch (error) {
+    console.error("Error accepting appointment:", error);
+    return res.status(500).json({
+      success: false,
+      message: "Server error while accepting appointment",
+      error: error.message,
+    });
+  }
+};
+
+
 
 // --- Get Appointments for Logged-In Doctor ---
 const getMyAppointments = async (req, res) => {
@@ -129,6 +190,7 @@ const getMyAppointments = async (req, res) => {
     
     const formatted = appointments.map((a) => {
       return a.patient.map((pat) => ({
+        _id:a._id,
         doctor: {
           doctorId: a.doctor?.doctorId || null,
           doctorname: a.doctor?.doctorname || '',
@@ -139,6 +201,9 @@ const getMyAppointments = async (req, res) => {
           days: pat.days || '',
           times: pat.times || '',
           reason: pat.reason || '',
+          status:pat.status||"pending",
+          appointmentDateTime:pat.appointmentDateTime,
+          videoRoomLine:pat.videoRoomLink||""
         },
       }));
     }).flat();
@@ -203,8 +268,10 @@ const sendAppointmentConfirmation = async ({ to, patientName, doctorName, day, t
     }
 };
 
+
 module.exports = {
     createAppointment,
     appointmentConfirmationEmail: sendAppointmentConfirmation,
-    getMyAppointments
+    getMyAppointments,
+    acceptAppointment
 };

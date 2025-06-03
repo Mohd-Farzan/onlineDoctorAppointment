@@ -11,12 +11,14 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table"
 import { Badge } from "@/components/ui/badge"
 import { useDispatch, useSelector } from "react-redux"
+
+import { Link } from "react-router-dom"
 import { cancleAppointment, userAppointment } from "@/store/appointment-slice"
 
 function Appointment() {
   const [editingAppointment, setEditingAppointment] = useState(null)
   const [isEditDialogOpen, setIsEditDialogOpen] = useState(false)
-  const [activeTab, setActiveTab] = useState("upcoming")
+  const [activeTab, setActiveTab] = useState("pending")
   const { appointment = [], loading, error } = useSelector((state) => state.appointment)
   const dispatch = useDispatch()
 
@@ -24,36 +26,42 @@ function Appointment() {
     dispatch(userAppointment())
   }, [dispatch])
 
-   const filteredAppointments = appointment // Modify if status filtering is needed
-  // const filteredAppointments = appointment.filter((app) => app.status == activeTab)
- // const appointmentList = Array.isArray(appointment) ? appointment : [];
+  //  const filteredAppointments = appointment // Modify if status filtering is needed
+  
+ const appointmentList = Array.isArray(appointment) ? appointment : [];
 
-//const filteredAppointments=appointmentList.filter(item => item.status === 'Upcoming')
+ const filteredCancelAppointment=appointmentList.filter(item => item.patient.status === 'rejected')
+const filteredAppointment = appointmentList.filter((app) => app.patient.status == activeTab)
 
 
-  // const handleEdit = (appointment) => {
-  //   setEditingAppointment({ ...appointment })
-  //   setIsEditDialogOpen(true)
-  // }
-
-  // const handleSaveEdit = () => {
-  //   // TODO: Add API call
-  //   setIsEditDialogOpen(false)
-  //   setEditingAppointment(null)
-  // }
-
-  const handleCancel = async (id) => {
-  try {
-    await dispatch(cancleAppointment(id)).then((data)=>{
-      if(data.payload.success){
-        alert("Appointment cancelled successfully");
-      }
-    });
-    console.log(id,"id")
-  } catch (err) {
-    alert(err || "Failed to cancel appointment");
+  const handleEdit = (appointment) => {
+    setEditingAppointment({ ...appointment })
+    setIsEditDialogOpen(true)
   }
-}
+
+  const handleSaveEdit = () => {
+    // TODO: Add API call
+    setIsEditDialogOpen(false)
+    setEditingAppointment(null)
+  }
+
+ const handleCancel = async (_id, email) => {
+  try {
+    const result = await dispatch(cancleAppointment({ _id, email }));
+    if (cancleAppointment.fulfilled.match(result)) {
+      alert("Appointment cancelled");
+      // Refresh the appointment list from server
+      dispatch(userAppointment());
+    } else {
+      alert("Failed to cancel appointment");
+      console.error(result.payload || result.error);
+    }
+  } catch (error) {
+    console.error("Error in handleCancel:", error);
+    alert("An error occurred");
+  }
+};
+    console.log(filteredCancelAppointment,"afdf")
 useEffect(()=>{
   dispatch(userAppointment())
 },[dispatch])
@@ -91,18 +99,18 @@ useEffect(()=>{
       <Card className="w-full max-w-4xl mx-auto">
         <CardHeader>
           <CardTitle className="text-2xl">My Appointments</CardTitle>
-          <CardDescription>View, edit, and manage your upcoming appointments</CardDescription>
+          <CardDescription>manage your upcoming appointments</CardDescription>
         </CardHeader>
         <CardContent>
           <Tabs defaultValue="upcoming" value={activeTab} onValueChange={setActiveTab} className="w-full">
             <TabsList className="grid w-full grid-cols-3 mb-4">
-              <TabsTrigger value="upcoming">Upcoming</TabsTrigger>
+              <TabsTrigger value="pending">Upcoming</TabsTrigger>
               <TabsTrigger value="completed">Completed</TabsTrigger>
-              <TabsTrigger value="cancelled">Cancelled</TabsTrigger>
+              <TabsTrigger value="rejected">Cancelled</TabsTrigger>
             </TabsList>
 
             <TabsContent value={activeTab}>
-              {filteredAppointments.length > 0 ? (
+              {filteredAppointment.length > 0 ? (
                 <div className="rounded-md border">
                   <Table>
                     <TableHeader>
@@ -111,11 +119,12 @@ useEffect(()=>{
                         <TableHead className="hidden md:table-cell">Day</TableHead>
                         <TableHead className="hidden md:table-cell">Time</TableHead>
                         <TableHead className="hidden md:table-cell">Reason</TableHead>
+                        <TableHead className="hidden md:table-cell">Status</TableHead>
                         <TableHead className="text-right">Actions</TableHead>
                       </TableRow>
                     </TableHeader>
                     <TableBody>
-                      {filteredAppointments.map((appointment, index) => (
+                      {filteredAppointment.map((appointment, index) => (
                         <TableRow key={index}>
                           <TableCell>
                             <div className="font-medium">{appointment.doctor?.doctorname}</div>
@@ -139,6 +148,7 @@ useEffect(()=>{
                             </div>
                           </TableCell>
                           <TableCell className="hidden md:table-cell">{appointment.patient?.reason}</TableCell>
+                          <TableCell className="hidden md:table-cell text-red-600 font-semibold">{appointment.patient?.status}</TableCell>
                           <TableCell className="text-right">
                             <DropdownMenu>
                               <DropdownMenuTrigger asChild>
@@ -149,7 +159,7 @@ useEffect(()=>{
                               </DropdownMenuTrigger>
                               <DropdownMenuContent align="end">
                                 {/* <DropdownMenuItem onClick={() => handleEdit(appointment)}>Edit Appointment</DropdownMenuItem> */}
-                                <DropdownMenuItem onClick={() => handleCancel(appointment._id)}>Cancel Appointment</DropdownMenuItem>
+                                <DropdownMenuItem onClick={() => handleCancel(appointment._id,appointment.patient.email)}>Cancel Appointment</DropdownMenuItem>
                               </DropdownMenuContent>
                             </DropdownMenu>
                           </TableCell>
@@ -161,7 +171,39 @@ useEffect(()=>{
               ) : (
                 <div className="flex flex-col items-center justify-center py-12 text-center">
                   <div className="text-muted-foreground mb-2">No {activeTab} appointments found</div>
-                  {activeTab === "upcoming" && <Button variant="outline">Schedule New Appointment</Button>}
+                  {activeTab === "pending" && <Link to ="/home/book-appointment"><Button variant="outline">Schedule New Appointment</Button></Link>}
+                  {activeTab==="rejected" && 
+                  <TableBody>
+                      {filteredCancelAppointment.map((appointment, index) => (
+                        <TableRow key={index}>
+                          <TableCell>
+                            <div className="font-medium">{appointment.doctor?.doctorname}</div>
+                            <div className="md:hidden text-sm text-muted-foreground mt-1">
+                              {appointment.patient?.days} at {appointment.patient?.times}
+                            </div>
+                            <div className="md:hidden text-sm text-muted-foreground">
+                              {appointment.patient?.reason}
+                            </div>
+                          </TableCell>
+                          <TableCell className="hidden md:table-cell">
+                            <div className="flex items-center gap-2">
+                              <Calendar className="h-4 w-4 text-muted-foreground" />
+                              {appointment.patient?.days}
+                            </div>
+                          </TableCell>
+                          <TableCell className="hidden md:table-cell">
+                            <div className="flex items-center gap-2">
+                              <Clock className="h-4 w-4 text-muted-foreground" />
+                              {appointment.patient?.times}
+                            </div>
+                          </TableCell>
+                          <TableCell className="hidden md:table-cell">{appointment.patient?.reason}</TableCell>
+                          <TableCell className="hidden md:table-cell text-red-600 font-semibold">{appointment.patient?.status}</TableCell>
+                          
+                        </TableRow>
+                      ))}
+                    </TableBody>
+                  }
                 </div>
               )}
             </TabsContent>
@@ -169,8 +211,8 @@ useEffect(()=>{
         </CardContent>
       </Card>
 
-      {/* Edit Dialog */}
-      {/* <Dialog open={isEditDialogOpen} onOpenChange={setIsEditDialogOpen}>
+      
+       <Dialog open={isEditDialogOpen} onOpenChange={setIsEditDialogOpen}>
         <DialogContent className="sm:max-w-[425px]">
           <DialogHeader>
             <DialogTitle>Edit Appointment</DialogTitle>
@@ -221,7 +263,7 @@ useEffect(()=>{
             <Button onClick={handleSaveEdit}>Save Changes</Button>
           </DialogFooter>
         </DialogContent>
-      </Dialog> */}
+      </Dialog>
     </>
   )
 }

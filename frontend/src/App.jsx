@@ -33,9 +33,9 @@ import DoctorChart from "./pages/admin/chart";
 import Doctortable from "./pages/admin/Table";
 import DoctorAppoint from "./pages/doctor/doctorappointment"
 import DocMeeting from "./pages/doctor/DocMeeting";
-// import Docchating from "./pages/doctor/docchat";
-// import Chat from "./pages/home/chat";
-// import ChatUser from "./pages/home/Chatuser";
+import Docchating from "./pages/doctor/docchat";
+import Chat from "./pages/home/chat";
+import ChatUser from "./pages/home/Chatuser";
 import GoogleOAuthCallback from "./Component/auth/googleAuth";
 
 // NEW: Import for Google OAuth callback
@@ -79,8 +79,8 @@ function App() {
           <Route path='book-appointment' element={<AppointmentForm />} />
           <Route path='about' element={<AboutUs />} />
           <Route path='contact' element={<Contact />} />
-          {/* <Route path='chatuser' element={<ChatUser />} /> */}
-          {/* <Route path='chat/:id' element={<Chat />} /> */}
+          <Route path='chatuser' element={<ChatUser />} />
+          <Route path='chat/:id' element={<Chat />} />
         </Route>
 
         <Route path='/admin' element={<CheckRoute isAuthenticated={isAuthenticated} user={user}>

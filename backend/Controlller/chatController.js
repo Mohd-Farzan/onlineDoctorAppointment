@@ -22,11 +22,17 @@ const sendMessage = (req, res) => {
   };
 console.log(fullMessage)
   // Emit to all connected clients
-  if (ioInstance) {
-    ioInstance.emit("chat message", fullMessage);
-    return res.status(200).json({ success: true, message: "Message broadcasted" });
-  } else {
-    return res.status(500).json({ error: "Socket.io not initialized" });
+  try{
+    if (ioInstance) {
+      ioInstance.emit("chat message", fullMessage);
+      return res.status(200).json({ success: true, message: "Message broadcasted" });
+      
+    } else {
+      return res.status(500).json({ error: "Socket.io not initialized" });
+    }
+  }
+  catch(err){
+    console.error(err);
   }
 };
 

@@ -13,11 +13,23 @@ export const createZoomMeeting = createAsyncThunk(
     }
   }
 );
+export const emergencyRequest = createAsyncThunk(
+  'video/emergencyRequest',
+  async (formData, { rejectWithValue }) => {
+    try {
+      const res = await axios.post('http://localhost:3000/api/video/request-form',formData);
+      return res.data;
+    } catch (error) {
+      return rejectWithValue(error.response?.data || error.message);
+    }
+  }
+);
 
 const videoSlice = createSlice({
   name: 'video',
   initialState: {
     meeting: null,
+    request:null,
     loading: false,
     error: null,
   },
@@ -35,7 +47,19 @@ const videoSlice = createSlice({
       .addCase(createZoomMeeting.rejected, (state, action) => {
         state.loading = false;
         state.error = action.payload;
+      }) .addCase(emergencyRequest.pending, (state) => {
+        state.loading = true;
+        state.error = null;
+      })
+      .addCase(emergencyRequest.fulfilled, (state, action) => {
+        state.loading = false;
+        state.request = action.payload.data;
+      })
+      .addCase(emergencyRequest.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.payload;
       });
+
   },
 });
 

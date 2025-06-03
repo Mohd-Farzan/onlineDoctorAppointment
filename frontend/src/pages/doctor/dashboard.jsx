@@ -25,7 +25,7 @@ export default function Dashboard() {
               </div>
               <div className="bg-white mt-5 shadow rounded-lg p-4">
                 <h2 className="text-gray-700 text-lg font-semibold pb-4">Next Patients</h2>
-                <NextPatientsTable />
+                {/* <NextPatientsTabl/> */}
               </div>
             </div>
 

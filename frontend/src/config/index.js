@@ -262,3 +262,29 @@ export const contactForm=[
         },
     
 ]
+export const requestForm=[
+    {
+            name:'email',
+            label:"Email",
+            placeholder:"Enter Email",
+            componentType:"input",
+            type:"text",
+            unique:true
+        },
+        {
+            name:'phone',
+            label:"Mobile Number",
+            placeholder:"Enter Mobile Number ",
+            componentType:"input",
+            type:"text",
+            unique:true
+        },
+        {
+            name:'problem',
+            label:"Tell us your Symptom or  health problem",
+            placeholder:"Eg:fever,headache ",
+            componentType:"input",
+            type:"text",
+        },
+    
+]
