@@ -6,7 +6,7 @@ export const createZoomMeeting = createAsyncThunk(
   'video/createZoomMeeting',
   async (topic = "Consultation", { rejectWithValue }) => {
     try {
-      const res = await axios.post('http://localhost:3000/api/video/create-room', { topic });
+      const res = await axios.post('https://pulsecare-pc.onrender.com/api/video/create-room', { topic });
       return res.data;
     } catch (error) {
       return rejectWithValue(error.response?.data || error.message);
@@ -17,7 +17,7 @@ export const emergencyRequest = createAsyncThunk(
   'video/emergencyRequest',
   async (formData, { rejectWithValue }) => {
     try {
-      const res = await axios.post('http://localhost:3000/api/video/request-form',formData);
+      const res = await axios.post('https://pulsecare-pc.onrender.com/api/video/request-form',formData);
       return res.data;
     } catch (error) {
       return rejectWithValue(error.response?.data || error.message);

@@ -14,7 +14,7 @@ export const contact = createAsyncThunk(
     'contact/createContact',
     async (formData, { rejectWithValue }) => {
         try {
-            const response = await axios.post('http://localhost:3000/api/contact/create-contact',formData);
+            const response = await axios.post('https://pulsecare-pc.onrender.com/api/contact/create-contact',formData);
                 
                 return response.data;
         } catch (error) {

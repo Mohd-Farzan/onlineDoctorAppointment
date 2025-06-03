@@ -14,7 +14,7 @@ export const doctorRegistration = createAsyncThunk(
   async (formData, { rejectWithValue }) => {
     try {
       const response = await axios.post(
-        "http://localhost:3000/api/doctor/create-doctor",
+        "https://pulsecare-pc.onrender.com/api/doctor/create-doctor",
         formData,
         { withCredentials: true }
       );
@@ -36,7 +36,7 @@ export const fatchDoctor = createAsyncThunk(
   async (_, { rejectWithValue }) => {
     try {
       const response = await axios.get(
-        "http://localhost:3000/api/doctor/show-doctor",
+        "https://pulsecare-pc.onrender.com/api/doctor/show-doctor",
         { withCredentials: true }
       );
       return {
@@ -61,7 +61,7 @@ export const updateDoctorProfile = createAsyncThunk(
   async (formData, { rejectWithValue }) => {
     try {
       const response = await axios.put(
-        "http://localhost:3000/api/doctor/update-doctor",
+        "https://pulsecare-pc.onrender.com/api/doctor/update-doctor",
         formData,
         { withCredentials: true }
       );

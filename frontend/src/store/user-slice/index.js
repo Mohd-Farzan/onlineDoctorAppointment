@@ -15,7 +15,7 @@ export const updateprofile = createAsyncThunk(
     'user/updateProfile',
     async (id,formData, { rejectWithValue }) => {
         try {
-            const response = await axios.post(`http://localhost:3000/api/user/profile/${id}`,formData);
+            const response = await axios.post(`https://pulsecare-pc.onrender.com/api/user/profile/${id}`,formData);
                 
                 return response.data;
         } catch (error) {

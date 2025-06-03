@@ -28,7 +28,7 @@ app.use(express.json());
 
 
 app.use(cors({
-    origin: 'http://localhost:5173', 
+    origin: 'https://pc-pulsecare.netlify.app/', 
     methods: ['GET', 'POST', 'DELETE', 'UPDATE', 'OPTIONS','PUT'], 
     allowedHeaders: [
         'Content-Type',

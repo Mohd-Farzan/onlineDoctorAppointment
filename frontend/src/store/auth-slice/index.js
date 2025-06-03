@@ -15,7 +15,7 @@ export const SignupUser = createAsyncThunk(
     'auth/signup',
     async (formData, { rejectWithValue }) => {
         try {
-            const response = await axios.post('http://localhost:3000/api/auth/signup', formData, {
+            const response = await axios.post('https://pulsecare-pc.onrender.com/api/auth/signup', formData, {
                 withCredentials: true,
             });
             console.log("response",response.data);
@@ -33,7 +33,7 @@ export const checkRoute = createAsyncThunk(
     async (_, { rejectWithValue }) => {
         try {
             const token = Cookies.get('token'); // Get token from cookies
-            const response = await axios.get('http://localhost:3000/api/auth/checkroute', {
+            const response = await axios.get('https://pulsecare-pc.onrender.com/api/auth/checkroute', {
                 withCredentials: true,
                 headers: {
                     'Authorization': `Bearer ${token}`,
@@ -54,7 +54,7 @@ export const loginUser = createAsyncThunk(
     'auth/login',
     async (formData, { rejectWithValue }) => {
         try {
-            const response = await axios.post('http://localhost:3000/api/auth/login', formData, {
+            const response = await axios.post('https://pulsecare-pc.onrender.com/api/auth/login', formData, {
                 withCredentials: true,
             });
 
@@ -76,7 +76,7 @@ export const logoutUser = createAsyncThunk(
     'auth/logout',
     async (_, { rejectWithValue }) => {
         try {
-            const response = await axios.post('http://localhost:3000/api/auth/logout', {}, {
+            const response = await axios.post('https://pulsecare-pc.onrender.com/api/auth/logout', {}, {
                 withCredentials: true,
             });
 
@@ -96,7 +96,7 @@ export const forgotPassword = createAsyncThunk(
     'auth/forgotPassword',
     async (formData, { rejectWithValue }) => {
         try {
-            const response = await axios.post('http://localhost:3000/api/auth/forgot-password', formData, {
+            const response = await axios.post('https://pulsecare-pc.onrender.com/api/auth/forgot-password', formData, {
                 withCredentials: true, // Ensures cookies are sent
             });
 
@@ -117,7 +117,7 @@ export const verifyOtpAndResetPswrd = createAsyncThunk(
     'auth/verifyOtpAndResetPswrd',
     async ({ email, otp, newPassword }, { rejectWithValue }) => {
         try {
-            const response = await axios.post('http://localhost:3000/api/auth/reset-password', { email, otp, newPassword }, {
+            const response = await axios.post('https://pulsecare-pc.onrender.com/api/auth/reset-password', { email, otp, newPassword }, {
                 withCredentials: true,
             });
             return response.data;
@@ -133,7 +133,7 @@ export const updateProfile = createAsyncThunk(
     'user/updateProfile',
     async ({ id, formData }, { rejectWithValue }) => {
         try {
-            const response = await axios.put(`http://localhost:3000/api/auth/profile/${id}`, formData);
+            const response = await axios.put(`https://pulsecare-pc.onrender.com/api/auth/profile/${id}`, formData);
             return response.data;
         } catch (error) {
             console.error(error);

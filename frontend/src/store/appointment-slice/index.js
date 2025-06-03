@@ -13,7 +13,7 @@ export const appointmentData = createAsyncThunk(
     'appointment/createAppointment',
     async (formData, { rejectWithValue }) => {
         try {
-            const response = await axios.post('http://localhost:3000/api/appointment/create-appointment',formData);
+            const response = await axios.post('https://pulsecare-pc.onrender.com/api/appointment/create-appointment',formData);
             return response.data;
         } catch (error) {
             console.error(error);
@@ -30,7 +30,7 @@ export const showAppointment = createAsyncThunk(
       if (!user?.doctorId) throw new Error("No doctor ID found");
       console.log(user.doctorId,"idFromlogin")
       const response = await axios.get(
-        `http://localhost:3000/api/appointment/get-appointment/${user.doctorId}`,
+        `https://pulsecare-pc.onrender.com/api/appointment/get-appointment/${user.doctorId}`,
         { withCredentials: true }
       );
       return response.data;
@@ -46,7 +46,7 @@ export const userAppointment = createAsyncThunk(
       const user = JSON.parse(Cookies.get("user"));
       // console.log(user.email,"EMAIL FROM LOGIN")
       const response = await axios.get(
-        `http://localhost:3000/api/appointment/fetch-appointment/${user.email}`,
+        `https://pulsecare-pc.onrender.com/api/appointment/fetch-appointment/${user.email}`,
         { withCredentials: true }
       );
       return response.data;
@@ -61,7 +61,7 @@ export const cancleAppointment = createAsyncThunk(
   async ({_id,email},thunkAPI) => {
     try {
       const response = await axios.post(
-        `http://localhost:3000/api/appointment/cancle-appointment/${_id}/${email}`,
+        `https://pulsecare-pc.onrender.com/api/appointment/cancle-appointment/${_id}/${email}`,
        
       );
       return response.data;
@@ -74,7 +74,7 @@ export const acceptAppointment = createAsyncThunk(
   "appointment/accept",
   async ({ _id, email }, thunkAPI) => {
     try {
-      const res = await axios.post(`http://localhost:3000/api/appointment/accept/${_id}`, {
+      const res = await axios.post(`https://pulsecare-pc.onrender.com/api/appointment/accept/${_id}`, {
         email
       });
       console.log(res.data,"data")
