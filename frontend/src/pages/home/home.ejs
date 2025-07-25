@@ -1,0 +1,459 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Doctris</title>
+    <link rel="icon" type="jpeg" src="/public/ Image 2024-09-29 at 18.18.08.jpeg" >
+    <script src="https://cdn.tailwindcss.com"></script>
+     <link rel="stylesheet" href="/stylesheets/output.css">
+    <link rel="stylesheet" href="stylesheets/a.css">
+   <link rel="icon" type="jpeg" href="/public/images/WhatsApp Image 2024-09-29 at 18.18.08.jpeg">
+    <!-- <link rel="stylesheet" href="output.css"> -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+</head>
+<body>
+
+
+
+
+  <nav className="navbar bg-body-tertiary fixed-top">
+    <div className="container-fluid">
+      <img className="w-10 h-10 rounded-full object-cover" src="https://images.pexels.com/photos/1382732/pexels-photo-1382732.jpeg?cs=srgb&dl=pexels-soldiervip-1382732.jpg&fm=jpg" alt="">
+      <h1 className="absolute left-16 top-1 text-orange-300 ">welcome</h1>
+   <h2 className="absolute left-16 top-5 text-blue-700"><i>hey,adil</i></h2>
+
+
+   <nav className="footer-nav">
+    <ul className="flex gap-6 items-center justify-center mt-0  bg-transparent ">
+      <li>
+        <a href="/home" className=" transform-doc bg-transparent  ">
+          <i className="fa fa-home"></i>
+          <span>Home</span>
+        </a>
+      </li>
+      <li>
+        <a href="/search" className=" transform-doc bg-transparent  ">
+          <i className="fa fa-search"></i>
+          <span>Search</span>
+        </a>
+      </li>
+      <li>
+        <a href="/video" className=" transform-doc bg-transparent  ">
+          <i className="fa fa-video"></i>
+          <span>Video</span>
+        </a>
+      </li>
+      <li>
+        <a href="/chat" className=" transform-doc bg-transparent  ">
+          <i className="fa fa-comments"></i>
+          <span>Chat</span>
+        </a>
+      </li>
+      <li>
+        <a href="/user" className=" transform-doc bg-transparent  ">
+          <i className="fa fa-user"></i>
+          <span>Profile</span>
+        </a>
+      </li>
+    </ul>
+</nav>
+   <div className="w-32 h-8 rounded flex items-center space-x-4 pl-6">
+    <i className="fa-solid fa-heart text-blue-500 hover:text-blue-800 hover:underline"></i>
+
+    <i className="fa-solid fa-home text-blue-500 hover:text-blue-800"></i>
+  
+      <button className="navbar-toggler text-blue-500" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbar" aria-controls="offcanvasNavbar" aria-label="Toggle navigation">
+        <span className="navbar-toggler-icon text-blue-600"></span>
+      </button>
+      
+      <div className="offcanvas offcanvas-end" tabindex="-1" id="offcanvasNavbar" aria-labelledby="offcanvasNavbarLabel">
+        <div className="offcanvas-header">
+          <h5 className="offcanvas-title font-bold" id="offcanvasNavbarLabel">Doctris</h5>
+          <button type="button" className="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+        </div>
+        <div className="offcanvas-body">
+          <ul className="navbar-nav justify-content-end flex-grow-1 pe-3">
+            <li className="nav-item">
+              <a className="nav-link" href="/views/home.ejs">
+                <img className="w-10 h-10 rounded-full object-cover" src="https://images.pexels.com/photos/1382732/pexels-photo-1382732.jpeg?cs=srgb&dl=pexels-soldiervip-1382732.jpg&fm=jpg" alt="">
+                <h1 className="left-10 top-1 text-orange-300 ">welcome</h1>
+                <h2 className="absolute left-16  text-blue-700"><i>hey,adil</i></h2></a>
+            </li>
+            <li className="nav-item">
+              <a className="nav-link active" aria-current="page" href="./home.ejs">Home</a>
+            </li>
+            <li className="nav-item">
+              <a className="nav-link" href="#">Link</a>
+            </li>
+            <li className="nav-item">
+              <a className="nav-link" href="#">Appointment</a>
+            </li>
+
+
+            <li className="nav-item">
+              <a className="nav-link" href="#">video call</a>
+            </li>
+            <li className="nav-item">
+              <a className="nav-link" href="/chat">chat</a>
+            </li>
+            <li className="nav-item">
+              <a className="nav-link text-gray-500" href="#">log out</a>
+            </li>
+          </ul>
+        
+        
+        </div>
+      </div>
+    </div>
+  </nav>
+  <form className="d-flex mt-14" role="search" action="">
+    <input className="form-control me-2" type="search" placeholder="Find your suitable doctor" aria-label="Search">
+    <button className="btn btn-outline-success" type="submit">Search</button>
+  </form>
+
+
+
+    <!-- <nav className="navbar navbar-expand-lg bg-body-tertiary">
+        <div className="container-fluid ">
+        
+          <img className="w-10 h-10 rounded-full object-cover" src="https://images.pexels.com/photos/1382732/pexels-photo-1382732.jpeg?cs=srgb&dl=pexels-soldiervip-1382732.jpg&fm=jpg" alt="">
+          <h1 className="absolute left-16 top-1 text-orange-300 ">welcome</h1>
+       <h2 className="absolute left-16 top-5 text-blue-700"><i>hey,adil</i></h2>
+      
+      <div className="w-32 h-8 rounded flex items-center space-x-4 pl-6">
+        <i className="fa-solid fa-heart text-blue-500 hover:text-blue-800 hover:underline"></i>
+
+        <i className="fa-solid fa-home text-blue-500 hover:text-blue-800"></i>
+        <i className="fa-solid fa-bars text-blue-500 hover:text-blue-800"></i>
+
+
+    </div> -->
+    
+
+    <!-- </div>
+        </div>
+</nav> -->
+      <!-- <form className="d-flex" role="search" action="">
+        <input className="form-control me-2" type="search" placeholder="Find your suitable doctor" aria-label="Search">
+        <button className="btn btn-outline-success" type="submit">Search</button>
+      </form> -->
+
+     
+      
+
+     <div className="flex  items-center justify-center">
+      <div className="flex flex-wrap mt-4 ml-2">
+        <div className="flex space-x-2 w-full md:w-1/2  transform-b">
+            <div className="max-w-sm bg-blue-700 shadow-lg rounded-lg overflow-hidden mr-8">
+                <div className="flex">
+                    <div className="w-2/3 p-4">
+                        <h5 className="text-lg font-bold text-white">Book Your Next</h5>
+                        <p className="text-blue-600 border-2 border-white rounded font-bold bg-white">
+                            Appointment 
+                            <span className="bg-cyan-500 text-white text-lg rounded font-bold ml-5">Online!</span>
+                        </p>
+                        <p className="text-gray-500 text-sm mt-1">
+                            <small>Book Now And Get 30% OFF</small>
+                        </p>
+                        <button className="border-2 border-orange-500 text-lg bg-orange-500 rounded text-white font-bold mt-3">BOOK NOW -></button>
+                    </div>
+                    <div className="w-1/3 hidden md:block">
+                        <img src="data:image/jpeg;base64,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" alt="Appointment" className="w-full h-full object-cover">
+                    </div>
+                </div>
+            </div>
+        </div>
+    
+        <div className="flex space-x-2 w-full md:w-1/2  transform-b">
+            <div className="max-w-sm bg-orange-400 shadow-lg rounded-lg overflow-hidden">
+                <div className="flex">
+                    <div className="w-2/3 p-4">
+                        <h5 className="text-lg font-semibold text-blue-600 mt-1">Find Your Right</h5>
+                        <p className="text-gray-700 text-white text-lg">Specialist Doctor</p>
+                        <p className="text-gray-500 text-sm mt-1">
+                            <small>Book Now And Get 30% OFF</small>
+                        </p>
+                        <button className="border-2 border-black text-lg bg-black rounded text-white font-bold mt-3">BOOK NOW -></button>
+                    </div>
+                    <div className="w-1/3 hidden md:block">
+                        <img src="data:image/jpeg;base64,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" alt="Specialist" className="w-full h-full object-cover">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+    
+    
+          
+                 
+        
+    <div className="con">
+        <div className="flex flex-wrap justify-center mt-7 mx-10 gap-6 ">
+
+          <div className=" p-4 border-2 shadow-md rounded w-32 sm:w-40 md:w-48 transform-box">
+            <i className="fa-solid fa-user-nurse text-blue-600"></i><br>
+            <h2 className="text-lg font-bold"><a href="/read">Doctor</a></h2>
+        </div>
+          <div className=" p-4 border-2 shadow-md rounded w-32 sm:w-40 md:w-48 transform-box">
+            <i className="fa-regular fa-calendar-check text-blue-500"></i><br>
+            <h2 className="font-bold"><a href="/appointment">Appointment</a></h2>
+          </div>
+          <div className=" p-4 border-2 shadow-md rounded w-32 sm:w-40 md:w-48 transform-box">
+            <i className="fa-solid fa-file-medical text-blue-500"></i><br>
+            <h2 className="font-bold">Prescription</h2>
+          </div>
+          <div className=" p-4 border-2 shadow-md rounded w-32 sm:w-40 md:w-48 transform-box">
+            <i className="fa-solid fa-capsules text-blue-500"></i><br>
+            <h2 className="text-lg font-bold">Medicines</h2>
+          </div>
+        </div>
+      </div>
+      
+
+
+      
+<section>
+
+    <div className="flex items-center justify-center mt-6">
+        <h1 className="text-lg font-bold text-center">Top Doctor</h1>
+      </div>
+
+      <div className="flex flex-wrap justify-center mt-7 mx-10 gap-6 ">
+        <div className="bg-white p-4 border-2 shadow-md rounded w-32  transform-doc sm:w-40 md:w-48 ">
+          <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQe8NSPS55rkrlfdRX1wVF4CPPy7cChXpqTLgKOASdmMIZUPCnRqhaKwzPoZIC_4lD94cY&usqp=CAU" alt="" className="rounded transform-img">
+         <br> <h2 className="font-bold">Dr.Taylor Samaro</h2>
+          <samp className="text-gray-500"> Dentel Sergon</samp>
+        </div>
+        <div className="bg-white p-4 border-2 shadow-md rounded w-32 sm:w-40 md:w-48 transform-doc">
+        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTJwk4dWl_PNeohCcCtlXLFED41Mj-BZ2d9A5i5NG4Qa4_bASMvfu2ofrIRX_VCjsYSeIM&usqp=CAU" alt="" className="rounded transform-img">
+            <br> <h2 className="font-bold">Dr.Aqib Samaro</h2>
+            <samp className="text-gray-500"> Dentel Sergon</samp>
+        
+        </div>
+        <div className="bg-white p-4 border-2 shadow-md rounded w-32 sm:w-40 md:w-48 transform-doc">
+         <img src="https://m.media-amazon.com/images/I/716B8GMzj3L._AC_UF894,1000_QL80_.jpg" alt="" className="rounded transform-img">
+            <br>
+            <h2 className="font-bold">Dr.Adil Samaro</h2>
+            <samp className="text-gray-500"> Dentel Sergon</samp>
+        </div>
+        <div className="bg-white p-4 border-2 shadow-md rounded w-32 sm:w-40 md:w-48 transform-doc">
+         <img src="https://m.media-amazon.com/images/I/71eX4VHZApL._AC_UF350,350_QL80_.jpg" alt=""  className="rounded transform-img">
+            <br>
+            <h2 className="font-bold">Dr.Aman</h2>
+            <samp className="text-gray-500"> Dentel Sergon</samp>
+        </div>
+      </div>
+      
+
+
+
+
+
+
+
+      
+<section>
+    <div className="flex items-center justify-center mt-6">
+        <h1 className="text-lg font-bold text-center">Available Doctor</h1>
+      </div>
+      
+    
+
+
+      <div className="flex flex-wrap justify-center mt-7 mx-10 gap-6 ">
+        <div className="bg-white p-4 border-2 shadow-md rounded w-32  transform-doc sm:w-40 md:w-48 ">
+          <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQe8NSPS55rkrlfdRX1wVF4CPPy7cChXpqTLgKOASdmMIZUPCnRqhaKwzPoZIC_4lD94cY&usqp=CAU" alt="" className="rounded transform-img">
+         <br> <h2 className="font-bold">Dr.Taylor Samaro</h2>
+          <samp className="text-gray-500"> Dentel Sergon</samp>
+          <div className="flex items-center">
+            <svg className="w-4 h-4 text-yellow-300 me-1" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 22 20">
+                <path d="M20.924 7.625a1.523 1.523 0 0 0-1.238-1.044l-5.051-.734-2.259-4.577a1.534 1.534 0 0 0-2.752 0L7.365 5.847l-5.051.734A1.535 1.535 0 0 0 1.463 9.2l3.656 3.563-.863 5.031a1.532 1.532 0 0 0 2.226 1.616L11 17.033l4.518 2.375a1.534 1.534 0 0 0 2.226-1.617l-.863-5.03L20.537 9.2a1.523 1.523 0 0 0 .387-1.575Z"/>
+            </svg>
+            <p className="ms-2 text-sm font-bold text-gray-900 dark:text-white">4.95</p>
+            <span className="w-1 h-1 mx-1.5 bg-gray-500 rounded-full dark:bg-gray-400"></span>
+            <a href="#" className="text-sm font-medium text-gray-900 underline hover:no-underline dark:text-white">73 reviews</a>
+        </div>
+        
+        <p>100 </p>
+        
+                    <button className="border-2 shadow-md  bg-blue-700 text-white rounded w-19"> See Doctor Now <i className="fa-solid fa-video text-white"></i></button>
+        </div>
+        <div className="bg-white p-4 border-2 shadow-md rounded w-32 sm:w-40 md:w-48 transform-doc">
+        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTJwk4dWl_PNeohCcCtlXLFED41Mj-BZ2d9A5i5NG4Qa4_bASMvfu2ofrIRX_VCjsYSeIM&usqp=CAU" alt="" className="rounded transform-img">
+            <br> <h2 className="font-bold">Dr.Aqib Samaro</h2>
+            <samp className="text-gray-500"> Dentel Sergon</samp>
+            <div className="flex items-center">
+                <svg className="w-4 h-4 text-yellow-300 me-1" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 22 20">
+                    <path d="M20.924 7.625a1.523 1.523 0 0 0-1.238-1.044l-5.051-.734-2.259-4.577a1.534 1.534 0 0 0-2.752 0L7.365 5.847l-5.051.734A1.535 1.535 0 0 0 1.463 9.2l3.656 3.563-.863 5.031a1.532 1.532 0 0 0 2.226 1.616L11 17.033l4.518 2.375a1.534 1.534 0 0 0 2.226-1.617l-.863-5.03L20.537 9.2a1.523 1.523 0 0 0 .387-1.575Z"/>
+                </svg>
+                <p className="ms-2 text-sm font-bold text-gray-900 dark:text-white">4.95</p>
+                <span className="w-1 h-1 mx-1.5 bg-gray-500 rounded-full dark:bg-gray-400"></span>
+                <a href="#" className="text-sm font-medium text-gray-900 underline hover:no-underline dark:text-white">73 reviews</a>
+            </div>
+            
+            <p>100 </p>
+            
+                        <button className="border-2 shadow-md  bg-blue-700 text-white rounded w-19"> See Doctor Now <i className="fa-solid fa-video text-white"></i></button>
+        
+        </div>
+        <div className="bg-white p-4 border-2 shadow-md rounded w-32 sm:w-40 md:w-48 transform-doc">
+         <img src="https://m.media-amazon.com/images/I/716B8GMzj3L._AC_UF894,1000_QL80_.jpg" alt="" className="rounded transform-img">
+            <br>
+            <h2 className="font-bold">Dr.Adil Samaro</h2>
+            <samp className="text-gray-500"> Dentel Sergon</samp>
+            <div className="flex items-center">
+                <svg className="w-4 h-4 text-yellow-300 me-1" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 22 20">
+                    <path d="M20.924 7.625a1.523 1.523 0 0 0-1.238-1.044l-5.051-.734-2.259-4.577a1.534 1.534 0 0 0-2.752 0L7.365 5.847l-5.051.734A1.535 1.535 0 0 0 1.463 9.2l3.656 3.563-.863 5.031a1.532 1.532 0 0 0 2.226 1.616L11 17.033l4.518 2.375a1.534 1.534 0 0 0 2.226-1.617l-.863-5.03L20.537 9.2a1.523 1.523 0 0 0 .387-1.575Z"/>
+                </svg>
+                <p className="ms-2 text-sm font-bold text-gray-900 dark:text-white">4.95</p>
+                <span className="w-1 h-1 mx-1.5 bg-gray-500 rounded-full dark:bg-gray-400"></span>
+                <a href="#" className="text-sm font-medium text-gray-900 underline hover:no-underline dark:text-white">73 reviews</a>
+            </div>
+            
+            <p>100 </p>
+            
+                        <button className="border-2 shadow-md  bg-blue-700 text-white rounded w-19"> See Doctor Now <i className="fa-solid fa-video text-white"></i></button>
+        </div>
+        <div className="bg-white p-4 border-2 shadow-md rounded w-32 sm:w-40 md:w-48 transform-doc">
+         <img src="https://m.media-amazon.com/images/I/71eX4VHZApL._AC_UF350,350_QL80_.jpg" alt=""  className="rounded transform-img">
+            <br>
+            <h2 className="font-bold">Dr.Aman</h2>
+            <samp className="text-gray-500"> Dentel Sergon</samp>
+            <div className="flex items-center">
+                <svg className="w-4 h-4 text-yellow-300 me-1" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 22 20">
+                    <path d="M20.924 7.625a1.523 1.523 0 0 0-1.238-1.044l-5.051-.734-2.259-4.577a1.534 1.534 0 0 0-2.752 0L7.365 5.847l-5.051.734A1.535 1.535 0 0 0 1.463 9.2l3.656 3.563-.863 5.031a1.532 1.532 0 0 0 2.226 1.616L11 17.033l4.518 2.375a1.534 1.534 0 0 0 2.226-1.617l-.863-5.03L20.537 9.2a1.523 1.523 0 0 0 .387-1.575Z"/>
+                </svg>
+                <p className="ms-2 text-sm font-bold text-gray-900 dark:text-white">4.95</p>
+                <span className="w-1 h-1 mx-1.5 bg-gray-500 rounded-full dark:bg-gray-400"></span>
+                <a href="#" className="text-sm font-medium text-gray-900 underline hover:no-underline dark:text-white">73 reviews</a>
+            </div>
+            
+            <p>100 </p>
+            
+                        <button className="border-2 shadow-md  bg-blue-700 text-white rounded w-19"> See Doctor Now <i className="fa-solid fa-video text-white"></i></button>
+        </div>
+      </div>
+
+      <div className="flex flex-wrap justify-center mt-7 mx-10 gap-6 ">
+        <div className="bg-white p-4 border-2 shadow-md rounded w-32  transform-doc sm:w-40 md:w-48 ">
+          <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQe8NSPS55rkrlfdRX1wVF4CPPy7cChXpqTLgKOASdmMIZUPCnRqhaKwzPoZIC_4lD94cY&usqp=CAU" alt="" className="rounded transform-img">
+         <br> <h2 className="font-bold">Dr.Taylor Samaro</h2>
+          <samp className="text-gray-500"> Dentel Sergon</samp>
+          <div className="flex items-center">
+            <svg className="w-4 h-4 text-yellow-300 me-1" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 22 20">
+                <path d="M20.924 7.625a1.523 1.523 0 0 0-1.238-1.044l-5.051-.734-2.259-4.577a1.534 1.534 0 0 0-2.752 0L7.365 5.847l-5.051.734A1.535 1.535 0 0 0 1.463 9.2l3.656 3.563-.863 5.031a1.532 1.532 0 0 0 2.226 1.616L11 17.033l4.518 2.375a1.534 1.534 0 0 0 2.226-1.617l-.863-5.03L20.537 9.2a1.523 1.523 0 0 0 .387-1.575Z"/>
+            </svg>
+            <p className="ms-2 text-sm font-bold text-gray-900 dark:text-white">4.95</p>
+            <span className="w-1 h-1 mx-1.5 bg-gray-500 rounded-full dark:bg-gray-400"></span>
+            <a href="#" className="text-sm font-medium text-gray-900 underline hover:no-underline dark:text-white">73 reviews</a>
+        </div>
+        
+        <p>100 </p>
+        
+                    <button className="border-2 shadow-md  bg-blue-700 text-white rounded w-19"> See Doctor Now <i className="fa-solid fa-video text-white"></i></button>
+        </div>
+        <div className="bg-white p-4 border-2 shadow-md rounded w-32 sm:w-40 md:w-48 transform-doc">
+        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTJwk4dWl_PNeohCcCtlXLFED41Mj-BZ2d9A5i5NG4Qa4_bASMvfu2ofrIRX_VCjsYSeIM&usqp=CAU" alt="" className="rounded transform-img">
+            <br> <h2 className="font-bold">Dr.Aqib Samaro</h2>
+            <samp className="text-gray-500"> Dentel Sergon</samp>
+            
+<!-- rating code -->
+<div className="flex items-center">
+    <svg className="w-4 h-4 text-yellow-300 me-1" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 22 20">
+        <path d="M20.924 7.625a1.523 1.523 0 0 0-1.238-1.044l-5.051-.734-2.259-4.577a1.534 1.534 0 0 0-2.752 0L7.365 5.847l-5.051.734A1.535 1.535 0 0 0 1.463 9.2l3.656 3.563-.863 5.031a1.532 1.532 0 0 0 2.226 1.616L11 17.033l4.518 2.375a1.534 1.534 0 0 0 2.226-1.617l-.863-5.03L20.537 9.2a1.523 1.523 0 0 0 .387-1.575Z"/>
+    </svg>
+    <p className="ms-2 text-sm font-bold text-gray-900 dark:text-white">4.95</p>
+    <span className="w-1 h-1 mx-1.5 bg-gray-500 rounded-full dark:bg-gray-400"></span>
+    <a href="#" className="text-sm font-medium text-gray-900 underline hover:no-underline dark:text-white">73 reviews</a>
+</div>
+
+<p>100 </p>
+
+            <button className="border-2 shadow-md  bg-blue-700 text-white rounded w-19"> See Doctor Now <i className="fa-solid fa-video text-white"></i></button>
+        
+        </div>
+        <div className="bg-white p-4 border-2 shadow-md rounded w-32 sm:w-40 md:w-48 transform-doc">
+         <img src="https://m.media-amazon.com/images/I/716B8GMzj3L._AC_UF894,1000_QL80_.jpg" alt="" className="rounded transform-img">
+            <br>
+            <h2 className="font-bold">Dr.Adil Samaro</h2>
+            <samp className="text-gray-500"> Dentel Sergon</samp>
+            <div className="flex items-center">
+                <svg className="w-4 h-4 text-yellow-300 me-1" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 22 20">
+                    <path d="M20.924 7.625a1.523 1.523 0 0 0-1.238-1.044l-5.051-.734-2.259-4.577a1.534 1.534 0 0 0-2.752 0L7.365 5.847l-5.051.734A1.535 1.535 0 0 0 1.463 9.2l3.656 3.563-.863 5.031a1.532 1.532 0 0 0 2.226 1.616L11 17.033l4.518 2.375a1.534 1.534 0 0 0 2.226-1.617l-.863-5.03L20.537 9.2a1.523 1.523 0 0 0 .387-1.575Z"/>
+                </svg>
+                <p className="ms-2 text-sm font-bold text-gray-900 dark:text-white">4.95</p>
+                <span className="w-1 h-1 mx-1.5 bg-gray-500 rounded-full dark:bg-gray-400"></span>
+                <a href="#" className="text-sm font-medium text-gray-900 underline hover:no-underline dark:text-white">73 reviews</a>
+            </div>
+            
+            <p>100 </p>
+            
+                        <button className="border-2 shadow-md  bg-blue-700 text-white rounded w-19"> See Doctor Now <i className="fa-solid fa-video text-white"></i></button>
+        </div>
+        <div className="bg-white p-4 border-2 shadow-md rounded w-32 sm:w-40 md:w-48 transform-doc">
+         <img src="https://m.media-amazon.com/images/I/71eX4VHZApL._AC_UF350,350_QL80_.jpg" alt=""  className="rounded transform-img">
+            <br>
+            <h2 className="font-bold">Dr.Aman</h2>
+            <samp className="text-gray-500"> Dentel Sergon</samp>
+            <div className="flex items-center">
+                <svg className="w-4 h-4 text-yellow-300 me-1" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 22 20">
+                    <path d="M20.924 7.625a1.523 1.523 0 0 0-1.238-1.044l-5.051-.734-2.259-4.577a1.534 1.534 0 0 0-2.752 0L7.365 5.847l-5.051.734A1.535 1.535 0 0 0 1.463 9.2l3.656 3.563-.863 5.031a1.532 1.532 0 0 0 2.226 1.616L11 17.033l4.518 2.375a1.534 1.534 0 0 0 2.226-1.617l-.863-5.03L20.537 9.2a1.523 1.523 0 0 0 .387-1.575Z"/>
+                </svg>
+                <p className="ms-2 text-sm font-bold text-gray-900 dark:text-white">4.95</p>
+                <span className="w-1 h-1 mx-1.5 bg-gray-500 rounded-full dark:bg-gray-400"></span>
+                <a href="#" className="text-sm font-medium text-gray-900 underline hover:no-underline dark:text-white">73 reviews</a>
+            </div>
+            
+            <p>100 </p>
+            
+                        <button className="border-2 shadow-md  bg-blue-700 text-white rounded w-19"> See Doctor Now <i className="fa-solid fa-video text-white"></i></button>
+        </div>
+      </div>
+</section>
+     
+
+
+
+
+<!-- <nav className="footer-nav mt-12 h-10  ">
+    <ul className="flex gap-6 items-center justify-center mt-6 shadow-md border-2 bg-white ">
+      <li>
+        <a href="/home">
+          <i className="fa fa-home"></i>
+          <span>Home</span>
+        </a>
+      </li>
+      <li>
+        <a href="/search">
+          <i className="fa fa-search"></i>
+          <span>Search</span>
+        </a>
+      </li>
+      <li>
+        <a href="/video">
+          <i className="fa fa-video"></i>
+          <span>Video</span>
+        </a>
+      </li>
+      <li>
+        <a href="/chat">
+          <i className="fa fa-comments"></i>
+          <span>Chat</span>
+        </a>
+      </li>
+      <li>
+        <a href="/user">
+          <i className="fa fa-user"></i>
+          <span>Profile</span>
+        </a>
+      </li>
+    </ul>
+</nav> -->
+</body>
+
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+</html>
