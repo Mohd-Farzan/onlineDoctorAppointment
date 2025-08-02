@@ -11,7 +11,6 @@ const appointmentRoute= require('./Routes/appointmentroutes')
 const chatRoutes=require('./Routes/chatRoutes')
 const DocRequestRouter = require("./Routes/requestVideo");
 const videoRoutes=require('./Routes/meet')
-require("./passport"); // Passport config
 const app=express()
 
 // const server = createServer(app);
@@ -59,14 +58,6 @@ app.use(cookieParser());
 //     console.log('User disconnected:', socket.id);
 //   });
 // });
-app.use(session({
-  secret: "your_secret",
-  resave: false,
-  saveUninitialized: false
-}));
-
-app.use(passport.initialize());
-app.use(passport.session())
 
 app.use('/api/auth',Authrouter);
 app.use('/api/doctor',doctorRouter)
