@@ -4,7 +4,7 @@ A full-stack web application that allows users to book appointments with doctors
 
 ## 🌐 Live Demo
 
-🔗 [Visit the Website](pc-pulsecare.netlify.app)
+🔗 [Visit the Website](https://pc-pulsecare.netlify.app/login)
 
 ## 📸 Screenshots
 
